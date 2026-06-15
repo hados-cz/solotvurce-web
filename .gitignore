@@ -1,6 +1,7 @@
 # Track only the final preview page + author photos.
 *
 !index.html
+!index-v5.html
 !vop.html
 !zasady-osobnich-udaju.html
 !comgate-light.png
