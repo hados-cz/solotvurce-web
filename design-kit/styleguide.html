@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Hadoš — Design system / styleguide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="design.css" />
+  <style>
+    /* jen pro layout tohoto styleguide (není součást design systému) */
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 56px 6% 120px; }
+    .sg-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 8px; }
+    section { padding: 40px 0; border-top: 1px solid var(--line-soft); }
+    section:first-of-type { border-top: none; }
+    .sg-label { font-family: var(--body); font-weight: 800; font-size: .8rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mut); margin-bottom: 22px; }
+    .row { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 14px; }
+    .sw { border: 1px solid var(--line-soft); }
+    .sw .chip { height: 70px; }
+    .sw .meta { padding: 8px 10px; font-size: .8rem; }
+    .sw .meta b { display: block; color: var(--text); font-weight: 700; }
+    .sw .meta span { color: var(--text-mut); font-family: ui-monospace, monospace; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 34px 26px; }
+    .toggle { background: none; border: 2px solid var(--line); color: var(--text); border-radius: 999px; padding: 8px 16px; font: inherit; font-weight: 700; font-size: .85rem; cursor: pointer; }
+    .toggle:hover { border-color: var(--yellow); color: var(--yellow); }
+    code { font-family: ui-monospace, monospace; font-size: .85em; background: var(--bg-soft); padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body class="riso">
+  <div class="wrap">
+
+    <div class="sg-head">
+      <h1 style="margin:0">Design system</h1>
+      <button class="toggle" id="themeToggle" type="button">Světlý / tmavý</button>
+    </div>
+    <p class="lead">Vizuální jazyk „AI pro sólotvůrce" jako znovupoužitelný kit pro Hadoš.
+       Připojíš <code>design.css</code> + Google Fonts (Newsreader, Plus&nbsp;Jakarta&nbsp;Sans),
+       režim přepneš atributem <code>data-theme</code> na <code>&lt;html&gt;</code>.</p>
+
+    <section>
+      <div class="sg-label">Barvy — paleta</div>
+      <div class="swatches">
+        <div class="sw"><div class="chip" style="background:#FFCC33"></div><div class="meta"><b>Žlutá / CTA</b><span>--yellow #FFCC33</span></div></div>
+        <div class="sw"><div class="chip" style="background:#5eead4"></div><div class="meta"><b>Mátová akcent</b><span>--mint #5eead4</span></div></div>
+        <div class="sw"><div class="chip" style="background:#2a3a7e"></div><div class="meta"><b>Modrá</b><span>--blue #2a3a7e</span></div></div>
+        <div class="sw"><div class="chip" style="background:#16213a"></div><div class="meta"><b>Ink</b><span>--ink #16213a</span></div></div>
+        <div class="sw"><div class="chip" style="background:var(--bg)"></div><div class="meta"><b>Pozadí (režim)</b><span>--bg</span></div></div>
+        <div class="sw"><div class="chip" style="background:var(--paper)"></div><div class="meta"><b>Papír / karta</b><span>--paper</span></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sg-label">Typografie</div>
+      <h1>Nadpis H1 <span class="mark">se zvýrazněním.</span></h1>
+      <h2>Nadpis H2 — Newsreader serif</h2>
+      <h3>Nadpis H3</h3>
+      <p class="lead">Lead odstavec (<code>.lead</code>) — větší, tlumený. Použij pod claim sekce.</p>
+      <p class="text-soft">Běžný odstavec v Plus Jakarta Sans (<code>.text-soft</code>). Serif = nadpisy, sans = text.</p>
+      <p class="eyebrow">Eyebrow / nadřádek</p>
+    </section>
+
+    <section>
+      <div class="sg-label">Tlačítka</div>
+      <div class="row">
+        <a class="btn btn-primary" href="#">Chci se přidat →</a>
+        <a class="btn btn-ghost" href="#">Sekundární</a>
+        <a class="btn btn-dark" href="#">Tmavé / nákup</a>
+      </div>
+    </section>
+
+    <section>
+      <div class="sg-label">Karty + soutiskové (offset) stíny</div>
+      <div class="cards">
+        <div class="card card--s1"><h3>Žlutý stín</h3><p style="margin:0" class="text-soft">.card .card--s1</p></div>
+        <div class="card card--s2"><h3>Mátový stín</h3><p style="margin:0" class="text-soft">.card .card--s2</p></div>
+        <div class="card card--s3"><h3>Modrý stín</h3><p style="margin:0" class="text-soft">.card .card--s3</p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sg-label">Razítko</div>
+      <div class="stamp"><b>100%</b><small>vhodné pro<br/>neajťáky</small></div>
+    </section>
+
+    <section>
+      <div class="sg-label">Riso textura</div>
+      <p class="text-soft">Jemný šum + halftone rastr přes celou stránku. <strong>Opt-in</strong> — přidej
+        <code>class="riso"</code> na <code>&lt;body&gt;</code>. (Tahle stránka ho má zapnutý.)</p>
+    </section>
+
+  </div>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      try { var s = localStorage.getItem('theme'); if (s) root.setAttribute('data-theme', s); } catch (e) {}
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('#themeToggle')) return;
+        var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+      });
+    })();
+  </script>
+</body>
+</html>
