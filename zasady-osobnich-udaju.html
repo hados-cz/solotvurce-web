@@ -65,6 +65,7 @@
   <main>
     <h1>Zásady zpracování osobních údajů</h1>
     <p class="eff">Účinné od 14. května 2026</p>
+    <p>Vaše soukromí bereme vážně. Najdete tu srozumitelně a&nbsp;bez právničiny, co o&nbsp;vás víme, proč to potřebujeme a&nbsp;jak dlouho si to necháváme. Krátce: sbíráme jen to nutné, abyste se mohli přihlásit a&nbsp;projít kurzem — nikde vás nesledujeme a&nbsp;vaše data nikomu neprodáváme.</p>
 
     <h2>Kdo s&nbsp;vašimi údaji pracuje</h2>
     <p>Vaše osobní údaje zpracovává společnost <strong>Hadoš s.r.o.</strong>, IČO 23822694, se sídlem Nad Přívozem 1681/3, Braník, 147 00 Praha 4. Napište nám na <a href="mailto:info@hados.cz">info@hados.cz</a>; odpovídáme zpravidla do 3 pracovních dnů.</p>
@@ -75,13 +76,13 @@
     <ul>
       <li><strong>Jméno a&nbsp;příjmení</strong> – abychom vás mohli oslovit v&nbsp;aplikaci a&nbsp;v&nbsp;e-mailech.</li>
       <li><strong>E-mail</strong> – pro přihlášení, zaslání hesla, obnovu hesla, upozornění před koncem přístupu.</li>
-      <li><strong>Heslo</strong> ukládáme výhradně jako kryptografický otisk (PBKDF2-SHA256, 100 000 iterací). Plaintext nemáme, nikdy ho nevidíme.</li>
-      <li><strong>IP adresu při registraci a&nbsp;časovou značku souhlasu</strong> – povinná evidence dle GDPR.</li>
+      <li><strong>Heslo</strong> ukládáme jen jako nečitelný otisk (PBKDF2-SHA256, 100 000 iterací) — vaše skutečné heslo nikde nemáme a&nbsp;nikdy ho nevidíme, ani my.</li>
+      <li><strong>IP adresu při registraci a&nbsp;čas vašeho souhlasu</strong> – abychom uměli doložit, kdy jste souhlasili. Vyžaduje to GDPR.</li>
     </ul>
 
     <h3>Když používáte kurz</h3>
     <ul>
-      <li><strong>Záznamy o&nbsp;vašem postupu</strong> (která lekce, kdy dokončená, výsledky cvičení) – abyste mohl pokračovat tam, kde jste skončili, a&nbsp;my viděli, jak kurz funguje.</li>
+      <li><strong>Záznamy o&nbsp;vašem postupu</strong> (která lekce, kdy dokončená, výsledky cvičení) – abyste mohli pokračovat tam, kde jste skončili, a&nbsp;my viděli, jak kurz funguje.</li>
       <li><strong>Datum vypršení vašeho přístupu</strong> – abychom vás stihli včas upozornit.</li>
     </ul>
 
@@ -101,7 +102,7 @@
     </ul>
 
     <h2>Kdo se k&nbsp;vašim údajům dostane</h2>
-    <p>Pro provoz služby spolupracujeme s&nbsp;těmito poskytovateli, se kterými máme podepsanou Smlouvu o&nbsp;zpracování osobních údajů (DPA):</p>
+    <p>Pro provoz služby spolupracujeme s&nbsp;několika poskytovateli. S&nbsp;každým máme podepsanou smlouvu o&nbsp;zpracování osobních údajů (DPA), která je zavazuje chránit vaše data stejně přísně jako nás:</p>
     <ul>
       <li><strong>Cloudflare, Inc.</strong> – hosting webu, databáze (D1 s&nbsp;nastavením EU jurisdikce), úložiště souborů (R2), streamování videa. Data uchovávána v&nbsp;EU jurisdikci. DPA.</li>
       <li><strong>Resend (Resend.com Inc.)</strong> – transakční e-maily (přihlašovací údaje, upozornění). Sídlo USA, sub-processory v&nbsp;EU. DPA.</li>
@@ -137,13 +138,12 @@
       <li>Hesla výhradně jako PBKDF2 hash (100 000 iterací, SHA-256, unikátní salt).</li>
       <li>Provoz šifrovaný HTTPS (TLS 1.3).</li>
       <li>Databáze Cloudflare D1 je vázána na EU jurisdikci – vaše údaje nikdy neopustí EU.</li>
-      <li>Přihlašovací endpoint má rate-limit (max. 5 pokusů za 15 minut).</li>
-      <li>Můžete si volitelně zapnout dvoufaktorové ověření (2FA) přes TOTP aplikaci.</li>
+      <li>Přihlašování je chráněné proti zkoušení hesel (max. 5 pokusů za 15 minut).</li>
+      <li>Volitelně si můžete zapnout dvoufaktorové ověření (2FA) přes ověřovací aplikaci, např. Google Authenticator.</li>
     </ul>
 
     <h2>Změny dokumentu</h2>
     <p>Při významné změně tady zveřejníme novou verzi a&nbsp;pokud máte aktivní účet, dáme vám vědět e-mailem.</p>
-    <p>Tyto zásady jsou účinné od 14. května 2026, stejně jako všeobecné obchodní podmínky.</p>
   </main>
 
   <footer>
