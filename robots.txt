@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://solotvurce.cz/sitemap.xml
+Sitemap: https://solotvurci.cz/sitemap.xml

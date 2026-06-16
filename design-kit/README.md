@@ -53,5 +53,5 @@ Přepínání za běhu: `document.documentElement.setAttribute('data-theme', 'li
 - Tokeny se mění jen v `design.css` v sekcích `:root` / `[data-theme="…"]` — neměň barvy natvrdo v komponentách.
 
 ## Pozn.
-Stylesheet je extrahovaný z živého webu `solotvurce.cz` (inline `<style>` v `index.html`).
+Stylesheet je extrahovaný z živého webu `solotvurci.cz` (inline `<style>` v `index.html`).
 Když na landingu něco upravíš a chceš to i v kitu (nebo naopak), sjednoť ručně.
