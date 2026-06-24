@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Platba proběhla – AI pro sólotvůrce</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#121b30" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --disp: 'Newsreader', Georgia, serif;
+      --body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --bg: #121b30; --text: #ece3d1; --text-soft: #b8b0a0;
+      --yellow: #FFCC33; --paper: #f6efdf; --ink: #16213a;
+    }
+    @media (prefers-color-scheme: light) {
+      :root { --bg: #fbf4e6; --text: #16213a; --text-soft: #33405f; --paper: #ffffff; }
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--body); background: var(--bg); color: var(--text);
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 40px 20px;
+    }
+    .card {
+      background: var(--paper); color: var(--ink); border-radius: 16px;
+      padding: 48px 40px; max-width: 520px; width: 100%; text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,.15);
+    }
+    .icon { font-size: 3.5rem; margin-bottom: 16px; }
+    h1 { font-family: var(--disp); font-weight: 600; font-size: 1.8rem; margin-bottom: 16px; line-height: 1.3; }
+    p { font-size: 1.05rem; line-height: 1.7; color: #33405f; margin-bottom: 12px; }
+    .note {
+      margin-top: 24px; padding: 16px 20px; background: #f0e8d4; border-radius: 10px;
+      font-size: .92rem; color: #5b6a86; line-height: 1.6;
+    }
+    a.back {
+      display: inline-block; margin-top: 28px; padding: 12px 32px;
+      background: var(--yellow); color: var(--ink); font-weight: 700;
+      border-radius: 8px; text-decoration: none; font-size: 1rem; transition: background .2s;
+    }
+    a.back:hover { background: #e6b800; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">&#10003;</div>
+    <h1>Platba proběhla</h1>
+    <p>Děkujeme! Vaše platba byla úspěšně přijata.</p>
+    <p>Přístupové údaje ke kurzu vám přijdou <strong>e-mailem</strong> během několika minut.</p>
+    <div class="note">
+      E-mail nepřišel? Zkontrolujte složku spam. Pokud ani tam není, napište nám na <strong>info@solotvurci.cz</strong>.
+    </div>
+    <a class="back" href="https://solotvurci.cz">Zpět na solotvurci.cz</a>
+  </div>
+</body>
+</html>
