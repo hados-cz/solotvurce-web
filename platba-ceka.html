@@ -4,58 +4,152 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Platba se zpracovává – AI pro sólotvůrce</title>
-  <meta name="robots" content="noindex" />
+  <meta name="robots" content="noindex, nofollow" />
   <meta name="theme-color" content="#121b30" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
+      --ink:        #16213a;
+      --blue:       #2a3a7e;
+      --yellow:     #FFCC33;
+      --yellow-dark:#e6b800;
       --disp: 'Newsreader', Georgia, serif;
       --body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --bg: #121b30; --text: #ece3d1; --text-soft: #b8b0a0;
-      --yellow: #FFCC33; --paper: #f6efdf; --ink: #16213a;
+      --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
     }
-    @media (prefers-color-scheme: light) {
-      :root { --bg: #fbf4e6; --text: #16213a; --text-soft: #33405f; --paper: #ffffff; }
+    :root, :root[data-theme="dark"] {
+      --bg:        #121b30;
+      --bg-soft:   #16203a;
+      --nav-bg:    rgba(18,27,48,0.84);
+      --text:      #ece3d1;
+      --text-soft: rgba(236,227,209,.76);
+      --text-mut:  rgba(236,227,209,.55);
+      --line:      rgba(244,236,221,.22);
+      --line-soft: rgba(244,236,221,.12);
+      --paper:     #f6efdf;
+      --icon:      #FFCC33;
+      --shadow:    rgba(0,0,0,.42);
+      --dot: #ffd24d;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root[data-theme="light"] {
+      --bg:        #fbf4e6;
+      --bg-soft:   #f2e9d8;
+      --nav-bg:    rgba(251,244,230,0.85);
+      --text:      #16213a;
+      --text-soft: #33405f;
+      --text-mut:  #5b6a86;
+      --line:      rgba(34,50,118,.30);
+      --line-soft: rgba(34,50,118,.15);
+      --paper:     #ffffff;
+      --icon:      #223276;
+      --shadow:    rgba(22,33,58,.30);
+      --dot: #223276;
+    }
+
     body {
-      font-family: var(--body); background: var(--bg); color: var(--text);
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      padding: 40px 20px;
+      font-family: var(--body); line-height: 1.6; -webkit-font-smoothing: antialiased;
+      background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; position: relative;
+      display: flex; flex-direction: column;
     }
-    .card {
-      background: var(--paper); color: var(--ink); border-radius: 16px;
-      padding: 48px 40px; max-width: 520px; width: 100%; text-align: center;
-      box-shadow: 0 8px 32px rgba(0,0,0,.15);
+    body::after {
+      content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+      opacity: .32; mix-blend-mode: overlay; background-image: var(--grain);
     }
-    .icon { font-size: 3.5rem; margin-bottom: 16px; }
-    h1 { font-family: var(--disp); font-weight: 600; font-size: 1.8rem; margin-bottom: 16px; line-height: 1.3; }
-    p { font-size: 1.05rem; line-height: 1.7; color: #33405f; margin-bottom: 12px; }
-    .note {
-      margin-top: 24px; padding: 16px 20px; background: #f0e8d4; border-radius: 10px;
-      font-size: .92rem; color: #5b6a86; line-height: 1.6;
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+      opacity: .06; background-image: radial-gradient(var(--dot) 1px, transparent 1.7px); background-size: 7px 7px;
     }
-    a.back {
-      display: inline-block; margin-top: 28px; padding: 12px 32px;
-      background: var(--yellow); color: var(--ink); font-weight: 700;
-      border-radius: 8px; text-decoration: none; font-size: 1rem; transition: background .2s;
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 10001; background: var(--nav-bg);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--text); padding: 0 6%;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
     }
-    a.back:hover { background: #e6b800; }
+    .nav-logo { font-family: var(--disp); font-weight: 600; font-size: 1.32rem; color: var(--text); text-decoration: none; letter-spacing: -.2px; }
+    @media (max-width: 600px) { .nav-logo { font-size: 1.12rem; white-space: nowrap; } }
+    .theme-toggle {
+      width: 38px; height: 38px; flex-shrink: 0; background: transparent; color: var(--text);
+      border: 2px solid var(--text); cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+      transition: background .15s, color .15s;
+    }
+    .theme-toggle:hover { background: var(--text); color: var(--bg); }
+    .theme-toggle svg { width: 18px; height: 18px; }
+    .theme-toggle .ic-moon { display: none; }
+    :root[data-theme="light"] .theme-toggle .ic-sun  { display: none; }
+    :root[data-theme="light"] .theme-toggle .ic-moon { display: block; }
+
+    /* BUTTONS */
+    .btn-primary { background: var(--yellow); color: var(--ink); padding: 15px 32px; font-weight: 800; font-size: 1rem; text-decoration: none; display: inline-block; border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--shadow); transition: transform .12s, box-shadow .12s; }
+    .btn-primary:hover { transform: translate(2px,2px); box-shadow: 3px 3px 0 var(--shadow); }
+    .btn-ghost { background: transparent; color: var(--text); padding: 14px 26px; font-weight: 700; font-size: 1rem; text-decoration: none; display: inline-block; border: 2px solid var(--text); transition: background .15s, color .15s; }
+    .btn-ghost:hover { background: var(--text); color: var(--bg); }
+
+    /* STATUS */
+    .status-wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 64px 6%; position: relative; z-index: 1; }
+    .status { max-width: 640px; text-align: center; }
+    .status-ic { width: 92px; height: 92px; margin: 0 auto 26px; display: block; color: var(--icon); }
+    .status-kicker { font-family: var(--disp); font-style: italic; font-size: 1.25rem; color: var(--icon); margin-bottom: 12px; }
+    .status-h1 { font-family: var(--disp); font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 600; letter-spacing: -.6px; line-height: 1.2; color: var(--text); margin-bottom: 18px; }
+    .status-msg { font-size: 1.15rem; color: var(--text-soft); line-height: 1.72; margin-bottom: 32px; }
+    .status-msg strong { color: var(--text); font-weight: 600; }
+    .status-msg a { color: var(--text); border-bottom: 2px solid var(--yellow); text-decoration: none; }
+    .status-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer { background: var(--bg-soft); padding: 28px 6%; border-top: 2px solid var(--text); position: relative; z-index: 1; }
+    .footer-meta { max-width: 1120px; margin: 0 auto; font-size: .78rem; color: var(--text-mut); text-align: center; line-height: 1.8; }
+    footer a { color: var(--text-soft); text-decoration: none; border-bottom: 1px solid var(--line-soft); }
+    footer a:hover { color: var(--yellow); border-color: var(--yellow); }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="icon">&#9203;</div>
-    <h1>Platba se zpracovává</h1>
-    <p>Vaše platba čeká na potvrzení od banky. Obvykle to trvá jen pár minut.</p>
-    <p>Jakmile platba projde, dostanete <strong>e-mail s přístupovými údaji</strong> ke kurzu.</p>
-    <div class="note">
-      Pokud e-mail do hodiny nepřijde, napište nám na <strong>info@solotvurci.cz</strong>.
+
+<nav>
+  <a class="nav-logo" href="/">AI pro sólotvůrce</a>
+  <button id="themeToggle" class="theme-toggle" type="button" aria-label="Přepnout světlý a tmavý režim" title="Přepnout režim">
+    <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+    <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+  </button>
+</nav>
+
+<main class="status-wrap">
+  <div class="status">
+    <svg class="status-ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="19"/><path d="M24 13v11l7 5"/></svg>
+    <p class="status-kicker">Platba se zpracovává</p>
+    <h1 class="status-h1">Ještě chviličku strpení.</h1>
+    <p class="status-msg">U&nbsp;některých způsobů platby (třeba bankovního převodu) může potvrzení chvíli trvat. <strong>Nemusíte nic dělat.</strong> Jakmile platbu dostaneme, pošleme vám e-mailem fakturu a&nbsp;přihlašovací údaje do&nbsp;kurzu.<br/><br/>Kdyby vám do&nbsp;pár dní nic nepřišlo, ozvěte se na&nbsp;<a href="mailto:info@hados.cz">info@hados.cz</a>.</p>
+    <div class="status-cta">
+      <a href="/" class="btn-primary">Zpět na&nbsp;hlavní stránku</a>
     </div>
-    <a class="back" href="https://solotvurci.cz">Zpět na solotvurci.cz</a>
   </div>
+</main>
+
+<footer>
+  <div class="footer-meta">© 2026 Hadoš s.r.o. · <a href="/">AI pro sólotvůrce</a> · <a href="vop.html">Obchodní podmínky</a> · <a href="zasady-osobnich-udaju.html">Ochrana osobních údajů</a> · <a href="mailto:info@hados.cz">info@hados.cz</a></div>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved === 'light' || saved === 'dark') { root.setAttribute('data-theme', saved); }
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('#themeToggle')) return;
+      var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  })();
+</script>
+
 </body>
 </html>
