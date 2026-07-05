@@ -70,6 +70,7 @@
       --yellow-dark:#e6b800;
       --disp: 'Newsreader', Georgia, serif;
       --body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
       --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
     }
     /* TMAVÝ režim (výchozí) */
@@ -373,6 +374,191 @@
       .price-row { flex-wrap: wrap; row-gap: 2px; }
       .price-circle { width: 175px; height: 76px; }
     }
+
+    /* ═══ VÝSTUPY: showreel + seznam s náhledem ═══ */
+    /* Mockupy = simulované „screenshoty" aplikací (vlastní vnitřní barvy, jako reálný obrázek).
+       Rám stránky (panel, seznam, showreel) běží na design tokenech → funguje v obou tématech. */
+    .mk { border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--shadow); overflow: hidden; background: #fff; position: relative; }
+    .mk-bar { display: flex; align-items: center; gap: 6px; padding: 8px 10px; background: #e9e2d2; border-bottom: 2px solid var(--ink); }
+    .mk-bar i { width: 10px; height: 10px; border-radius: 50%; }
+    .mk-bar i:nth-child(1){ background: #ff6058; } .mk-bar i:nth-child(2){ background: #ffbd2e; } .mk-bar i:nth-child(3){ background: #28ca42; }
+    .mk-url { margin-left: 8px; font-family: var(--mono); font-size: .7rem; color: #6b6455; background: #fff; border: 1px solid #d8d0bd; border-radius: 20px; padding: 2px 12px; }
+
+    .mk-web { background: linear-gradient(160deg,#1a2540,#223a7a); padding: 22px 20px 26px; min-height: 180px; color: #fff; }
+    .mk-web .eye { font-size: .6rem; letter-spacing: .18em; text-transform: uppercase; color: #ffcc33; font-weight: 800; }
+    .mk-web h4 { font-family: var(--disp); font-size: 1.5rem; line-height: 1.15; margin: 8px 0 6px; font-weight: 600; }
+    .mk-web h4 em { font-style: normal; background: #ffcc33; color: #16213a; padding: 0 4px; }
+    .mk-web p { font-size: .72rem; color: rgba(255,255,255,.7); max-width: 80%; margin-bottom: 14px; }
+    .mk-web .b { display: inline-block; background: #ffcc33; color: #16213a; font-weight: 800; font-size: .7rem; padding: 7px 16px; border: 1.5px solid #000; box-shadow: 2.5px 2.5px 0 rgba(0,0,0,.4); }
+
+    .mk-mac { background: #ecebf0; padding: 0; }
+    .mk-menubar { background: rgba(245,245,247,.9); border-bottom: 1px solid #cfced6; height: 24px; display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 0 12px; font-size: .62rem; color: #3a3a40; }
+    .mk-menubar .mi { display: flex; align-items: center; gap: 3px; }
+    .mk-menubar .act { color: #3358d4; font-weight: 700; }
+    .mk-pop { margin: 10px auto 16px; width: 78%; background: #fff; border: 1px solid #d5d4dd; border-radius: 12px; box-shadow: 0 10px 24px rgba(30,30,50,.18); padding: 16px; }
+    .mk-pop .ttl { font-family: var(--body); font-weight: 800; font-size: .78rem; color: #1c1c22; display: flex; align-items: center; gap: 6px; }
+    /* nahrávání: červený pulzující bod + časovač + živá červená waveform */
+    .mk-pop .ttl .dot { width: 8px; height: 8px; border-radius: 50%; background: #e5484d; box-shadow: 0 0 0 3px rgba(229,72,77,.22); animation: mkrec 1.2s ease-in-out infinite; }
+    .mk-pop .ttl .rec { margin-left: auto; font-family: var(--mono); font-weight: 700; font-size: .64rem; color: #e5484d; letter-spacing: .05em; }
+    @keyframes mkrec { 50% { box-shadow: 0 0 0 7px rgba(229,72,77,.1); } }
+    .mk-wave { display: flex; align-items: center; gap: 3px; height: 34px; margin: 12px 0 8px; }
+    .mk-wave span { flex: 1; background: linear-gradient(#ff6b64,#e5484d); border-radius: 2px; box-shadow: 0 0 7px rgba(229,72,77,.45); transform-origin: center; animation: mkwave .9s ease-in-out infinite; }
+    .mk-wave span:nth-child(2n) { animation-delay: .12s; }
+    .mk-wave span:nth-child(3n) { animation-delay: .28s; }
+    .mk-wave span:nth-child(5n) { animation-delay: .42s; }
+    @keyframes mkwave { 0%, 100% { transform: scaleY(.55); } 50% { transform: scaleY(1.05); } }
+    @media (prefers-reduced-motion: reduce) { .mk-wave span, .mk-pop .ttl .dot { animation: none; } }
+    .mk-pop .hint { font-size: .66rem; color: #6a6a75; }
+    .mk-pop .kbd { font-family: var(--mono); font-size: .6rem; background: #f0f0f4; border: 1px solid #d5d4dd; border-radius: 4px; padding: 1px 5px; color: #3a3a40; }
+    /* přepis řeči: ukazuje, že z mluvení vzniká text */
+    .mk-transcript { background: #f6f6fa; border: 1px solid #e3e3ea; border-radius: 8px; padding: 8px 11px; margin-bottom: 9px; font-size: .7rem; line-height: 1.5; color: #1c1c22; }
+    .mk-transcript .tcur { display: inline-block; width: 2px; height: 11px; background: #3358d4; vertical-align: -1px; margin-left: 1px; animation: mkbl 1s steps(1) infinite; }
+
+    .mk-dash { background: #fbfbfd; padding: 14px 16px 18px; }
+    .mk-dash .top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+    .mk-dash .top h4 { font-family: var(--body); font-weight: 800; font-size: .8rem; color: #1c2333; }
+    .mk-dash .top .per { font-size: .62rem; color: #8a90a0; font-family: var(--mono); }
+    .mk-tbl { width: 100%; border-collapse: collapse; font-size: .66rem; }
+    .mk-tbl th { text-align: left; color: #9aa0b0; font-weight: 700; padding: 4px 6px; border-bottom: 1.5px solid #e6e8ef; font-size: .58rem; text-transform: uppercase; letter-spacing: .05em; }
+    .mk-tbl td { padding: 6px 6px; border-bottom: 1px solid #eef0f5; color: #2a3350; }
+    .mk-tbl td.amt { text-align: right; font-family: var(--mono); font-weight: 600; }
+    .mk-tbl .paid { color: #1c7c4a; font-weight: 700; }
+    .mk-tbl .due { color: #c0842a; font-weight: 700; }
+    .mk-dash .sum { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding: 8px 10px; background: #16213a; color: #ffcc33; border-radius: 6px; }
+    .mk-dash .sum span { font-size: .62rem; color: rgba(255,255,255,.7); text-transform: uppercase; letter-spacing: .06em; }
+    .mk-dash .sum b { font-family: var(--mono); font-size: .9rem; }
+
+    .mk-chart { background: #fbfbfd; padding: 15px 18px 12px; min-height: 180px; }
+    .mk-chart .ch-top { font-family: var(--body); font-weight: 800; font-size: .74rem; color: #1c2333; margin-bottom: 12px; }
+    .mk-chart .bars { display: flex; align-items: flex-end; gap: 9px; height: 104px; }
+    .mk-chart .bars span { flex: 1; background: linear-gradient(#3358d4,#5b7bf5); border-radius: 3px 3px 0 0; }
+    .mk-chart .ch-x { display: flex; gap: 9px; margin-top: 6px; }
+    .mk-chart .ch-x i { flex: 1; text-align: center; font-family: var(--mono); font-size: .54rem; color: #8a90a0; font-style: normal; }
+
+    .mk-print { background: #d9d3c4; padding: 26px; display: flex; align-items: center; justify-content: center; min-height: 190px; position: relative; }
+    .mk-card { position: relative; width: 230px; height: 145px; background: #16213a; color: #f6efdf; border-radius: 4px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 8px 20px rgba(0,0,0,.3); }
+    .mk-card .bleed { position: absolute; inset: -11px; border: 1px dashed #b33; border-radius: 6px; }
+    .mk-card .logo { font-family: var(--disp); font-size: 1.1rem; font-weight: 600; }
+    .mk-card .logo b { color: #ffcc33; }
+    .mk-card .nm { font-family: var(--body); font-weight: 800; font-size: .74rem; }
+    .mk-card .rl { font-size: .6rem; color: rgba(246,239,223,.7); }
+    .mk-card .c1{ top:-11px; left:-11px; border-top:1px solid #333; border-left:1px solid #333; position:absolute; width:12px; height:12px;}
+    .mk-card .c2{ top:-11px; right:-11px; border-top:1px solid #333; border-right:1px solid #333; position:absolute; width:12px; height:12px;}
+    .mk-card .c3{ bottom:-11px; left:-11px; border-bottom:1px solid #333; border-left:1px solid #333; position:absolute; width:12px; height:12px;}
+    .mk-card .c4{ bottom:-11px; right:-11px; border-bottom:1px solid #333; border-right:1px solid #333; position:absolute; width:12px; height:12px;}
+    .mk-print .tag { position: absolute; bottom: 8px; right: 10px; font-family: var(--mono); font-size: .56rem; color: #6b6455; background: #f6efdf; border: 1px solid #b8b0a0; padding: 1px 7px; border-radius: 10px; }
+
+    .mk-pdf { background: #cfd3da; padding: 22px 26px; display: flex; justify-content: center; min-height: 190px; }
+    .mk-page { width: 200px; background: #fff; box-shadow: 0 8px 20px rgba(0,0,0,.22); overflow: hidden; }
+    .mk-page .hd { background: #223a7a; color: #fff; padding: 14px 14px 12px; }
+    .mk-page .hd .k { font-size: .52rem; letter-spacing: .16em; text-transform: uppercase; color: #ffcc33; font-weight: 800; }
+    .mk-page .hd h5 { font-family: var(--disp); font-size: .98rem; font-weight: 600; line-height: 1.15; margin-top: 3px; }
+    .mk-page .bd { padding: 12px 14px 16px; }
+    .mk-page .ln { height: 4px; background: #e6e8ef; border-radius: 3px; margin-bottom: 6px; }
+    .mk-page .ln.s { width: 60%; } .mk-page .ln.m{ width: 85%; }
+    .mk-page .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    .mk-page .pgn { text-align: right; font-family: var(--mono); font-size: .5rem; color: #aab; margin-top: 8px; }
+
+    .mk-term { background: #0e1526; padding: 0; }
+    .mk-term .mk-bar { background: #1a2338; border-bottom: 1px solid #2a3752; }
+    .mk-term .mk-url { background: #0e1526; border-color: #2a3752; color: #8aa0c8; }
+    .mk-body { padding: 14px 16px 18px; font-family: var(--mono); font-size: .72rem; line-height: 1.65; color: #c7d3e8; min-height: 120px; }
+    .mk-body .u { color: #ffcc33; } .mk-body .u::before{ content: '> '; color: #5b7bf5; }
+    .mk-body .ok { color: #5eead4; } .mk-body .ok::before{ content: '✓ '; }
+    .mk-body .mut { color: #6b7a99; }
+    .mk-body .cur { display: inline-block; width: 7px; height: 13px; background: #ffcc33; vertical-align: -2px; animation: mkbl 1s steps(1) infinite; }
+    @keyframes mkbl { 50%{ opacity: 0; } }
+
+    .mk-edit { background: #fff; }
+    .mk-edit .doc { padding: 16px 18px 18px; min-height: 150px; }
+    .mk-edit .dt { font-family: var(--disp); font-size: 1rem; font-weight: 600; color: #1c2333; margin-bottom: 10px; }
+    .mk-edit .ln { height: 5px; background: #e6e8ef; border-radius: 3px; margin-bottom: 7px; }
+    .mk-edit .ln.s { width: 55%; } .mk-edit .ln.m { width: 82%; }
+    .mk-edit .arrow { text-align: center; color: #e6b800; font-family: var(--mono); font-size: .66rem; margin: 8px 0; letter-spacing: .05em; }
+    .mk-edit .hl { background: #fff3cc; border-left: 3px solid #ffcc33; padding: 9px 11px; font-size: .74rem; color: #5b5442; line-height: 1.5; }
+    .mk-edit .chips-src { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+    .mk-edit .chips-src span { font-family: var(--mono); font-size: .54rem; background: #eef1fc; color: #3358d4; border: 1px solid #d3ddfa; border-radius: 10px; padding: 1px 7px; }
+
+    /* převodník fotek – seznam souborů s viditelným před → po (velikosti se zmenšují) */
+    .mk-conv { background: #fffdf7; padding: 14px 16px 13px; }
+    .mk-conv .frow { display: flex; align-items: center; gap: 9px; padding: 6px 0; border-bottom: 1px solid #f0ead9; font-family: var(--mono); font-size: .64rem; color: #5b5442; }
+    .mk-conv .frow .fn { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #4a4433; }
+    .mk-conv .frow s { color: #b0472f; }
+    .mk-conv .frow .arr { color: #e6b800; font-weight: 700; }
+    .mk-conv .frow b { color: #1c7c4a; }
+    .mk-conv .frow .okc { color: #1c7c4a; font-weight: 800; }
+    .mk-conv .t { width: 27px; height: 22px; border-radius: 4px; flex: none; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: .54rem; text-shadow: 0 1px 2px rgba(0,0,0,.25); }
+    .mk-conv .t1 { background: linear-gradient(135deg,#ffb84d,#ff8a5c); }
+    .mk-conv .t2 { background: linear-gradient(135deg,#5eead4,#2dd4bf); }
+    .mk-conv .t3 { background: linear-gradient(135deg,#93c5fd,#6366f1); }
+    .mk-conv .t4 { background: linear-gradient(135deg,#f9a8d4,#f472b6); }
+    .mk-conv .t5 { background: linear-gradient(135deg,#bef264,#84cc16); }
+    .mk-conv .t6 { background: linear-gradient(135deg,#fde047,#f59e0b); }
+    .mk-conv .t7 { background: linear-gradient(135deg,#a5b4fc,#818cf8); }
+    .mk-conv .t8 { background: #efe9da; color: #6b6455; text-shadow: none; }
+    .mk-conv .conv-sum { margin-top: 10px; font-size: .72rem; color: #5b5442; }
+    .mk-conv .conv-sum b { color: #1c7c4a; }
+
+    /* showreel */
+    .reel-wrap { margin: 40px auto 0; max-width: 1000px; }
+    .reel { display: grid; grid-template-columns: 1fr 46px 1fr; gap: 16px; align-items: center; }
+    @media (max-width: 860px){ .reel { grid-template-columns: 1fr; } .reel-arr { transform: rotate(90deg); margin: 2px auto; } }
+    .reel-arr { font-family: var(--mono); font-size: 1.5rem; color: var(--yellow); text-align: center; }
+    /* pevná výška = žádné poskakování stránky při střihu mezi příklady (obsah se centruje) */
+    .reel-out { min-height: 282px; display: flex; flex-direction: column; justify-content: center; }
+    @media (max-width: 860px) { .reel-out { min-height: 294px; } }
+    .reel-out .mk { opacity: 0; transform: translateY(10px); transition: opacity .45s ease, transform .45s ease; }
+    .reel-out .mk.on { opacity: 1; transform: none; }
+    .reel-ctl { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; }
+    .reel-dot { width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--text-mut); background: transparent; cursor: pointer; padding: 0; }
+    .reel-dot.on { background: var(--yellow); border-color: var(--yellow); animation: dotgo 1.1s ease-in-out infinite; }
+    @keyframes dotgo { 50% { transform: scale(1.4); } }
+    @media (prefers-reduced-motion: reduce) { .reel-dot.on { animation: none; } }
+    .reel-note { text-align: center; font-family: var(--mono); font-size: .7rem; color: var(--text-mut); margin-top: 12px; }
+    .reel-ph { font-family: var(--mono); font-size: .85rem; color: var(--text-mut); text-align: center; animation: reelpulse 1.1s ease-in-out infinite; }
+    @keyframes reelpulse { 50% { opacity: .38; } }
+
+    /* seznam s náhledem (master–detail) */
+    .md-grid { display: grid; grid-template-columns: minmax(380px,1fr) minmax(420px,1.05fr); gap: 38px; margin-top: 12px; align-items: start; }
+    @media (max-width: 900px){ .md-grid { grid-template-columns: 1fr; gap: 26px; } }
+    .md-list { border-top: 2px solid var(--line); }
+    .md-row { display: flex; align-items: baseline; gap: 14px; width: 100%; text-align: left; cursor: pointer;
+      background: transparent; border: 0; border-bottom: 1px solid var(--line-soft);
+      padding: 14px 12px 14px 6px; font-family: var(--body); color: var(--text); transition: background .12s; }
+    .md-row:hover { background: var(--line-soft); }
+    .md-row .r-txt { flex: 1; min-width: 0; }
+    .md-row .r-label { display: block; font-weight: 700; font-size: 1.02rem; line-height: 1.35; }
+    .md-row .r-out { display: block; font-size: .88rem; color: var(--text-mut); line-height: 1.4; margin-top: 1px; }
+    .md-row .chev { flex: none; font-family: var(--mono); color: var(--text-mut); font-size: .85rem; transition: transform .12s; }
+    .md-row.active { background: var(--yellow); border-bottom-color: var(--ink); }
+    .md-row.active .r-label { color: var(--ink); }
+    .md-row.active .r-out { color: rgba(22,33,58,.72); }
+    .md-row.active .chev { color: var(--ink); transform: translateX(3px); }
+    .md-panel { position: sticky; top: 84px; }
+    @media (max-width: 900px){ .md-panel { position: static; } }
+    .md-list .md-panel { margin: 12px 0 18px; }
+    .md-panel-inner { background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--shadow); padding: 22px; }
+    .md-panel-inner h3 { font-family: var(--disp); font-size: 1.5rem; font-weight: 600; line-height: 1.25; letter-spacing: -.3px; color: var(--ink); margin-bottom: 6px; }
+    .md-ba { font-family: var(--disp); font-style: italic; color: #7c745e; font-size: 1rem; margin-bottom: 14px; }
+    .md-ba s { color: #b0472f; } .md-ba b { font-style: normal; color: #1c7c4a; }
+    .md-slot { min-height: 250px; display: flex; flex-direction: column; justify-content: center; }
+    .md-panel-inner h3 { min-height: 60px; } /* rezerva na 2 řádky – panel nemění výšku podle délky titulku */
+    .md-sig { display: block; margin-top: 12px; font-family: var(--mono); font-size: .72rem; color: #a59a80; }
+
+    .more-line { margin-top: 34px; padding-top: 22px; border-top: 2px solid var(--line-soft); font-family: var(--disp); font-style: italic; font-size: 1.25rem; line-height: 1.5; color: var(--text-soft); max-width: 860px; }
+    .more-line b { font-style: normal; font-weight: 600; color: var(--text); }
+
+    /* Mockupy = „screenshoty obrazovky": neprůhledné, NAD riso texturou (body::before/after).
+       Sekce proto nesmí tvořit stacking context (z-index:auto) – texturu si nechává jen pozadí.
+       Žlutou fixu .mark drží lokální z-index:0, ať ::before(-1) nespadne pod pozadí sekce. */
+    #ukazka, #reseni { z-index: auto; }
+    #ukazka .mark, #reseni .mark { z-index: 0; }
+    #ukazka .mk, #reseni .mk { z-index: 10000; }
+    /* tmavý režim: ukázky na tmavém pozadí výraznější – světlá linka a tvrdší stín */
+    :root:not([data-theme="light"]) #ukazka .mk { border-color: rgba(244,236,221,.32); box-shadow: 7px 7px 0 rgba(0,0,0,.6); }
+
+    .hero-persona { font-size: 1.04rem; color: var(--text-soft); max-width: 480px; line-height: 1.6; margin: -8px 0 28px; }
+    .hero-persona u { text-decoration: none; border-bottom: 3px solid var(--yellow); padding-bottom: 1px; }
   </style>
 </head>
 <body>
@@ -417,6 +603,7 @@
       </h1>
       <!-- TIP: sem se hodí váš vlastní rukopis (sken) -->
       <p class="hero-sub">Online kurz pro sólotvůrce, kteří nikdy neprogramovali. Prošlapali jsme tu cestu před vámi&nbsp;– a&nbsp;teď vám k&nbsp;ní dáme mapu.</p>
+      <p class="hero-persona">Kurz je pro&nbsp;každého, kdo má&nbsp;nápady a&nbsp;chce je konečně realizovat&nbsp;– a&nbsp;<u>je jedno, jestli jste na&nbsp;volné noze, ve&nbsp;firmě, na&nbsp;úřadě, nebo učíte</u>.</p>
       <div class="hero-cta-row">
         <a href="#predprodej" class="btn-primary">Chci se přidat →</a>
         <a href="#vystupy" class="btn-ghost">Co si postavíte ↓</a>
@@ -468,6 +655,51 @@
     <div class="index-cta">
       <a href="#predprodej" class="btn-primary">Chci se přidat →</a>
     </div>
+  </div>
+</section>
+
+<!-- SHOWREEL -->
+<section class="section" style="background:var(--bg-soft)" id="ukazka">
+  <div class="section-inner">
+    <h2>Napíšete, co potřebujete. <span class="mark">A&nbsp;vznikne to.</span></h2>
+    <p class="lead" style="margin-bottom:8px;">Žádné programování. Napíšete nebo řeknete, co chcete&nbsp;– a&nbsp;ono to vznikne. Takhle to vypadá:</p>
+    <div class="reel-wrap">
+      <div class="reel" id="reel">
+        <div class="mk mk-term">
+          <div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">~/muj-napad — claude</span></div>
+          <div class="mk-body">
+            <div class="u"><span id="typed"></span><span class="cur"></span></div>
+            <div id="steps"></div>
+          </div>
+        </div>
+        <div class="reel-arr">→</div>
+        <div class="reel-out" id="reel-out"></div>
+      </div>
+      <div class="reel-ctl" id="reel-dots"></div>
+      <p class="reel-note">zrychlená ukázka – ilustrace</p>
+    </div>
+  </div>
+</section>
+
+<!-- CO ŘEŠÍTE — SEZNAM S NÁHLEDEM -->
+<section class="section" id="reseni">
+  <div class="section-inner">
+    <h2>Co vám <span class="mark">nejvíc žere čas?</span></h2>
+    <p class="lead" style="margin-bottom:34px;">Klikněte na&nbsp;to, co vás pálí&nbsp;– a&nbsp;hned uvidíte, co si s&nbsp;tím postavíte.</p>
+    <div class="md-grid">
+      <div>
+        <div class="md-list" id="list"></div>
+      </div>
+      <div class="md-panel">
+        <div class="md-panel-inner">
+          <h3 class="p-title"></h3>
+          <div class="md-ba p-ba"></div>
+          <div class="md-slot slot"></div>
+          <span class="md-sig p-sig"></span>
+        </div>
+      </div>
+    </div>
+    <p class="more-line">A&nbsp;tohle je jen ochutnávka pro&nbsp;představu, v&nbsp;čem vás kurz posune&nbsp;– <b>možností je mnohem víc</b>.</p>
   </div>
 </section>
 
@@ -625,6 +857,259 @@
   </div>
   <div class="footer-meta">© 2026 Hadoš s.r.o. · Sólotvůrci sobě · <a href="platba.html">Platba a&nbsp;doručení</a> · <a href="vop.html">Obchodní podmínky</a> · <a href="zasady-osobnich-udaju.html">Ochrana osobních údajů</a></div>
 </footer>
+
+<!-- MOCKUPY pro showreel a seznam s náhledem (ilustrační – nahradí reálné screenshoty) -->
+<template id="mk-1">
+  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">prevodnik — fotky na web</span></div>
+    <div class="mk-conv">
+      <div class="frow"><span class="t t1"></span><span class="fn">IMG_0421.heic</span><s>4,6 MB</s><span class="arr">→</span><b>320 kB</b><span class="okc">✓</span></div>
+      <div class="frow"><span class="t t2"></span><span class="fn">IMG_0422.heic</span><s>5,1 MB</s><span class="arr">→</span><b>290 kB</b><span class="okc">✓</span></div>
+      <div class="frow"><span class="t t4"></span><span class="fn">IMG_0423.heic</span><s>3,9 MB</s><span class="arr">→</span><b>310 kB</b><span class="okc">✓</span></div>
+      <div class="frow"><span class="t t8">+31</span><span class="fn">a další fotky…</span></div>
+      <div class="conv-sum"><b>34 fotek</b> zmenšeno pro web · ušetřeno 18 MB · jedním pokynem</div>
+    </div></div>
+</template>
+<template id="mk-2">
+  <div class="mk mk-edit"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">reserse.md</span></div>
+    <div class="doc"><div class="dt">Rešerše: dotace pro obce 2026</div>
+      <div class="ln m"></div><div class="ln"></div><div class="ln s"></div><div class="ln m"></div>
+      <div class="hl" style="border-left-color:#3358d4; background:#eef1fc; color:#33405f">Shrnuto z 50 zdrojů — u každého tvrzení odkaz, ať si to ověříte.</div>
+      <div class="chips-src"><span style="background:#e7fbef;color:#0f8a4e;border-color:#a8e6c4">zdroj 1</span><span style="background:#fff3cc;color:#8a6d00;border-color:#f2d55c">zdroj 2</span><span style="background:#fde7f1;color:#c23d78;border-color:#f5b8d2">zdroj 3</span><span>+47</span></div></div></div>
+</template>
+<template id="mk-3">
+  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">prehled.html</span></div>
+    <div class="mk-chart"><div class="ch-top">Tržby podle měsíců</div>
+      <div class="bars"><span style="height:38%;background:#f59e0b"></span><span style="height:60%;background:#5eead4"></span><span style="height:52%;background:#f472b6"></span><span style="height:78%;background:#818cf8"></span><span style="height:70%;background:#84cc16"></span><span style="height:96%;background:#FFCC33"></span></div>
+      <div class="ch-x"><i>led</i><i>úno</i><i>bře</i><i>dub</i><i>kvě</i><i>čvn</i></div></div></div>
+</template>
+<template id="mk-4">
+  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">promptne.cz</span></div>
+    <div class="mk-web"><div class="eye">Newsletter o psaní s AI</div><h4>Pište s AI tak, aby to <em>znělo jako vy.</em></h4><p>Každou středu jeden konkrétní postup do mailu.</p><span class="b">Chci odebírat →</span></div></div>
+</template>
+<template id="mk-5">
+  <div class="mk mk-mac"><div class="mk-menubar"><span class="mi">📶</span><span class="mi act">🎙 Mluv</span><span class="mi">14:32</span></div>
+    <div class="mk-pop"><div class="ttl"><span class="dot"></span> Nahrávám… <span class="rec">0:07</span></div>
+      <div class="mk-wave"><span style="height:40%"></span><span style="height:80%"></span><span style="height:55%"></span><span style="height:95%"></span><span style="height:60%"></span><span style="height:85%"></span><span style="height:45%"></span><span style="height:72%"></span><span style="height:38%"></span></div>
+      <div class="mk-transcript">„Dobrý den, paní Nováková, posílám slíbenou nabídku. Mrkněte na&nbsp;ni, prosím, do&nbsp;pátku…<span class="tcur"></span>“</div>
+      <div class="hint">Mluvíte – a&nbsp;hotový text hned vložíte kamkoli: <span class="kbd">⌘V</span></div></div></div>
+</template>
+<template id="mk-6">
+  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">localhost:3000 — faktury</span></div>
+    <div class="mk-dash"><div class="top"><h4>Faktury · červen</h4><span class="per">2026</span></div>
+      <table class="mk-tbl"><thead><tr><th>Klient</th><th>Stav</th><th style="text-align:right">Částka</th></tr></thead>
+      <tbody><tr><td>Kilovaty s.r.o.</td><td class="paid">Zaplaceno</td><td class="amt">18 000</td></tr>
+      <tr><td>Hadoš s.r.o.</td><td class="paid">Zaplaceno</td><td class="amt">9 500</td></tr>
+      <tr><td>NASA</td><td class="due">Čeká</td><td class="amt">12 000</td></tr></tbody></table>
+      <div class="sum"><span>Tento měsíc</span><b>39 500 Kč</b></div></div></div>
+</template>
+<template id="mk-7">
+  <div class="mk mk-print"><div class="mk-card" style="background:#FFCC33; color:#16213a; box-shadow:0 8px 20px rgba(0,0,0,.22)"><span class="bleed"></span><span class="c1"></span><span class="c2"></span><span class="c3"></span><span class="c4"></span>
+    <div class="logo" style="color:#223276">✳ <b style="color:#16213a">Hadoš</b></div><div><div class="nm">Martin Kavka</div><div class="rl" style="color:rgba(22,33,58,.65)">AI pro sólotvůrce</div></div></div>
+    <span class="tag">CMYK · spadávka 3 mm · řezačky</span></div>
+</template>
+<template id="mk-8">
+  <div class="mk mk-pdf"><div class="mk-page"><div class="hd"><div class="k">Materiál pro účastníky</div><h5>Operační systém psaní</h5></div>
+    <div class="bd"><div class="ln m"></div><div class="ln"></div><div class="ln s"></div>
+      <div class="cols"><div><div class="ln"></div><div class="ln s"></div><div class="ln m"></div></div><div><div class="ln m"></div><div class="ln"></div><div class="ln s"></div></div></div>
+      <div class="pgn">— 3 —</div></div></div></div>
+</template>
+<template id="mk-9">
+  <div class="mk mk-edit"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">koncept.md</span></div>
+    <div class="doc"><div class="dt">Z poznámek hotový článek</div>
+      <div class="ln m"></div><div class="ln s"></div><div class="ln"></div>
+      <div class="arrow">↓ srovná a dopíše ↓</div>
+      <div class="hl">Nápad, co vám půl roku ležel v hlavě, je na papíře — pořád vaším hlasem.</div></div></div>
+</template>
+<template id="mk-10">
+  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">nas-oddil.cz</span></div>
+    <div class="mk-web" style="background:linear-gradient(160deg,#e9fbf0,#c6f2da); color:#14351f"><div class="eye" style="color:#0f8a4e">Běžecký oddíl</div><h4>Tréninky, závody a výsledky <em style="background:#14b46a; color:#fff">na jednom místě.</em></h4><p style="color:rgba(20,53,31,.72)">Rozpis na měsíc, přihláška na závod, žebříček členů.</p><span class="b" style="background:#14b46a; color:#fff; border-color:#0d5c37; box-shadow:2.5px 2.5px 0 rgba(20,53,31,.3)">Přidat se →</span></div></div>
+</template>
+<template id="mk-11">
+  <div class="mk mk-edit"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">pracovni-list.pdf</span></div>
+    <div class="doc"><div class="dt">Pracovní list: Zlomky</div>
+      <div class="ln m"></div><div class="ln s"></div>
+      <div class="hl" style="border-left-color:#3358d4; background:#eef1fc; color:#33405f">1) Vypočítej ½ + ⅓ = ___ &nbsp;&nbsp; 2) Zakroužkuj větší: ¾ / ⅔</div>
+      <div class="chips-src"><span style="background:#fff3cc;color:#8a6d00;border-color:#f2d55c">20 variant</span><span style="background:#e7fbef;color:#0f8a4e;border-color:#a8e6c4">ať neopisují</span><span style="background:#fde7f1;color:#c23d78;border-color:#f5b8d2">+ řešení</span></div></div></div>
+</template>
+<template id="mk-12">
+  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">localhost:3000 — kalkulačka</span></div>
+    <div class="mk-dash"><div class="top"><h4>Kalkulačka nabídky</h4><span class="per">interní</span></div>
+      <table class="mk-tbl"><tbody>
+      <tr><td>Rozsah (člověkodny)</td><td class="amt">12</td></tr>
+      <tr><td>Denní sazba</td><td class="amt">1 500</td></tr>
+      <tr><td>Sleva stálý klient</td><td class="amt">−10 %</td></tr></tbody></table>
+      <div class="sum" style="background:#FFCC33; color:#16213a"><span style="color:rgba(22,33,58,.72)">Cena nabídky</span><b>16 200 Kč</b></div></div></div>
+</template>
+
+<script>
+/* ── SHOWREEL: „video" bez natáčení (autoplay smyčka) ── */
+(function(){
+  var reel=document.getElementById('reel');
+  if(!reel) return;
+  var REEL=[
+    {wish:"udělej mi web pro můj newsletter",
+     steps:["Skládám stránku…","Ladím texty a barvy…"], done:"Hotovo. Nasadit na web?", tpl:"mk-4"},
+    {wish:"appka na faktury – co je a není zaplacené",
+     steps:["Stavím appku…","Přidávám přehled a součty…"], done:"Hotovo. Spustit?", tpl:"mk-6"},
+    {wish:"chci diktovat hlasem rovnou do schránky",
+     steps:["Stavím appku do lišty…","Připojuji přepis řeči…"], done:"Hotovo. Zkusíte to?", tpl:"mk-5"},
+    {wish:"z mých poznámek udělej hezké PDF",
+     steps:["Skládám dokument…","Sázím do grafiky…"], done:"Hotovo. Otevřít PDF?", tpl:"mk-8"}
+  ];
+  var typed=document.getElementById('typed');
+  var steps=document.getElementById('steps');
+  var out=document.getElementById('reel-out');
+  var dotsWrap=document.getElementById('reel-dots');
+  var paused=false, runId=0;
+
+  reel.addEventListener('mouseenter',function(){ paused=true; });
+  reel.addEventListener('mouseleave',function(){ paused=false; });
+
+  REEL.forEach(function(_,i){
+    var d=document.createElement('button');
+    d.className='reel-dot'; d.type='button'; d.setAttribute('aria-label','Ukázka '+(i+1));
+    d.addEventListener('click',function(){ runId++; play(i); });
+    dotsWrap.appendChild(d);
+  });
+
+  function delay(ms,cb,id){
+    (function tick(rem){
+      if(id!==runId) return;
+      if(paused){ setTimeout(function(){ tick(rem); },150); return; }
+      if(rem<=0){ cb(); return; }
+      var step=Math.min(rem,90);
+      setTimeout(function(){ tick(rem-step); },step);
+    })(ms);
+  }
+  var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function show(i){
+    var r=REEL[i];
+    out.innerHTML='';
+    out.appendChild(document.getElementById(r.tpl).content.cloneNode(true));
+    var mk=out.querySelector('.mk');
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ if(mk) mk.classList.add('on'); }); });
+  }
+
+  function play(i){
+    var id=++runId, r=REEL[i];
+    Array.prototype.forEach.call(dotsWrap.children,function(d,di){ d.classList.toggle('on',di===i); });
+    typed.textContent=''; steps.innerHTML='';
+    out.innerHTML='<div class="reel-ph">… vzniká</div>';
+
+    if(reduce){
+      typed.textContent=r.wish;
+      r.steps.forEach(function(s){ var l=document.createElement('div'); l.className='ok'; l.textContent=s; steps.appendChild(l); });
+      var m=document.createElement('div'); m.className='mut'; m.textContent=r.done; steps.appendChild(m);
+      show(i); var mk=out.querySelector('.mk'); if(mk) mk.classList.add('on');
+      delay(5000,function(){ play((i+1)%REEL.length); },id);
+      return;
+    }
+    var ci=0;
+    (function type(){
+      if(id!==runId) return;
+      if(paused){ setTimeout(type,150); return; }
+      if(ci<r.wish.length){ typed.textContent+=r.wish.charAt(ci++); setTimeout(type,22); return; }
+      var si=0;
+      (function step(){
+        if(id!==runId) return;
+        if(si<r.steps.length){
+          delay(340,function(){ var l=document.createElement('div'); l.className='ok'; l.textContent=r.steps[si++]; steps.appendChild(l); step(); },id);
+        } else {
+          delay(340,function(){
+            var m=document.createElement('div'); m.className='mut'; m.textContent=r.done; steps.appendChild(m);
+            show(i);
+            delay(3400,function(){ play((i+1)%REEL.length); },id);
+          },id);
+        }
+      })();
+    })();
+  }
+
+  /* první příklad se ukáže hotový OKAMŽITĚ (žádné „načítání"),
+     animovaná smyčka běží až od dalšího příkladu */
+  function showInstant(i){
+    var id=++runId, r=REEL[i];
+    Array.prototype.forEach.call(dotsWrap.children,function(d,di){ d.classList.toggle('on',di===i); });
+    typed.textContent=r.wish; steps.innerHTML='';
+    r.steps.forEach(function(s){ var l=document.createElement('div'); l.className='ok'; l.textContent=s; steps.appendChild(l); });
+    var m=document.createElement('div'); m.className='mut'; m.textContent=r.done; steps.appendChild(m);
+    show(i); var mk=out.querySelector('.mk'); if(mk) mk.classList.add('on');
+    delay(1500,function(){ play((i+1)%REEL.length); },id);
+  }
+  var started=false;
+  function start(){ if(started) return; started=true; showInstant(0); }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ io.disconnect(); start(); } });
+    },{threshold:.2});
+    io.observe(reel);
+  } else {
+    if(document.readyState==='complete') start();
+    else window.addEventListener('load',function(){ setTimeout(start,300); });
+  }
+})();
+
+/* ── SEZNAM S NÁHLEDEM (master–detail; mobil: náhled pod klepnutý řádek) ── */
+(function(){
+  var list=document.getElementById('list');
+  if(!list) return;
+  var USES=[
+    {label:"Dělám pořád dokola stejnou práci", title:"Nástroj, co tu otravnou práci udělá za vás", before:"půl hodiny klikání dokola", after:"jeden pokyn, hotovo", sig:"projekt prevodnik", tpl:"mk-1"},
+    {label:"Topím se v rešerších a podkladech", title:"Rešerše a podklad za odpoledne", before:"3 hodiny, 10 zdrojů", after:"10 minut, 50 zdrojů", sig:"přímo v Claude Code", tpl:"mk-2"},
+    {label:"Ztrácím se ve vlastních datech", title:"Z hromady čísel čitelný přehled", before:"ruční počítání v tabulkách", after:"přehled a graf na klik", sig:"ilustrace", tpl:"mk-3"},
+    {label:"Potřebuju web, ale neumím programovat", title:"Jednoduchý web hotový za večer", before:"25 000 Kč a 3 týdny", after:"večer a je online", sig:"promptne.cz", tpl:"mk-4"},
+    {label:"Platím za aplikaci, kterou si možná zvládnu udělat", title:"Vlastní appka místo dalšího předplatného", before:"300 Kč každý měsíc", after:"vlastní, běží u vás", sig:"projekt Mluv – diktovací appka pro Mac", tpl:"mk-5"},
+    {label:"Mám chaos ve fakturách a evidenci výdajů", title:"Přehled financí a faktur na míru", before:"deset tabulek a ruční počítání", after:"jedna appka, přehled na klik", sig:"projekt Ledger", tpl:"mk-6"},
+    {label:"Chci tiskovinu, ale děsí mě grafika", title:"Vizitka nebo leták rovnou do tiskárny", before:"grafik a kolečko korektur", after:"hotové PDF, spadávka, CMYK", sig:"vizitka-tisk.pdf", tpl:"mk-7"},
+    {label:"Potřebuju dokument, co vypadá profi", title:"Ebook, prezentace nebo materiál pro klienty", before:"Word a hodiny formátování", after:"PDF jako od agentury", sig:"PDF Operační systém psaní", tpl:"mk-8"},
+    {label:"Mám plno nápadů, ale nedotahuju je", title:"Z rozházených poznámek hotový text", before:"složka nedotažených nápadů", after:"hotová věc venku, vaším hlasem", sig:"systém Hemingway", tpl:"mk-9"},
+    {label:"Mám nápad úplně mimo svou profesi", title:"Osobní projekt, co vám dřív nešel", before:"„to bez kódování nejde“", after:"postaveno o víkendu", sig:"ilustrace", tpl:"mk-10"},
+    {label:"Učím a chci lepší materiály", title:"Pracovní listy, kvízy a cvičení na míru", before:"kopírování z učebnic", after:"vlastní materiál za chvíli", sig:"ilustrace", tpl:"mk-11"},
+    {label:"Potřebuju v práci malý interní nástroj", title:"Kalkulačka, konfigurátor nebo formulář pro tým", before:"excel a e-maily sem a tam", after:"nástroj, co dělá přesně moje", sig:"ilustrace", tpl:"mk-12"}
+  ];
+  var grid=document.querySelector('.md-grid');
+  var panel=document.querySelector('.md-panel');
+  var slot=document.querySelector('.slot');
+  var titleEl=document.querySelector('.p-title');
+  var baEl=document.querySelector('.p-ba');
+  var sigEl=document.querySelector('.p-sig');
+  var current=0;
+
+  function placePanel(){
+    if(window.innerWidth<=900){
+      var row=list.querySelectorAll('.md-row')[current];
+      if(row && row.nextElementSibling!==panel) row.insertAdjacentElement('afterend',panel);
+    } else if(panel.parentNode!==grid){
+      grid.appendChild(panel);
+    }
+  }
+  window.addEventListener('resize',placePanel);
+
+  USES.forEach(function(u,i){
+    var b=document.createElement('button');
+    b.className='md-row'; b.type='button';
+    b.innerHTML='<span class="r-txt"><span class="r-label">'+u.label+'</span>'
+      +'<span class="r-out">→ '+u.title+'</span></span>'
+      +'<span class="chev">→</span>';
+    b.addEventListener('click',function(){ select(i); });
+    list.appendChild(b);
+  });
+
+  function select(i){
+    var u=USES[i];
+    current=i;
+    Array.prototype.forEach.call(list.querySelectorAll('.md-row'),function(r,ri){ r.classList.toggle('active',ri===i); });
+    titleEl.textContent=u.title;
+    baEl.innerHTML='<s>'+u.before+'</s> → <b>'+u.after+'</b>';
+    sigEl.textContent='↳ '+u.sig;
+    slot.innerHTML='';
+    slot.appendChild(document.getElementById(u.tpl).content.cloneNode(true));
+    placePanel();
+  }
+  select(0);
+})();
+</script>
 
 <script>
   (function () {
