@@ -539,7 +539,10 @@
     .md-row.active .r-label { color: var(--ink); }
     .md-row.active .r-out { color: rgba(22,33,58,.72); }
     .md-row.active .chev { color: var(--ink); transform: translateX(3px); }
-    .md-panel { position: sticky; top: 84px; }
+    /* sticky panel tvoří vlastní stacking context – bez z-indexu by celý (papír i mockup)
+       zůstal pod fixed riso rastrem (body::before/after 9998/9999) a tečky by přes něj prosvítaly.
+       Zvednutím nad rastr se vyřeší i mockupy uvnitř (jejich z-index:10000 je jinak uvězněný v tomto kontextu). */
+    .md-panel { position: sticky; top: 84px; z-index: 10000; }
     @media (max-width: 900px){ .md-panel { position: static; } }
     .md-list .md-panel { margin: 12px 0 18px; }
     .md-panel-inner { background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--shadow); padding: 22px; }
