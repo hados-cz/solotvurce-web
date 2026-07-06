@@ -556,12 +556,16 @@
     /* Mockupy = „screenshoty obrazovky": neprůhledné, NAD riso texturou (body::before/after).
        Sekce proto nesmí tvořit stacking context (z-index:auto) – texturu si nechává jen pozadí.
        Žlutou fixu .mark drží lokální z-index:0, ať ::before(-1) nespadne pod pozadí sekce. */
-    #ukazka, #reseni { z-index: auto; }
-    #ukazka .mark, #reseni .mark { z-index: 0; }
+    #ukazka, #reseni, #predprodej { z-index: auto; }
+    #ukazka .mark, #reseni .mark, #predprodej .mark { z-index: 0; }
     #ukazka .mk, #reseni .mk { z-index: 10000; }
-    /* papírová karta panelu = taky „čistý list" nad texturou – v light na ní modré tečky
-       rastru jinak prosvítají (v dark jsou žluté tečky na papíru neviditelné) */
+    /* papírové karty = taky „čisté listy" nad texturou – v light na nich modré tečky
+       rastru jinak prosvítají (v dark jsou žluté tečky na papíru neviditelné).
+       Platí pro panel seznamu, hero koláž (zvedá se celá kvůli vrstvení sample/stamp),
+       ticket s cenou i kartu objednávky (#predprodej má kvůli tomu z-index:auto výše). */
     #reseni .md-panel-inner { position: relative; z-index: 10000; }
+    .collage, .ticket, .embed-card { z-index: 10000; }
+    .stamp-m { z-index: 10000; }
     /* tmavý režim: ukázky na tmavém pozadí výraznější – světlá linka a tvrdší stín */
     :root:not([data-theme="light"]) #ukazka .mk { border-color: rgba(244,236,221,.32); box-shadow: 7px 7px 0 rgba(0,0,0,.6); }
 
@@ -917,7 +921,7 @@
 </template>
 <template id="mk-7">
   <div class="mk mk-print"><div class="mk-card" style="background:#FFCC33; color:#16213a; box-shadow:0 8px 20px rgba(0,0,0,.22)"><span class="bleed"></span><span class="c1"></span><span class="c2"></span><span class="c3"></span><span class="c4"></span>
-    <div class="logo" style="color:#223276">✳ <b style="color:#16213a">Hadoš</b></div><div><div class="nm">Martin Kavka</div><div class="rl" style="color:rgba(22,33,58,.65)">AI pro sólotvůrce</div></div></div>
+    <div class="logo" style="color:#223276">✳ <b style="color:#16213a">Liptákov</b></div><div><div class="nm">Jára Cimrman</div><div class="rl" style="color:rgba(22,33,58,.65)">dramatik · vynálezce · sólotvůrce</div></div></div>
     <span class="tag">CMYK · spadávka 3 mm · řezačky</span></div>
 </template>
 <template id="mk-8">
