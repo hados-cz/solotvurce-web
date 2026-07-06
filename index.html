@@ -303,6 +303,8 @@
     .faq-q { display: flex; gap: 14px; align-items: baseline; font-size: 1.4rem; font-weight: 600; color: var(--text); margin-bottom: 8px; letter-spacing: -.2px; }
     .faq-q .q { flex-shrink: 0; width: 16px; height: 16px; background: var(--yellow); display: inline-block; transform: translateY(2px); }
     .faq-a { font-size: 1.08rem; color: var(--text-soft); line-height: 1.7; padding-left: 30px; }
+    .faq-a a { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--yellow); }
+    .faq-a a:hover { color: var(--yellow); }
     .faq-a strong { color: var(--text); }
 
     /* ── CTA (plochý žlutý blok, vlevo) ── */
@@ -340,6 +342,9 @@
 
     /* ── VIDEO ───────────────────── */
     .video { max-width: 900px; margin-top: 8px; }
+    .peek { max-width: 900px; margin-top: 26px; display: flex; align-items: center; justify-content: space-between; gap: 16px 28px; flex-wrap: wrap; }
+    .peek p { margin: 0; color: var(--text-soft); font-size: .98rem; line-height: 1.55; flex: 1 1 380px; }
+    .peek .btn-ghost { white-space: nowrap; }
     .video iframe, .video video { width: 100%; aspect-ratio: 16 / 9; border: 2px solid var(--text); box-shadow: 11px 11px 0 var(--shadow); display: block; background: #000; }
     /* video sekci vyzvedneme nad celostránkový riso rastr, ať video není „puntíkované" */
     #video { z-index: 10000; }
@@ -634,6 +639,10 @@
         allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
         allowfullscreen="true"></iframe>
     </div>
+    <div class="peek">
+      <p>Tohle video vám nestačí? <strong>Nahlédněte přímo do kurzu</strong>: uvidíte tři úvodní videa, celé prostředí i&nbsp;to, že počet videí pořád roste. Zdarma, bez registrace.</p>
+      <a class="btn-ghost" href="https://naveromag.cz/kurzy/ai-pro-solotvurce?preview=1" target="_blank" rel="noopener">Nahlédnout do kurzu →</a>
+    </div>
   </div>
 </section>
 
@@ -676,7 +685,7 @@
         <div class="reel-out" id="reel-out"></div>
       </div>
       <div class="reel-ctl" id="reel-dots"></div>
-      <p class="reel-note">zrychlená ukázka – ilustrace</p>
+      <p class="reel-note">zrychlená ukázka podle našich reálných projektů</p>
     </div>
   </div>
 </section>
@@ -721,7 +730,7 @@
 <section class="section" style="background:var(--bg-soft)">
   <div class="section-inner">
     <h2>Když to zvládli netechnici jako my, <span class="mark">zvládnete to taky.</span></h2>
-    <p class="who">Nikdy jsme nenapsali ani řádku kódu. Nejsme ajťáci, jsme kreativci – a&nbsp;přesně proto vám to vysvětlíme lidsky a&nbsp;bez technického žargonu. <strong>Nemusíte se toho bát.</strong></p>
+    <p class="who">Nikdy jsme nenapsali ani řádku kódu. Nejsme ajťáci, jsme kreativci – a&nbsp;přesně proto vám to vysvětlíme lidsky a&nbsp;bez technického žargonu. <strong>Nemusíte se toho bát.</strong> Ostatně i&nbsp;vzdělávací platforma, na&nbsp;které tenhle kurz běží, vznikla přesně takhle – bez jediného řádku kódu napsaného rukou.</p>
     <p class="rolesline">Pro <u>tvůrce</u>, kreativce, <u>freelancery</u>, učitele i&nbsp;marketéry. A&nbsp;stejně tak pro maminky na&nbsp;rodičovské nebo <u>lidi přes 50</u>.</p>
   </div>
 </section>
@@ -814,6 +823,7 @@
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Musím umět programovat?</div><p class="faq-a">Ne. O&nbsp;to přesně jde. Kurz je pro lidi, kteří nikdy nenapsali řádku kódu. Neučíme programování – učíme, jak s&nbsp;AI dostat hotový výsledek.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Musím umět anglicky?</div><p class="faq-a">Ne. Při vajbení si v&nbsp;pohodě vystačíte s&nbsp;češtinou. A&nbsp;těch pár anglických slov, která čas od&nbsp;času potřebujete, vám detailně vysvětlíme. Navíc přihodíme i&nbsp;taháky, abyste se nikde nezasekli.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Potřebuju drahý počítač nebo Mac?</div><p class="faq-a">Stačí běžný notebook. Instalaci ukazujeme zvlášť pro <strong>macOS</strong> i&nbsp;<strong>Windows</strong>, takže nezáleží, co máte.</p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Můžu si kurz prohlédnout, než se rozhodnu?</div><p class="faq-a">Ano, dveře jsou otevřené. <a href="https://naveromag.cz/kurzy/ai-pro-solotvurce?preview=1" target="_blank" rel="noopener"><strong>Projděte si kurz zevnitř</strong></a>&nbsp;– uvidíte prostředí, celou osnovu a&nbsp;pustíte si tři úvodní videa: naše společné, Martinovo i&nbsp;Romanovo. Zdarma a&nbsp;bez registrace.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Platí se jednou, nebo každý rok?</div><p class="faq-a">Je to <strong>roční předplatné</strong> za&nbsp;1&nbsp;490&nbsp;Kč. Hlavní výhoda: cenu, za&nbsp;kterou se přidáte, máte <strong>zamčenou napořád</strong>. Kdo vezme 1&nbsp;490&nbsp;Kč/rok teď, platí 1&nbsp;490&nbsp;Kč/rok i&nbsp;za&nbsp;pět let&nbsp;– i&nbsp;když pro nově příchozí mezitím zdražíme.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Musím kvůli kurzu platit ještě něco navíc?</div><p class="faq-a">Ano, počítejte s&nbsp;tím dopředu. Kurz vás naučí používat nástroj <strong>Claude Code</strong>&nbsp;– ten ale není v&nbsp;ceně kurzu a&nbsp;platí se zvlášť přímo jeho tvůrcům (firma Anthropic). Dobrá zpráva: je to jednoduché a&nbsp;levné. Funguje to jako předplatné Netflixu nebo Spotify&nbsp;– nejlevnější verze vyjde zhruba na&nbsp;<strong>500&nbsp;Kč měsíčně</strong> (20&nbsp;dolarů), platíte po&nbsp;měsících a&nbsp;kdykoli můžete zrušit. Žádné licence na&nbsp;rok, žádné instalační poplatky. Na&nbsp;rozjezd vám ta nejlevnější verze bohatě stačí.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Jak dlouho mi to zabere?</div><p class="faq-a">Videa jsou krátká a&nbsp;jdete vlastním tempem. Nejde o&nbsp;to něco prosvištět&nbsp;– jsme tu s&nbsp;vámi dlouhodobě a&nbsp;vědomě nikam neženeme.</p></div>
@@ -860,7 +870,7 @@
 
 <!-- MOCKUPY pro showreel a seznam s náhledem (ilustrační – nahradí reálné screenshoty) -->
 <template id="mk-1">
-  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">prevodnik — fotky na web</span></div>
+  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">fotky na web</span></div>
     <div class="mk-conv">
       <div class="frow"><span class="t t1"></span><span class="fn">IMG_0421.heic</span><s>4,6 MB</s><span class="arr">→</span><b>320 kB</b><span class="okc">✓</span></div>
       <div class="frow"><span class="t t2"></span><span class="fn">IMG_0422.heic</span><s>5,1 MB</s><span class="arr">→</span><b>290 kB</b><span class="okc">✓</span></div>
@@ -877,17 +887,17 @@
       <div class="chips-src"><span style="background:#e7fbef;color:#0f8a4e;border-color:#a8e6c4">zdroj 1</span><span style="background:#fff3cc;color:#8a6d00;border-color:#f2d55c">zdroj 2</span><span style="background:#fde7f1;color:#c23d78;border-color:#f5b8d2">zdroj 3</span><span>+47</span></div></div></div>
 </template>
 <template id="mk-3">
-  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">prehled.html</span></div>
-    <div class="mk-chart"><div class="ch-top">Tržby podle měsíců</div>
-      <div class="bars"><span style="height:38%;background:#f59e0b"></span><span style="height:60%;background:#5eead4"></span><span style="height:52%;background:#f472b6"></span><span style="height:78%;background:#818cf8"></span><span style="height:70%;background:#84cc16"></span><span style="height:96%;background:#FFCC33"></span></div>
+  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">moje míry</span></div>
+    <div class="mk-chart"><div class="ch-top">Váha za půl roku</div>
+      <div class="bars"><span style="height:95%;background:#f472b6"></span><span style="height:88%;background:#818cf8"></span><span style="height:82%;background:#5eead4"></span><span style="height:74%;background:#84cc16"></span><span style="height:66%;background:#f59e0b"></span><span style="height:58%;background:#FFCC33"></span></div>
       <div class="ch-x"><i>led</i><i>úno</i><i>bře</i><i>dub</i><i>kvě</i><i>čvn</i></div></div></div>
 </template>
 <template id="mk-4">
-  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">promptne.cz</span></div>
-    <div class="mk-web"><div class="eye">Newsletter o psaní s AI</div><h4>Pište s AI tak, aby to <em>znělo jako vy.</em></h4><p>Každou středu jeden konkrétní postup do mailu.</p><span class="b">Chci odebírat →</span></div></div>
+  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">solotvurci.cz</span></div>
+    <div class="mk-web"><div class="eye">Online kurz</div><h4>Weby. Vizuály. Prezentace. <em>Bez psaní kódu.</em></h4><p>Pro sólotvůrce, kteří nikdy neprogramovali.</p><span class="b">Chci se přidat →</span></div></div>
 </template>
 <template id="mk-5">
-  <div class="mk mk-mac"><div class="mk-menubar"><span class="mi">📶</span><span class="mi act">🎙 Mluv</span><span class="mi">14:32</span></div>
+  <div class="mk mk-mac"><div class="mk-menubar"><span class="mi">📶</span><span class="mi act">🎙 Diktování</span><span class="mi">14:32</span></div>
     <div class="mk-pop"><div class="ttl"><span class="dot"></span> Nahrávám… <span class="rec">0:07</span></div>
       <div class="mk-wave"><span style="height:40%"></span><span style="height:80%"></span><span style="height:55%"></span><span style="height:95%"></span><span style="height:60%"></span><span style="height:85%"></span><span style="height:45%"></span><span style="height:72%"></span><span style="height:38%"></span></div>
       <div class="mk-transcript">„Dobrý den, paní Nováková, posílám slíbenou nabídku. Mrkněte na&nbsp;ni, prosím, do&nbsp;pátku…<span class="tcur"></span>“</div>
@@ -908,7 +918,7 @@
     <span class="tag">CMYK · spadávka 3 mm · řezačky</span></div>
 </template>
 <template id="mk-8">
-  <div class="mk mk-pdf"><div class="mk-page"><div class="hd"><div class="k">Materiál pro účastníky</div><h5>Operační systém psaní</h5></div>
+  <div class="mk mk-pdf"><div class="mk-page"><div class="hd"><div class="k">E-book pro vaše klienty</div><h5>Co si nachystat, než začneme</h5></div>
     <div class="bd"><div class="ln m"></div><div class="ln"></div><div class="ln s"></div>
       <div class="cols"><div><div class="ln"></div><div class="ln s"></div><div class="ln m"></div></div><div><div class="ln m"></div><div class="ln"></div><div class="ln s"></div></div></div>
       <div class="pgn">— 3 —</div></div></div></div>
@@ -921,8 +931,13 @@
       <div class="hl">Nápad, co vám půl roku ležel v hlavě, je na papíře — pořád vaším hlasem.</div></div></div>
 </template>
 <template id="mk-10">
-  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">nas-oddil.cz</span></div>
-    <div class="mk-web" style="background:linear-gradient(160deg,#e9fbf0,#c6f2da); color:#14351f"><div class="eye" style="color:#0f8a4e">Běžecký oddíl</div><h4>Tréninky, závody a výsledky <em style="background:#14b46a; color:#fff">na jednom místě.</em></h4><p style="color:rgba(20,53,31,.72)">Rozpis na měsíc, přihláška na závod, žebříček členů.</p><span class="b" style="background:#14b46a; color:#fff; border-color:#0d5c37; box-shadow:2.5px 2.5px 0 rgba(20,53,31,.3)">Přidat se →</span></div></div>
+  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">hlídač slev kávy</span></div>
+    <div class="mk-dash"><div class="top"><h4>Akce u pražíren</h4><span class="per">dnes</span></div>
+      <table class="mk-tbl"><thead><tr><th>Pražírna</th><th>Akce</th><th style="text-align:right">Cena</th></tr></thead>
+      <tbody><tr><td>Doubleshot</td><td class="paid">−20 %</td><td class="amt">319</td></tr>
+      <tr><td>Rebelbean</td><td class="paid">Nová dávka</td><td class="amt">265</td></tr>
+      <tr><td>Nordbeans</td><td class="paid">−15 %</td><td class="amt">289</td></tr></tbody></table>
+      <div class="sum"><span>Nové akce dnes</span><b>3 pražírny</b></div></div></div>
 </template>
 <template id="mk-11">
   <div class="mk mk-edit"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">pracovni-list.pdf</span></div>
@@ -940,6 +955,17 @@
       <tr><td>Sleva stálý klient</td><td class="amt">−10 %</td></tr></tbody></table>
       <div class="sum" style="background:#FFCC33; color:#16213a"><span style="color:rgba(22,33,58,.72)">Cena nabídky</span><b>16 200 Kč</b></div></div></div>
 </template>
+<template id="mk-13">
+  <div class="mk mk-edit"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">zapis-z-porady.md</span></div>
+    <div class="doc"><div class="dt">Porada – úterý 9:00</div>
+      <div class="ln m"></div><div class="ln s"></div>
+      <div class="hl" style="border-left-color:#3358d4; background:#eef1fc; color:#33405f">Domluveno: nabídku posíláme do pátku. Zajistí Petra.</div>
+      <div class="chips-src"><span style="background:#e7fbef;color:#0f8a4e;border-color:#a8e6c4">3 mluvčí</span><span style="background:#fff3cc;color:#8a6d00;border-color:#f2d55c">úkoly</span><span style="background:#fde7f1;color:#c23d78;border-color:#f5b8d2">doslovný přepis</span></div></div></div>
+</template>
+<template id="mk-w1">
+  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">muj-web.cz</span></div>
+    <div class="mk-web"><div class="eye">Vaše služby</div><h4>Web, na kterém vás lidi <em>najdou a ozvou se.</em></h4><p>Co nabízíte, reference, kontakt. Hotové za večer.</p><span class="b">Napište mi →</span></div></div>
+</template>
 
 <script>
 /* ── SHOWREEL: „video" bez natáčení (autoplay smyčka) ── */
@@ -947,10 +973,12 @@
   var reel=document.getElementById('reel');
   if(!reel) return;
   var REEL=[
-    {wish:"udělej mi web pro můj newsletter",
-     steps:["Skládám stránku…","Ladím texty a barvy…"], done:"Hotovo. Nasadit na web?", tpl:"mk-4"},
+    {wish:"udělej mi jednoduchý web na moje služby",
+     steps:["Skládám stránku…","Ladím texty a barvy…"], done:"Hotovo. Nasadit na web?", tpl:"mk-w1"},
     {wish:"appka na faktury – co je a není zaplacené",
      steps:["Stavím appku…","Přidávám přehled a součty…"], done:"Hotovo. Spustit?", tpl:"mk-6"},
+    {wish:"hlídej mi akce u mých oblíbených pražíren",
+     steps:["Stavím hlídače…","Načítám nabídky pražíren…"], done:"Hotovo. Nastavit hlídání?", tpl:"mk-10"},
     {wish:"chci diktovat hlasem rovnou do schránky",
      steps:["Stavím appku do lišty…","Připojuji přepis řeči…"], done:"Hotovo. Zkusíte to?", tpl:"mk-5"},
     {wish:"z mých poznámek udělej hezké PDF",
@@ -1055,18 +1083,19 @@
   var list=document.getElementById('list');
   if(!list) return;
   var USES=[
-    {label:"Dělám pořád dokola stejnou práci", title:"Nástroj, co tu otravnou práci udělá za vás", before:"půl hodiny klikání dokola", after:"jeden pokyn, hotovo", sig:"projekt prevodnik", tpl:"mk-1"},
+    {label:"Dělám pořád dokola stejnou práci", title:"Nástroj, co tu otravnou práci udělá za vás", before:"půl hodiny klikání dokola", after:"jeden pokyn, hotovo", sig:"appka, co zmenší stovky fotek jedním pokynem", tpl:"mk-1"},
     {label:"Topím se v rešerších a podkladech", title:"Rešerše a podklad za odpoledne", before:"3 hodiny, 10 zdrojů", after:"10 minut, 50 zdrojů", sig:"přímo v Claude Code", tpl:"mk-2"},
-    {label:"Ztrácím se ve vlastních datech", title:"Z hromady čísel čitelný přehled", before:"ruční počítání v tabulkách", after:"přehled a graf na klik", sig:"ilustrace", tpl:"mk-3"},
-    {label:"Potřebuju web, ale neumím programovat", title:"Jednoduchý web hotový za večer", before:"25 000 Kč a 3 týdny", after:"večer a je online", sig:"promptne.cz", tpl:"mk-4"},
-    {label:"Platím za aplikaci, kterou si možná zvládnu udělat", title:"Vlastní appka místo dalšího předplatného", before:"300 Kč každý měsíc", after:"vlastní, běží u vás", sig:"projekt Mluv – diktovací appka pro Mac", tpl:"mk-5"},
-    {label:"Mám chaos ve fakturách a evidenci výdajů", title:"Přehled financí a faktur na míru", before:"deset tabulek a ruční počítání", after:"jedna appka, přehled na klik", sig:"projekt Ledger", tpl:"mk-6"},
-    {label:"Chci tiskovinu, ale děsí mě grafika", title:"Vizitka nebo leták rovnou do tiskárny", before:"grafik a kolečko korektur", after:"hotové PDF, spadávka, CMYK", sig:"vizitka-tisk.pdf", tpl:"mk-7"},
-    {label:"Potřebuju dokument, co vypadá profi", title:"Ebook, prezentace nebo materiál pro klienty", before:"Word a hodiny formátování", after:"PDF jako od agentury", sig:"PDF Operační systém psaní", tpl:"mk-8"},
-    {label:"Mám plno nápadů, ale nedotahuju je", title:"Z rozházených poznámek hotový text", before:"složka nedotažených nápadů", after:"hotová věc venku, vaším hlasem", sig:"systém Hemingway", tpl:"mk-9"},
-    {label:"Mám nápad úplně mimo svou profesi", title:"Osobní projekt, co vám dřív nešel", before:"„to bez kódování nejde“", after:"postaveno o víkendu", sig:"ilustrace", tpl:"mk-10"},
-    {label:"Učím a chci lepší materiály", title:"Pracovní listy, kvízy a cvičení na míru", before:"kopírování z učebnic", after:"vlastní materiál za chvíli", sig:"ilustrace", tpl:"mk-11"},
-    {label:"Potřebuju v práci malý interní nástroj", title:"Kalkulačka, konfigurátor nebo formulář pro tým", before:"excel a e-maily sem a tam", after:"nástroj, co dělá přesně moje", sig:"ilustrace", tpl:"mk-12"}
+    {label:"Ztrácím se ve vlastních datech", title:"Z hromady čísel čitelný přehled", before:"čísla rozházená po sešitech a appkách", after:"jeden graf, hned vidíte trend", sig:"appka na sledování hubnutí", tpl:"mk-3"},
+    {label:"Potřebuju web, ale neumím programovat", title:"Jednoduchý web hotový za večer", before:"25 000 Kč a 3 týdny", after:"večer a je online", sig:"tento web – ano, ten, na kterém právě jste", tpl:"mk-4"},
+    {label:"Platím za aplikaci, kterou si možná zvládnu udělat", title:"Vlastní appka místo dalšího předplatného", before:"300 Kč každý měsíc", after:"vlastní, běží u vás", sig:"appka na přepis hlasu na text", tpl:"mk-5"},
+    {label:"Mám chaos ve fakturách a evidenci výdajů", title:"Přehled financí a faktur na míru", before:"deset tabulek a ruční počítání", after:"jedna appka, přehled na klik", sig:"appka na faktury a přehled financí", tpl:"mk-6"},
+    {label:"Chci tiskovinu, ale děsí mě grafika", title:"Vizitka nebo leták rovnou do tiskárny", before:"grafik a kolečko korektur", after:"hotové PDF, spadávka, CMYK", sig:"vizitka i leták rovnou pro tiskárnu", tpl:"mk-7"},
+    {label:"Potřebuju dokument, co vypadá profi", title:"E-book, prezentace nebo materiál pro klienty", before:"Word a hodiny formátování", after:"PDF jako od agentury", sig:"e-book pro klienty, co vypadá jako od agentury", tpl:"mk-8"},
+    {label:"Mám plno nápadů, ale nedotahuju je", title:"Z rozházených poznámek hotový text", before:"složka nedotažených nápadů", after:"hotová věc venku, vaším hlasem", sig:"systém, co udrží váš styl psaní", tpl:"mk-9"},
+    {label:"Mám nápad úplně mimo svou profesi", title:"Osobní projekt, co vám dřív nešel", before:"„to bez kódování nejde“", after:"postaveno o víkendu", sig:"appka, co hlídá slevy oblíbených pražíren", tpl:"mk-10"},
+    {label:"Ze schůzek nemám použitelný zápis", title:"Z nahrávky zápis, úkoly i doslovný přepis", before:"hodina řečí, poznámky nikde", after:"zápis a úkoly za pár minut", sig:"přepis, co rozliší jednotlivé mluvčí", tpl:"mk-13"},
+    {label:"Učím a chci lepší materiály", title:"Pracovní listy, kvízy a cvičení na míru", before:"kopírování z učebnic", after:"vlastní materiál za chvíli", sig:"pracovní listy a kvízy na míru", tpl:"mk-11"},
+    {label:"Potřebuju v práci malý interní nástroj", title:"Kalkulačka, konfigurátor nebo formulář pro tým", before:"excel a e-maily sem a tam", after:"nástroj, co dělá přesně moje", sig:"vlastní kalkulačka nebo formulář pro tým", tpl:"mk-12"}
   ];
   var grid=document.querySelector('.md-grid');
   var panel=document.querySelector('.md-panel');
