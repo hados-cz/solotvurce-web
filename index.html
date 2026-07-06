@@ -559,6 +559,9 @@
     #ukazka, #reseni { z-index: auto; }
     #ukazka .mark, #reseni .mark { z-index: 0; }
     #ukazka .mk, #reseni .mk { z-index: 10000; }
+    /* papírová karta panelu = taky „čistý list" nad texturou – v light na ní modré tečky
+       rastru jinak prosvítají (v dark jsou žluté tečky na papíru neviditelné) */
+    #reseni .md-panel-inner { position: relative; z-index: 10000; }
     /* tmavý režim: ukázky na tmavém pozadí výraznější – světlá linka a tvrdší stín */
     :root:not([data-theme="light"]) #ukazka .mk { border-color: rgba(244,236,221,.32); box-shadow: 7px 7px 0 rgba(0,0,0,.6); }
 
@@ -880,7 +883,7 @@
     </div></div>
 </template>
 <template id="mk-2">
-  <div class="mk mk-edit"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">reserse.md</span></div>
+  <div class="mk mk-edit"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">hotová rešerše</span></div>
     <div class="doc"><div class="dt">Rešerše: dotace pro obce 2026</div>
       <div class="ln m"></div><div class="ln"></div><div class="ln s"></div><div class="ln m"></div>
       <div class="hl" style="border-left-color:#3358d4; background:#eef1fc; color:#33405f">Shrnuto z 50 zdrojů — u každého tvrzení odkaz, ať si to ověříte.</div>
@@ -904,7 +907,7 @@
       <div class="hint">Mluvíte – a&nbsp;hotový text hned vložíte kamkoli: <span class="kbd">⌘V</span></div></div></div>
 </template>
 <template id="mk-6">
-  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">localhost:3000 — faktury</span></div>
+  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">moje faktury</span></div>
     <div class="mk-dash"><div class="top"><h4>Faktury · červen</h4><span class="per">2026</span></div>
       <table class="mk-tbl"><thead><tr><th>Klient</th><th>Stav</th><th style="text-align:right">Částka</th></tr></thead>
       <tbody><tr><td>Kilovaty s.r.o.</td><td class="paid">Zaplaceno</td><td class="amt">18 000</td></tr>
@@ -924,7 +927,7 @@
       <div class="pgn">— 3 —</div></div></div></div>
 </template>
 <template id="mk-9">
-  <div class="mk mk-edit"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">koncept.md</span></div>
+  <div class="mk mk-edit"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">můj koncept</span></div>
     <div class="doc"><div class="dt">Z poznámek hotový článek</div>
       <div class="ln m"></div><div class="ln s"></div><div class="ln"></div>
       <div class="arrow">↓ srovná a dopíše ↓</div>
@@ -940,14 +943,14 @@
       <div class="sum"><span>Nové akce dnes</span><b>3 pražírny</b></div></div></div>
 </template>
 <template id="mk-11">
-  <div class="mk mk-edit"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">pracovni-list.pdf</span></div>
+  <div class="mk mk-edit"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">pracovní list</span></div>
     <div class="doc"><div class="dt">Pracovní list: Zlomky</div>
       <div class="ln m"></div><div class="ln s"></div>
       <div class="hl" style="border-left-color:#3358d4; background:#eef1fc; color:#33405f">1) Vypočítej ½ + ⅓ = ___ &nbsp;&nbsp; 2) Zakroužkuj větší: ¾ / ⅔</div>
       <div class="chips-src"><span style="background:#fff3cc;color:#8a6d00;border-color:#f2d55c">20 variant</span><span style="background:#e7fbef;color:#0f8a4e;border-color:#a8e6c4">ať neopisují</span><span style="background:#fde7f1;color:#c23d78;border-color:#f5b8d2">+ řešení</span></div></div></div>
 </template>
 <template id="mk-12">
-  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">localhost:3000 — kalkulačka</span></div>
+  <div class="mk"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">kalkulačka pro tým</span></div>
     <div class="mk-dash"><div class="top"><h4>Kalkulačka nabídky</h4><span class="per">interní</span></div>
       <table class="mk-tbl"><tbody>
       <tr><td>Rozsah (člověkodny)</td><td class="amt">12</td></tr>
@@ -956,7 +959,7 @@
       <div class="sum" style="background:#FFCC33; color:#16213a"><span style="color:rgba(22,33,58,.72)">Cena nabídky</span><b>16 200 Kč</b></div></div></div>
 </template>
 <template id="mk-13">
-  <div class="mk mk-edit"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">zapis-z-porady.md</span></div>
+  <div class="mk mk-edit"><div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">zápis z porady</span></div>
     <div class="doc"><div class="dt">Porada – úterý 9:00</div>
       <div class="ln m"></div><div class="ln s"></div>
       <div class="hl" style="border-left-color:#3358d4; background:#eef1fc; color:#33405f">Domluveno: nabídku posíláme do pátku. Zajistí Petra.</div>
