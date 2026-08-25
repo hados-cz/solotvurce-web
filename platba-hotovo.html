@@ -109,6 +109,8 @@
     footer a { color: var(--text-soft); text-decoration: none; border-bottom: 1px solid var(--line-soft); }
     footer a:hover { color: var(--yellow); border-color: var(--yellow); }
   </style>
+<!-- Umami – anonymní měření návštěvnosti (bez cookies); stejné web ID jako homepage -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="1560934e-9623-4c4c-80e0-37dd07e3a4c1"></script>
 </head>
 <body>
 
@@ -151,5 +153,15 @@
   })();
 </script>
 
+<!-- Umami event: dokončená platba (počká, až se skript načte) -->
+<script>
+  (function () {
+    var pokusy = 0;
+    var t = setInterval(function () {
+      if (window.umami) { window.umami.track('platba-dokoncena'); clearInterval(t); }
+      if (++pokusy > 20) clearInterval(t);
+    }, 300);
+  })();
+</script>
 </body>
 </html>

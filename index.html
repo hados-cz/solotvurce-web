@@ -575,6 +575,9 @@
     .hero-persona { font-size: 1.04rem; color: var(--text-soft); max-width: 480px; line-height: 1.6; margin: -8px 0 28px; }
     .hero-persona u { text-decoration: none; border-bottom: 3px solid var(--yellow); padding-bottom: 1px; }
   </style>
+
+<!-- Umami – anonymní měření návštěvnosti (bez cookies, bez lišty); web ID patří k účtu info@hados.cz -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="1560934e-9623-4c4c-80e0-37dd07e3a4c1"></script>
 </head>
 <body>
 
@@ -602,7 +605,7 @@
       <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
       <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
     </button>
-    <a href="#predprodej" class="nav-cta">Chci se přidat →</a>
+    <a href="#predprodej" class="nav-cta" data-umami-event="cta-klik" data-umami-event-misto="nav">Chci se přidat →</a>
   </div>
 </nav>
 
@@ -620,7 +623,7 @@
       <p class="hero-sub">Online kurz pro sólotvůrce, kteří nikdy neprogramovali. Prošlapali jsme tu cestu před vámi&nbsp;– a&nbsp;teď vám k&nbsp;ní dáme mapu.</p>
       <p class="hero-persona">Kurz je pro&nbsp;každého, kdo má&nbsp;nápady a&nbsp;chce je konečně realizovat&nbsp;– a&nbsp;<u>je jedno, jestli jste na&nbsp;volné noze, ve&nbsp;firmě, na&nbsp;úřadě, nebo učíte</u>.</p>
       <div class="hero-cta-row">
-        <a href="#predprodej" class="btn-primary">Chci se přidat →</a>
+        <a href="#predprodej" class="btn-primary" data-umami-event="cta-klik" data-umami-event-misto="hero">Chci se přidat →</a>
         <a href="#vystupy" class="btn-ghost">Co si postavíte ↓</a>
       </div>
       <p class="hero-meta"><b>Tenhle kurz průběžně doplňujeme o&nbsp;další obsah.</b> Navíc kolem něj vzniká i&nbsp;komunita sólotvůrců, jako jste vy. Pomáháme si, inspirujeme se.</p>
@@ -672,7 +675,7 @@
     </div>
 
     <div class="index-cta">
-      <a href="#predprodej" class="btn-primary">Chci se přidat →</a>
+      <a href="#predprodej" class="btn-primary" data-umami-event="cta-klik" data-umami-event-misto="vystupy">Chci se přidat →</a>
     </div>
   </div>
 </section>
@@ -854,7 +857,7 @@
         <p>Stačí vám běžný počítač, chuť to zkusit a&nbsp;tenhle kurz. Až se za&nbsp;pár týdnů ohlédnete, budete se divit, kolik jste toho zvládli&nbsp;– se vším vám pomůžeme.</p>
         <p class="cta-note">Obsah roste, cena taky&nbsp;– zamkněte si tu dnešní.</p>
       </div>
-      <a href="#predprodej" class="btn-cta-dark">Chci se přidat →</a>
+      <a href="#predprodej" class="btn-cta-dark" data-umami-event="cta-klik" data-umami-event-misto="zaver">Chci se přidat →</a>
     </div>
   </div>
 </section>
@@ -1164,6 +1167,24 @@
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('theme', next); } catch (e) {}
     });
+  })();
+</script>
+
+<!-- Umami eventy: doscroll k ceně + zobrazení objednávkového iframu (kliky na CTA nesou data-umami-event atributy) -->
+<script>
+  (function () {
+    if (!('IntersectionObserver' in window)) return;
+    var seen = {};
+    function track(name) { if (seen[name]) return; seen[name] = 1; if (window.umami) window.umami.track(name); }
+    function once(el, name, threshold) {
+      if (!el) return;
+      var o = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { track(name); o.disconnect(); } });
+      }, { threshold: threshold });
+      o.observe(el);
+    }
+    once(document.getElementById('predprodej'), 'predprodej-doscroll', 0.2);
+    once(document.getElementById('benosaurus-form'), 'objednavka-zobrazena', 0.4);
   })();
 </script>
 
