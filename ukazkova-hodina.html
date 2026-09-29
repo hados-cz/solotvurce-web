@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <!--
   ukazkova-hodina.html – přistávačka „Ukázková hodina vajbování" (solotvurci.cz/ukazkova-hodina).
-  Obsah: hero + lístek s fakty, co uvidíte, pro koho, TERMÍNY (#terminy), otázky, autoři, CTA do kurzu.
-  Nový termín = přidat řádek do sekce #terminy (vzor v komentáři tamtéž) a upravit lístek v heru.
+  Obsah: hero (plakát + pruh s fakty), co uvidíte, pro koho, TERMÍNY (#terminy) s objednávkou (#objednavka), otázky, autoři, závěrečná výzva k objednávce hodiny.
+  Nový termín = přidat řádek do sekce #terminy (vzor v komentáři tamtéž), přepsat „Kdy" v pruhu hera, datum v závěrečném žlutém bloku a v JSON-LD (Event).
   Styly jsou výběr z index.html (stejné tokeny, obě témata). Objednávku kurzu tu nehledejte – ta je v index.html#predprodej.
   Zdroj textu: hemingway/my-projects/hados/kurz-vibecoding/web-ukazkova-hodina.md
 -->
@@ -41,6 +41,29 @@
     "inLanguage": "cs",
     "isPartOf": { "@type": "WebSite", "name": "AI pro sólotvůrce", "url": "https://solotvurci.cz/" },
     "publisher": { "@type": "Organization", "name": "Hadoš s.r.o.", "url": "https://hados.cz", "email": "info@hados.cz" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "Ukázková hodina vajbování",
+    "description": "Živá online hodina pro netechniky: za 60 minut vzniknou dvě hotové věci bez programování. Bez záznamu.",
+    "startDate": "2026-10-22T17:00:00+02:00",
+    "endDate": "2026-10-22T18:00:00+02:00",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+    "inLanguage": "cs",
+    "location": { "@type": "VirtualLocation", "url": "https://solotvurci.cz/ukazkova-hodina" },
+    "image": "https://solotvurci.cz/og-image.png",
+    "organizer": { "@type": "Organization", "name": "Hadoš s.r.o.", "url": "https://hados.cz" },
+    "offers": {
+      "@type": "Offer",
+      "price": "290",
+      "priceCurrency": "CZK",
+      "availability": "https://schema.org/InStock",
+      "url": "https://solotvurci.cz/ukazkova-hodina#objednavka"
+    }
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -109,7 +132,7 @@
       opacity: .06; background-image: radial-gradient(var(--dot) 1px, transparent 1.7px); background-size: 7px 7px;
     }
 
-    h1, h2, h3, .nav-logo, .bio-name, .faq-q, .fact dd, .term-when { font-family: var(--disp); font-optical-sizing: auto; }
+    h1, h2, h3, .nav-logo, .bio-name, .faq-q, .a-strip dd, .term-when, footer h4 { font-family: var(--disp); font-optical-sizing: auto; }
 
     .mark { position: relative; white-space: nowrap; color: var(--ink); padding: 0 .12em; }
     .mark::before { content: ''; position: absolute; z-index: -1; left: 0; right: 0; top: -.18em; bottom: -.12em; background: var(--yellow); }
@@ -148,43 +171,36 @@
     .section { padding: 86px 6%; position: relative; z-index: 0; }
     .section-inner { max-width: 1120px; margin: 0 auto; }
 
-    /* ── HERO ── */
-    .hero { padding: 60px 6% 86px; position: relative; }
-    .hero-grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; }
-    @media (max-width: 880px) { .hero-grid { grid-template-columns: 1fr; gap: 44px; } }
-    .hero-tag { display: inline-block; font-family: var(--disp); font-style: italic; font-size: 1.25rem; color: var(--yellow); margin-bottom: 18px; }
-    :root[data-theme="light"] .hero-tag { color: var(--blue); }
-    .hero h1 { font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 600; line-height: 1.2; letter-spacing: -1px; color: var(--text); margin-bottom: 22px; }
-    .hero h1 .line { display: block; }
-    .hero-sub { font-size: clamp(1.05rem, 2.2vw, 1.22rem); color: var(--text-soft); max-width: 500px; line-height: 1.65; margin-bottom: 30px; }
-    .hero-cta-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
-    .hero-meta { font-size: 1rem; color: var(--text-soft); font-weight: 500; }
-    .hero-meta b { color: var(--text); font-weight: 700; }
-
-    /* lístek s fakty (papírová karta nad riso texturou) */
-    .ticket { background: var(--paper); color: var(--ink); padding: 38px 36px 30px; position: relative; z-index: 10000; border: 2px solid var(--ink); box-shadow: 11px 11px 0 var(--shadow); }
-    /* desktop: lístek zarovnaný nahoru k nadpisu, ne na střed sloupce */
-    @media (min-width: 881px) { .ticket { align-self: start; margin-top: 56px; } }
-    /* mobil: lístek hned pod podtitul, nad tlačítka (textový sloupec se rozpustí do gridu, pořadí řídí order) */
+    /* ── HERO (plakát: nadpis přes celou šířku, fakta jako pruh pod ním) ── */
+    .hero { padding: 56px 6% 56px; text-align: center; position: relative; }
+    .a-inner { max-width: 1120px; margin: 0 auto; position: relative; }
+    .hero h1 { font-size: clamp(3.3rem, 10.5vw, 8.2rem); font-weight: 600; line-height: 1.12; letter-spacing: -.035em; color: var(--text); margin-bottom: 30px; }
+    .hero h1 .line { display: block; position: relative; }
+    /* dolní dotah „j" z prvního řádku nesmí zmizet pod žlutým podkladem druhého */
+    .hero h1 .line:first-child { z-index: 1; }
+    .hero h1 .mark { z-index: 0; }
+    .hero h1 .mark::before { top: -.1em; bottom: -.06em; }
+    .hero-sub { font-size: clamp(1.08rem, 2.2vw, 1.3rem); color: var(--text-soft); max-width: 700px; margin: 0 auto 14px; line-height: 1.6; text-wrap: balance; }
+    .hero-punch { font-size: clamp(1.12rem, 2.3vw, 1.36rem); font-weight: 700; color: var(--text); max-width: 700px; margin: 0 auto 30px; line-height: 1.5; text-wrap: balance; }
+    .hero-cta-row { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 44px; }
+    /* razítko je nad riso texturou (z 10000), pod nav (10001) */
+    .a-stamp { position: absolute; top: -18px; right: 0; width: 124px; height: 124px; border-radius: 50%; background: var(--yellow); border: 2.5px dashed var(--ink); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--ink); line-height: 1; transform: rotate(9deg); z-index: 10000; }
+    .a-stamp b { font-family: var(--disp); font-weight: 700; font-size: 2.2rem; line-height: .9; }
+    .a-stamp small { font-size: .6rem; letter-spacing: 1px; text-transform: uppercase; margin-top: 6px; font-weight: 800; line-height: 1.3; }
+    @media (max-width: 880px) { .a-stamp { position: static; margin: 0 auto 22px; width: 100px; height: 100px; } .a-stamp b { font-size: 1.8rem; } }
+    /* pruh s fakty. Až bude nový termín, přepsat „Kdy". */
+    .a-strip { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; border-top: 2px solid var(--text); border-bottom: 2px solid var(--text); text-align: left; max-width: 1120px; margin: 0 auto; }
+    .a-strip > div { padding: 16px 22px 18px; border-left: 1px solid var(--line); }
+    .a-strip > div:first-child { border-left: 0; padding-left: 0; }
+    .a-strip dt { font-size: .7rem; font-weight: 800; letter-spacing: 1.3px; text-transform: uppercase; color: var(--text-mut); margin-bottom: 4px; }
+    .a-strip dd { font-size: 1.5rem; font-weight: 600; line-height: 1.2; color: var(--text); }
+    .a-strip dd small { display: block; font-family: var(--body); font-size: .86rem; font-weight: 500; color: var(--text-mut); margin-top: 2px; }
     @media (max-width: 880px) {
-      .hero-grid { gap: 0; }
-      .hero-grid > div { display: contents; }
-      .hero-tag { order: 1; justify-self: start; }
-      .hero h1 { order: 2; }
-      .hero-sub { order: 3; }
-      .ticket { order: 4; margin: 14px 0 44px; }
-      .hero-cta-row { order: 5; }
-      .hero-meta { order: 6; }
+      .a-strip { grid-template-columns: 1fr 1fr; }
+      .a-strip > div { padding: 16px 14px 18px 0; border-left: 0; border-top: 1px solid var(--line); }
+      .a-strip > div:first-child { grid-column: 1 / -1; border-top: 0; }
+      .a-strip dd { font-size: 1.28rem; }
     }
-    .ticket::after { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: var(--grain); mix-blend-mode: multiply; opacity: .6; }
-    .ticket > * { position: relative; z-index: 1; }
-    .ticket-stamp { position: absolute; top: -16px; right: 26px; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); font-size: .68rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 6px 16px; }
-    .fact { display: grid; grid-template-columns: 112px 1fr; gap: 14px; align-items: baseline; padding: 13px 0; border-bottom: 2px dashed rgba(22,33,58,.22); }
-    .fact:last-child { border-bottom: 0; padding-bottom: 0; }
-    .fact:first-child { padding-top: 0; }
-    .fact dt { font-size: .72rem; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--paper-mut); }
-    .fact dd { font-size: 1.32rem; font-weight: 600; line-height: 1.25; color: var(--ink); }
-    .fact dd small { display: block; font-family: var(--body); font-size: .86rem; font-weight: 500; color: var(--paper-mut); margin-top: 2px; }
 
     /* ── CO UVIDÍTE (rejstřík) ── */
     .index { display: grid; grid-template-columns: 1fr 1fr; gap: 0 56px; margin-top: 40px; }
@@ -193,8 +209,6 @@
     .irow .ic { width: 34px; height: 34px; color: var(--icon); margin-top: 2px; }
     .irow h3 { font-size: 1.45rem; font-weight: 600; color: var(--text); margin-bottom: 6px; letter-spacing: -.2px; }
     .irow p { font-size: 1.04rem; color: var(--text-soft); line-height: 1.6; }
-    .more-line { margin-top: 34px; padding-top: 22px; border-top: 2px solid var(--line-soft); font-family: var(--disp); font-style: italic; font-size: 1.25rem; line-height: 1.5; color: var(--text-soft); max-width: 860px; }
-    .more-line b { font-style: normal; font-weight: 600; color: var(--text); }
 
     /* ── PRO KOHO ── */
     .who { font-size: 1.18rem; color: var(--text-soft); line-height: 1.7; max-width: 720px; }
@@ -248,22 +262,38 @@
     .cta-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
     @media (max-width: 720px) { .cta-grid { grid-template-columns: 1fr; gap: 24px; } }
     .cta-box h2 { color: var(--ink); margin-bottom: 8px; max-width: 720px; font-size: clamp(2.4rem, 5.4vw, 3.8rem); }
-    .cta-box p { font-size: 1.08rem; color: rgba(22,33,58,.82); max-width: 480px; line-height: 1.55; }
+    .cta-box p { font-size: 1.08rem; color: rgba(22,33,58,.82); max-width: 560px; line-height: 1.55; }
     .btn-cta-dark { background: var(--ink); color: var(--paper); padding: 17px 38px; font-weight: 800; font-size: 1.05rem; text-decoration: none; display: inline-block; border: 2px solid var(--ink); box-shadow: 6px 6px 0 rgba(255,255,255,.5); white-space: nowrap; transition: transform .12s, box-shadow .12s; }
     .btn-cta-dark:hover { transform: translate(2px,2px); box-shadow: 4px 4px 0 rgba(255,255,255,.5); }
 
-    /* ── FOOTER ── */
-    footer { background: var(--bg-soft); padding: 36px 6%; font-size: .82rem; color: var(--text-mut); line-height: 1.75; border-top: 2px solid var(--text); text-align: center; }
+    /* ── FOOTER (shodný s index.html) ── */
+    footer { background: var(--bg-soft); padding: 48px 6% 36px; font-size: .82rem; color: var(--text-mut); line-height: 1.75; border-top: 2px solid var(--text); }
+    footer .footer-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; }
+    @media (max-width: 720px) { footer .footer-inner { grid-template-columns: 1fr; gap: 24px; } }
+    footer .footer-inner > div { min-width: 0; } /* jinak lišta s logy (320 px) roztáhne sloupec přes okraj úzkého telefonu */
+    footer h4 { color: var(--text); font-size: 1.2rem; font-weight: 600; margin-bottom: 12px; }
+    .pay-logos { position: relative; display: inline-block; width: 320px; max-width: 100%; border-bottom: none; margin-bottom: 14px; }
+    .pay-bar { width: 100%; height: auto; display: block; }
+    .pay-comgate { position: absolute; left: 0; top: 0; height: 100%; width: 30%; border-bottom: none; }
+    .pay-comgate:hover { opacity: .7; }
+    .pay-bar-light { display: none; }
+    :root[data-theme="light"] .pay-bar-dark { display: none; }
+    :root[data-theme="light"] .pay-bar-light { display: block; }
+    .pay-methods { list-style: none; margin: 0 0 10px; padding: 0; display: grid; gap: 6px; }
+    .pay-methods li { font-size: .9rem; color: var(--text-soft); line-height: 1.45; padding-left: 18px; position: relative; }
+    .pay-methods li::before { content: ""; position: absolute; left: 0; top: .5em; width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); }
+    .pay-methods strong { color: var(--text); font-weight: 700; }
+    .pay-foot { font-size: .84rem; color: var(--text-mut); line-height: 1.5; }
     footer a { color: var(--text-soft); text-decoration: none; border-bottom: 1px solid var(--line-soft); }
     footer a:hover { color: var(--yellow); border-color: var(--yellow); }
+    footer .footer-meta { max-width: 1120px; margin: 32px auto 0; padding-top: 24px; border-top: 1px solid var(--line-soft); font-size: .76rem; color: var(--text-mut); text-align: center; }
 
+    /* nejužší telefony (320 px): nadpis se jinak nevejde na šířku */
+    @media (max-width: 360px) { .hero h1 { font-size: 2.7rem; } }
     @media (max-width: 600px) {
-      .hero { padding: 40px 5% 56px; }
+      .hero { padding: 32px 5% 44px; }
       .section { padding: 60px 5%; }
       .cta-section { padding: 56px 5%; }
-      .ticket { padding: 32px 22px 24px; }
-      .fact { grid-template-columns: 92px 1fr; }
-      .fact dd { font-size: 1.18rem; }
       .cta-box { padding: 40px 26px; }
       .nav-cta { display: none; }
       .nav-logo { font-size: 1.12rem; white-space: nowrap; }
@@ -308,77 +338,71 @@
 
 <!-- HERO -->
 <header class="hero">
-  <div class="hero-grid">
-    <div>
-      <div class="hero-tag">Ukázková hodina vajbování</div>
-      <h1>
-        <span class="line">Vajbování</span>
-        <span class="line">je potřeba</span>
-        <span class="line"><span class="mark">vidět.</span></span>
-      </h1>
-      <p class="hero-sub">Tvoříte weby, prezentace, vizuály a&nbsp;vlastní pomocníky tím, že si povídáte s&nbsp;počítačem. Jednou větou to ale nikomu moc neřekne. Proto vám to za&nbsp;hodinu ukážeme naživo.</p>
-      <div class="hero-cta-row">
-        <a href="#terminy" class="btn-primary" data-umami-event="uh-klik" data-umami-event-misto="hero">Chci vědět o&nbsp;dalším termínu →</a>
-        <a href="#co-uvidite" class="btn-ghost">Co uvidíte ↓</a>
-      </div>
-      <p class="hero-meta"><b>První hodina proběhla 29.&nbsp;9.&nbsp;2026.</b> Další chystáme.</p>
+  <div class="a-inner">
+    <div class="a-stamp"><b>60</b><small>minut<br/>naživo</small></div>
+    <h1>
+      <span class="line">Vajbování je</span>
+      <span class="line">potřeba <span class="mark">vidět.</span></span>
+    </h1>
+    <p class="hero-sub">Vajbování je tvoření s&nbsp;umělou inteligencí. Řeknete jí, co potřebujete, a&nbsp;ona postaví web, prezentaci nebo aplikaci. Bez programování.</p>
+    <p class="hero-punch">Na&nbsp;ukázkové hodině vám to předvedeme. Uvidíte, že je to snazší, než čekáte.</p>
+    <div class="hero-cta-row">
+      <a href="#objednavka" class="btn-primary" data-umami-event="uh-klik" data-umami-event-misto="hero">Chci přijít →</a>
+      <a href="#co-uvidite" class="btn-ghost">Co uvidíte ↓</a>
     </div>
-
-    <!-- Lístek s fakty. Až bude termín, přepsat řádek „Kdy". -->
-    <dl class="ticket">
-      <div class="ticket-stamp">Jen naživo</div>
-      <div class="fact"><dt>Kdy</dt><dd>Další termín chystáme</dd></div>
-      <div class="fact"><dt>Kde</dt><dd>Online<small>přes Google Meet</small></dd></div>
-      <div class="fact"><dt>Jak dlouho</dt><dd>60&nbsp;minut</dd></div>
-      <div class="fact"><dt>Za kolik</dt><dd>290&nbsp;Kč</dd></div>
-      <div class="fact"><dt>Záznam</dt><dd>Nebude</dd></div>
-    </dl>
   </div>
+  <!-- Pruh s fakty. S novým termínem přepsat „Kdy". -->
+  <dl class="a-strip">
+    <div><dt>Kdy</dt><dd>čtvrtek 22.&nbsp;10.&nbsp;2026<small>17:00–18:00</small></dd></div>
+    <div><dt>Kde</dt><dd>Online<small>přes Google Meet</small></dd></div>
+    <div><dt>Jak dlouho</dt><dd>60&nbsp;minut</dd></div>
+    <div><dt>Za kolik</dt><dd>290&nbsp;Kč</dd></div>
+    <div><dt>Záznam</dt><dd>Nebude</dd></div>
+  </dl>
 </header>
 
 <!-- 01 CO UVIDÍTE -->
 <section class="section" id="co-uvidite" style="background:var(--bg-soft)">
   <div class="section-inner">
     <h2>Za hodinu vzniknou <span class="mark">dvě hotové věci.</span></h2>
-    <p class="lead">Jsme na&nbsp;to dva, Martin Kavka a&nbsp;Roman Věžník. Nic vytaženého ze&nbsp;šuplíku. Obojí vzniká před vámi, jen povídáním s&nbsp;počítačem.</p>
+    <p class="lead">Obojí stavíme před vámi od&nbsp;nuly. Nic předem připraveného.</p>
     <div class="index">
-      <div class="irow"><svg class="ic" viewBox="0 0 48 48"><use href="#d-web"/></svg><div><h3>Jedna věc ven</h3><p>Web, nabídka nebo prezentace. Něco, co ukážete světu. Na&nbsp;první hodině to byl web v&nbsp;našem vlastním vzhledu.</p></div></div>
-      <div class="irow"><svg class="ic" viewBox="0 0 48 48"><use href="#d-spark"/></svg><div><h3>Jedna věc dovnitř</h3><p>Malá aplikace, která běží jen ve&nbsp;vašem počítači a&nbsp;je ohnutá přesně pro vaše potřeby. S&nbsp;funkcemi, za&nbsp;které se jinde platí.</p></div></div>
+      <div class="irow"><svg class="ic" viewBox="0 0 48 48"><use href="#d-web"/></svg><div><h3>Web, nabídka nebo prezentace</h3><p>Něco, co ukážete světu. Na&nbsp;první hodině to byla právě tahle webová stránka.</p></div></div>
+      <div class="irow"><svg class="ic" viewBox="0 0 48 48"><use href="#d-spark"/></svg><div><h3>Vlastní aplikace</h3><p>Malá, jen pro vás. Běží ve&nbsp;vašem počítači a&nbsp;je ohnutá přesně pro vaše potřeby. S&nbsp;funkcemi, za&nbsp;které se jinde platí.</p></div></div>
       <div class="irow"><svg class="ic" viewBox="0 0 48 48"><use href="#d-text"/></svg><div><h3>Co AI říkáme a&nbsp;co ne</h3><p>Uvidíte celé zadání tak, jak ho píšeme. Žádná zaklínadla, běžná čeština.</p></div></div>
-      <div class="irow"><svg class="ic" viewBox="0 0 48 48"><use href="#d-brain"/></svg><div><h3>Co děláme, když se něco podělá</h3><p>Naživo se vždycky něco pokazí. Ukážeme, jak z&nbsp;toho ven.</p></div></div>
+      <div class="irow"><svg class="ic" viewBox="0 0 48 48"><use href="#d-brain"/></svg><div><h3>Co děláme, když se něco podělá</h3><p>Při vajbování se občas něco nepovede. Ukážeme, co v&nbsp;tu chvíli dělat.</p></div></div>
     </div>
-    <p class="more-line">A&nbsp;nakonec vás vezmeme do&nbsp;kurzu <b>AI pro sólotvůrce</b>. Zevnitř, očima účastníka.</p>
   </div>
 </section>
 
 <!-- 02 PRO KOHO -->
 <section class="section">
   <div class="section-inner">
-    <h2>Hodina <span class="mark">pro netechniky.</span></h2>
-    <p class="who">Pro neajťáky. Pro lidi vajbováním ještě nepolíbené. <strong>Nemusíte nic umět, nic instalovat ani nic chystat.</strong> Stačí se připojit a&nbsp;dívat se.</p>
+    <h2>Není se <span class="mark">čeho bát.</span></h2>
+    <p class="who"><strong>Nemusíte nic umět, nic instalovat ani nic chystat.</strong> Připojíte se a&nbsp;koukáte nám pod ruce. Účastnice první hodiny to nakoplo. Odcházely s&nbsp;tím, že si to chtějí samy vyzkoušet. Přijďte se podívat taky.</p>
   </div>
 </section>
 
 <!-- 03 TERMÍNY -->
 <section class="section" id="terminy" style="background:var(--bg-soft)">
   <div class="section-inner">
-    <h2>Kdy to <span class="mark">bude příště.</span></h2>
-    <p class="lead">Hodinu chceme opakovat. Datum té další ještě nemáme.</p>
+    <h2>Kdy se <span class="mark">uvidíme.</span></h2>
     <div class="terms">
       <!--
-        VZOR NOVÉHO TERMÍNU (vložit nad řádek „Další termín", ten pak smazat nebo nechat pro přespříští):
+        VZOR NOVÉHO TERMÍNU (vložit nad aktuální řádek; proběhlý termín přepnout na class="term past" + štítek „Proběhlo" bez tlačítka):
         <div class="term">
-          <div><span class="term-badge soon">Přihlašujeme</span><div class="term-when">úterý 27.&nbsp;10.&nbsp;2026, 17:00–18:00</div><p class="term-note">Online přes Google Meet. 290&nbsp;Kč.</p></div>
+          <div><span class="term-badge soon">Nový termín</span><div class="term-when">úterý 24.&nbsp;11.&nbsp;2026, 17:00–18:00</div><p class="term-note">Online přes Google Meet. 290&nbsp;Kč.</p></div>
           <a href="#objednavka" class="btn-primary" data-umami-event="uh-klik" data-umami-event-misto="termin">Chci přijít →</a>
         </div>
+        Bez vypsaného termínu: štítek „Chystáme", tlačítko „Dejte mi vědět →" jako mailto na info@hados.cz a blok #objednavka schovat.
       -->
       <div class="term">
         <div>
-          <span class="term-badge soon">Chystáme</span>
-          <div class="term-when">Další termín</div>
-          <p class="term-note">Napište nám a&nbsp;ozveme se, jakmile ho vypíšeme.</p>
+          <span class="term-badge soon">Nový termín</span>
+          <div class="term-when">čtvrtek 22.&nbsp;10.&nbsp;2026, <span style="white-space:nowrap">17:00–18:00</span></div>
+          <p class="term-note">Online přes Google Meet. 290&nbsp;Kč.</p>
         </div>
-        <a href="mailto:info@hados.cz?subject=Uk%C3%A1zkov%C3%A1%20hodina%20vajbov%C3%A1n%C3%AD%20%E2%80%93%20dal%C5%A1%C3%AD%20term%C3%ADn&body=Dobr%C3%BD%20den%2C%0A%0Adejte%20mi%20pros%C3%ADm%20v%C4%9Bd%C4%9Bt%2C%20a%C5%BE%20vyp%C3%AD%C5%A1ete%20dal%C5%A1%C3%AD%20Uk%C3%A1zkovou%20hodinu%20vajbov%C3%A1n%C3%AD.%0A" class="btn-primary" data-umami-event="uh-klik" data-umami-event-misto="termin-mail">Dejte mi vědět →</a>
+        <a href="#objednavka" class="btn-primary" data-umami-event="uh-klik" data-umami-event-misto="termin">Chci přijít →</a>
       </div>
       <div class="term past">
         <div>
@@ -388,12 +412,13 @@
       </div>
     </div>
 
-    <!-- Objednávka hodiny (Naveromag). Papírová karta nad riso texturou, stejně jako objednávka kurzu v index.html. -->
+    <!-- Objednávka hodiny (Benosaurus). Papírová karta nad riso texturou, parametry vzhledu shodné s objednávkou kurzu v index.html.
+         Formulář nese termín sám – při novém termínu zkontrolovat, že ukazuje správné datum. -->
     <div class="order" id="objednavka">
       <h3>Objednávka</h3>
       <div class="embed-card">
-        <iframe id="benosaurus-form" src="https://naveromag.cz/objednavka/ukazkova-hodina-vajbovani?embed=1&compact=1" style="width:100%;border:none;overflow:hidden;" loading="lazy" title="Objednávka Ukázkové hodiny vajbování"></iframe>
-        <script>window.addEventListener('message',e=>{if(e.data?.type==='benosaurus-resize')document.getElementById('benosaurus-form').style.height=e.data.height+'px'});</script>
+        <iframe id="benosaurus-form" src="https://benosaurus.cz/objednavka/ukazkova-hodina-vajbovani?embed=1&compact=1&bare=1&font=Plus+Jakarta+Sans&accent=2a3a7e&btn_bg=FFCC33&btn_fg=16213a" style="width:100%;border:none;overflow:hidden;" loading="lazy" title="Objednávka Ukázkové hodiny vajbování"></iframe>
+        <script>window.addEventListener('message',function(e){if(e.origin==='https://benosaurus.cz'&&e.data&&e.data.type==='benosaurus-resize')document.getElementById('benosaurus-form').style.height=e.data.height+'px'});</script>
       </div>
     </div>
   </div>
@@ -402,13 +427,13 @@
 <!-- 04 OTÁZKY -->
 <section class="section">
   <div class="section-inner">
-    <h2>Než se přihlásíte.</h2>
+    <h2>Než přijdete.</h2>
     <div class="faq">
-      <div class="faq-item"><div class="faq-q"><span class="q"></span> Kde to probíhá?</div><p class="faq-a">Online přes Google Meet. Odkaz dostanete e-mailem po&nbsp;objednání. Trvá to 60&nbsp;minut.</p></div>
-      <div class="faq-item"><div class="faq-q"><span class="q"></span> Kolik to stojí?</div><p class="faq-a"><strong>290&nbsp;Kč.</strong></p></div>
-      <div class="faq-item"><div class="faq-q"><span class="q"></span> Bude záznam?</div><p class="faq-a">Nebude. Hodina je jenom naživo. Je to naše vědomé rozhodnutí.</p></div>
-      <div class="faq-item"><div class="faq-q"><span class="q"></span> Musím mít něco nainstalované?</div><p class="faq-a">Ne. Stačí prohlížeč a&nbsp;hodina času.</p></div>
-      <div class="faq-item"><div class="faq-q"><span class="q"></span> Odečte se mi cena hodiny z&nbsp;kurzu?</div><p class="faq-a">Ano. Když se po&nbsp;hodině přidáte do&nbsp;kurzu <a href="/">AI pro sólotvůrce</a>, máte ho o&nbsp;290&nbsp;Kč levnější. Nabídka platí jen pár dní po&nbsp;hodině.</p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Kde?</div><p class="faq-a">Online přes Google Meet. Odkaz dostanete e-mailem po&nbsp;objednání.</p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Jak dlouho?</div><p class="faq-a">60&nbsp;minut.</p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Za kolik?</div><p class="faq-a"><strong>290&nbsp;Kč.</strong></p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Bude záznam?</div><p class="faq-a">Nebude. Hodina je jenom naživo.</p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Musím mít něco nainstalované?</div><p class="faq-a">Ne. Stačí vám Google Meet a&nbsp;hodina času.</p></div>
     </div>
   </div>
 </section>
@@ -424,7 +449,7 @@
                onerror="this.outerHTML='<div class=\'bio-photo\' style=\'background:linear-gradient(135deg,#6d28d9,#9333ea);display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:800;color:white;\'>MK</div>'">
           <div>
             <div class="bio-name">Martin Kavka</div>
-            <div class="bio-kicker">„Nikdy jsem nekódoval. A&nbsp;teď jsem za&nbsp;pár týdnů postavil 7&nbsp;webů a&nbsp;4&nbsp;vlastní aplikace.&#8220;</div>
+            <div class="bio-kicker">„Nikdy jsem nekódoval. Dnes si stavím weby i&nbsp;apky.&#8220;</div>
           </div>
         </div>
       </div>
@@ -443,21 +468,37 @@
   </div>
 </section>
 
-<!-- 06 CTA -->
+<!-- 06 CTA – prodává hodinu, ne kurz. S novým termínem přepsat datum. -->
 <section class="cta-section">
   <div class="cta-box">
     <div class="cta-grid">
       <div>
-        <h2>Nechce se vám čekat?</h2>
-        <p>Kurz AI pro sólotvůrce běží pořád. Prohlédnout si ho můžete zdarma a&nbsp;bez registrace.</p>
+        <h2>Uvidíme se 22.&nbsp;října?</h2>
+        <p>Čtvrtek od&nbsp;17:00, online přes Google Meet. 60&nbsp;minut, 290&nbsp;Kč.</p>
       </div>
-      <a href="/" class="btn-cta-dark" data-umami-event="uh-klik" data-umami-event-misto="zaver">Mrknout do&nbsp;kurzu →</a>
+      <a href="#objednavka" class="btn-cta-dark" data-umami-event="uh-klik" data-umami-event-misto="zaver">Chci přijít →</a>
     </div>
   </div>
 </section>
 
-<footer>
-  © 2026 Hadoš s.r.o. · Sólotvůrci sobě · <a href="/">AI pro sólotvůrce</a> · <a href="vop.html">Obchodní podmínky</a> · <a href="zasady-osobnich-udaju.html">Ochrana osobních údajů</a> · <a href="mailto:info@hados.cz">info@hados.cz</a>
+<footer id="kontakt">
+  <div class="footer-inner">
+    <div><h4>Hadoš s.r.o.</h4><p>IČ: 23822694<br/>Sídlo: Nad přívozem 1681/3, Braník, 147&nbsp;00 Praha 4<br/>Zapsáno v&nbsp;obchodním rejstříku vedeném Městským soudem v&nbsp;Praze, oddíl C, vložka 433479<br/><a href="https://hados.cz" target="_blank" rel="noopener">hados.cz</a> · <a href="mailto:info@hados.cz">info@hados.cz</a><br/>Martin&nbsp;Kavka · <a href="tel:+420605412328">+420&nbsp;605&nbsp;412&nbsp;328</a></p></div>
+    <div>
+      <h4>Jak můžete zaplatit</h4>
+      <div class="pay-logos">
+        <img class="pay-bar pay-bar-dark" src="comgate-dark.png" width="1975" height="120" alt="Platební metody: Comgate, Visa, Mastercard, Google Pay, Apple Pay" />
+        <img class="pay-bar pay-bar-light" src="comgate-light.png" width="1975" height="120" alt="Platební metody: Comgate, Visa, Mastercard, Google Pay, Apple Pay" />
+        <a class="pay-comgate" href="https://www.comgate.eu" target="_blank" rel="noopener" aria-label="Platební brána Comgate"></a>
+      </div>
+      <ul class="pay-methods">
+        <li><strong>Kartou</strong> – Visa, Mastercard, Apple&nbsp;Pay, Google&nbsp;Pay</li>
+        <li><strong>Bankovním převodem</strong> – rychlým online převodem i&nbsp;přes QR&nbsp;kód</li>
+      </ul>
+      <p class="pay-foot">Online platby zajišťuje zabezpečená platební brána&nbsp;Comgate.</p>
+    </div>
+  </div>
+  <div class="footer-meta">© 2026 Hadoš s.r.o. · Sólotvůrci sobě · <a href="/">AI pro sólotvůrce</a> · <a href="platba.html">Platba a&nbsp;doručení</a> · <a href="vop.html">Obchodní podmínky</a> · <a href="zasady-osobnich-udaju.html">Ochrana osobních údajů</a></div>
 </footer>
 
 <script>

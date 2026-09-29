@@ -168,6 +168,9 @@
     .nav-logo .logo-mark { color: var(--yellow); font-size: 1.5rem; }
     .nav-logo small { font-family: var(--disp); font-style: italic; font-weight: 400; font-size: .92rem; color: var(--text-mut); }
     .nav-cta { background: var(--yellow); color: var(--ink); padding: 9px 20px; font-size: .85rem; font-weight: 800; text-decoration: none; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--shadow); transition: transform .12s, box-shadow .12s; }
+    .nav-link { color: var(--text); font-size: .88rem; font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--yellow); padding-bottom: 1px; white-space: nowrap; }
+    .nav-link:hover { color: var(--yellow); }
+    :root[data-theme="light"] .nav-link:hover { color: var(--blue); }
     .nav-cta:hover { transform: translate(1.5px,1.5px); box-shadow: 1.5px 1.5px 0 var(--shadow); }
 
     /* ── BUTTONS (hranaté, tištěné) ─ */
@@ -192,6 +195,8 @@
     .hero-tag { display: inline-block; font-family: var(--disp); font-style: italic; font-size: 1.25rem; color: var(--yellow); margin-bottom: 18px; }
     .hero h1 { font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 600; line-height: 1.2; letter-spacing: -1px; color: var(--text); margin-bottom: 22px; }
     .hero h1 .line { display: block; }
+    /* nejužší telefony (320 px): žlutě podtržené části nadpisů se nelámou, při plné velikosti přetékaly přes okraj */
+    @media (max-width: 340px) { .hero h1 { font-size: 2.5rem; } h2 { font-size: 1.8rem; } }
     .hero-sub { font-size: clamp(1.05rem, 2.2vw, 1.22rem); color: var(--text-soft); max-width: 460px; line-height: 1.65; margin-bottom: 30px; }
     .hero-cta-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
     .hero-meta { font-size: 1rem; color: var(--text-soft); font-weight: 500; }
@@ -324,6 +329,7 @@
     footer { background: var(--bg-soft); padding: 48px 6% 36px; font-size: .82rem; color: var(--text-mut); line-height: 1.75; border-top: 2px solid var(--text); }
     footer .footer-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; }
     @media (max-width: 720px) { footer .footer-inner { grid-template-columns: 1fr; gap: 24px; } }
+    footer .footer-inner > div { min-width: 0; } /* jinak lišta s logy (320 px) roztáhne sloupec přes okraj úzkého telefonu */
     footer h4 { color: var(--text); font-size: 1.2rem; font-weight: 600; margin-bottom: 12px; }
     .pay-logos { position: relative; display: inline-block; width: 320px; max-width: 100%; border-bottom: none; margin-bottom: 14px; }
     .pay-bar { width: 100%; height: auto; display: block; }
@@ -375,6 +381,8 @@
       /* nav na mobilu: jen logo + přepínač (CTA je hned v heru) */
       .nav-cta { display: none; }
       .nav-logo { font-size: 1.12rem; white-space: nowrap; }
+      .nav-link { font-size: .78rem; }
+      .nav-right { gap: 10px; }
       /* cena na mobilu: menší, ať nepřetéká kartu */
       .price-big { font-size: 2.9rem; }
       .price-row { flex-wrap: wrap; row-gap: 2px; }
@@ -610,6 +618,7 @@
 <nav>
   <a class="nav-logo" href="/">AI pro sólotvůrce</a>
   <div class="nav-right">
+    <a href="/ukazkova-hodina" class="nav-link" data-umami-event="cta-klik" data-umami-event-misto="nav-ukazkova-hodina">Ukázková hodina</a>
     <button id="themeToggle" class="theme-toggle" type="button" aria-label="Přepnout světlý a tmavý režim" title="Přepnout režim">
       <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
       <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
@@ -784,7 +793,7 @@
                onerror="this.outerHTML='<div class=\'bio-photo\' style=\'background:linear-gradient(135deg,#6d28d9,#9333ea);display:flex;align-items:center;justify-content:center;font-size:2.6rem;font-weight:800;color:white;min-width:150px;\'>MK</div>'">
           <div>
             <div class="bio-name">Martin Kavka</div>
-            <div class="bio-kicker">„Nikdy jsem nekódoval. A&nbsp;teď jsem za&nbsp;pár týdnů postavil 7&nbsp;webů a&nbsp;4&nbsp;vlastní aplikace.&#8220;</div>
+            <div class="bio-kicker">„Nikdy jsem nekódoval. Dnes si stavím weby i&nbsp;apky.&#8220;</div>
           </div>
         </div>
         <p>Poslední dva roky zkouším, jak psát s&nbsp;AI naplno a&nbsp;neztratit přitom vlastní hlas. Na&nbsp;jaře 2026 jsem navrch propadl i&nbsp;vajbování a&nbsp;chci s&nbsp;ním pomáhat dalším sólotvůrcům, kteří si na&nbsp;to doteď netroufli.</p>
