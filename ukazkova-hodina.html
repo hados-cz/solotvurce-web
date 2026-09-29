@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<!--
+  ukazkova-hodina.html – přistávačka „Ukázková hodina vajbování" (solotvurci.cz/ukazkova-hodina).
+  Obsah: hero + lístek s fakty, co uvidíte, pro koho, TERMÍNY (#terminy), otázky, autoři, CTA do kurzu.
+  Nový termín = přidat řádek do sekce #terminy (vzor v komentáři tamtéž) a upravit lístek v heru.
+  Styly jsou výběr z index.html (stejné tokeny, obě témata). Objednávku kurzu tu nehledejte – ta je v index.html#predprodej.
+  Zdroj textu: hemingway/my-projects/hados/kurz-vibecoding/web-ukazkova-hodina.md
+-->
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ukázková hodina vajbování – AI pro sólotvůrce</title>
+  <meta name="description" content="Ukázková hodina vajbování pro netechniky. Za 60 minut před vámi naživo vzniknou dvě hotové věci – bez programování, jen povídáním s počítačem. Online, 290 Kč." />
+  <meta name="author" content="Hadoš s.r.o." />
+  <meta name="theme-color" content="#121b30" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="canonical" href="https://solotvurci.cz/ukazkova-hodina" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://solotvurci.cz/ukazkova-hodina" />
+  <meta property="og:title" content="Ukázková hodina vajbování – AI pro sólotvůrce" />
+  <meta property="og:description" content="Vajbování je potřeba vidět. Za hodinu před vámi naživo vzniknou dvě hotové věci. Pro netechniky, online, 290 Kč." />
+  <meta property="og:locale" content="cs_CZ" />
+  <meta property="og:site_name" content="AI pro sólotvůrce" />
+  <meta property="og:image" content="https://solotvurci.cz/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="AI pro sólotvůrce – Weby. Prezentace. Vizuály. Aplikace. Bez psaní kódu." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ukázková hodina vajbování – AI pro sólotvůrce" />
+  <meta name="twitter:description" content="Vajbování je potřeba vidět. Za hodinu před vámi naživo vzniknou dvě hotové věci. Pro netechniky, online, 290 Kč." />
+  <meta name="twitter:image" content="https://solotvurci.cz/og-image.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Ukázková hodina vajbování",
+    "description": "Živá online hodina pro netechniky: za 60 minut vzniknou dvě hotové věci bez programování.",
+    "url": "https://solotvurci.cz/ukazkova-hodina",
+    "inLanguage": "cs",
+    "isPartOf": { "@type": "WebSite", "name": "AI pro sólotvůrce", "url": "https://solotvurci.cz/" },
+    "publisher": { "@type": "Organization", "name": "Hadoš s.r.o.", "url": "https://hados.cz", "email": "info@hados.cz" }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* konstanty napříč režimy (shodné s index.html) */
+    :root {
+      --ink:        #16213a;
+      --blue:       #2a3a7e;
+      --yellow:     #FFCC33;
+      --yellow-dark:#e6b800;
+      --disp: 'Newsreader', Georgia, serif;
+      --body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+    }
+    /* TMAVÝ režim (výchozí) */
+    :root, :root[data-theme="dark"] {
+      --bg:        #121b30;
+      --bg-soft:   #16203a;
+      --nav-bg:    rgba(18,27,48,0.84);
+      --text:      #ece3d1;
+      --text-soft: rgba(236,227,209,.76);
+      --text-mut:  rgba(236,227,209,.55);
+      --line:      rgba(244,236,221,.22);
+      --line-soft: rgba(244,236,221,.12);
+      --paper:     #f6efdf;
+      --paper-mut: #5b6a86;
+      --icon:      #FFCC33;
+      --shadow:    rgba(0,0,0,.42);
+      --s2: #5eead4;
+      --dot: #ffd24d;
+    }
+    /* SVĚTLÝ režim */
+    :root[data-theme="light"] {
+      --bg:        #fbf4e6;
+      --bg-soft:   #f2e9d8;
+      --nav-bg:    rgba(251,244,230,0.85);
+      --text:      #16213a;
+      --text-soft: #33405f;
+      --text-mut:  #5b6a86;
+      --line:      rgba(34,50,118,.30);
+      --line-soft: rgba(34,50,118,.15);
+      --paper:     #ffffff;
+      --paper-mut: #5b6a86;
+      --icon:      #223276;
+      --shadow:    rgba(22,33,58,.30);
+      --s2: #5eead4;
+      --dot: #223276;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--body); line-height: 1.6; -webkit-font-smoothing: antialiased;
+      background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; position: relative;
+    }
+    /* RISO papírový šum + halftone rastr */
+    body::after {
+      content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+      opacity: .32; mix-blend-mode: overlay; background-image: var(--grain);
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+      opacity: .06; background-image: radial-gradient(var(--dot) 1px, transparent 1.7px); background-size: 7px 7px;
+    }
+
+    h1, h2, h3, .nav-logo, .bio-name, .faq-q, .fact dd, .term-when { font-family: var(--disp); font-optical-sizing: auto; }
+
+    .mark { position: relative; white-space: nowrap; color: var(--ink); padding: 0 .12em; }
+    .mark::before { content: ''; position: absolute; z-index: -1; left: 0; right: 0; top: -.18em; bottom: -.12em; background: var(--yellow); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 10001;
+      background: var(--nav-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--text); padding: 0 6%;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .theme-toggle {
+      width: 38px; height: 38px; flex-shrink: 0; background: transparent; color: var(--text);
+      border: 2px solid var(--text); cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; transition: background .15s, color .15s;
+    }
+    .theme-toggle:hover { background: var(--text); color: var(--bg); }
+    .theme-toggle svg { width: 18px; height: 18px; }
+    .theme-toggle .ic-moon { display: none; }
+    :root[data-theme="light"] .theme-toggle .ic-sun  { display: none; }
+    :root[data-theme="light"] .theme-toggle .ic-moon { display: block; }
+    .nav-logo { font-weight: 600; font-size: 1.32rem; color: var(--text); text-decoration: none; letter-spacing: -.2px; }
+    .nav-cta { background: var(--yellow); color: var(--ink); padding: 9px 20px; font-size: .85rem; font-weight: 800; text-decoration: none; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--shadow); transition: transform .12s, box-shadow .12s; }
+    .nav-cta:hover { transform: translate(1.5px,1.5px); box-shadow: 1.5px 1.5px 0 var(--shadow); }
+
+    /* ── BUTTONS ── */
+    .btn-primary { background: var(--yellow); color: var(--ink); padding: 15px 32px; font-weight: 800; font-size: 1rem; text-decoration: none; display: inline-block; border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--shadow); transition: transform .12s, box-shadow .12s; }
+    .btn-primary:hover { transform: translate(2px,2px); box-shadow: 3px 3px 0 var(--shadow); }
+    .btn-ghost { background: transparent; color: var(--text); padding: 14px 26px; font-weight: 700; font-size: 1rem; text-decoration: none; display: inline-block; border: 2px solid var(--text); transition: background .15s, color .15s; }
+    .btn-ghost:hover { background: var(--text); color: var(--bg); }
+
+    h2 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 600; letter-spacing: -.6px; line-height: 1.28; margin-bottom: 18px; color: var(--text); max-width: 900px; }
+    .lead { font-size: 1.18rem; max-width: 660px; line-height: 1.7; color: var(--text-soft); }
+
+    .section { padding: 86px 6%; position: relative; z-index: 0; }
+    .section-inner { max-width: 1120px; margin: 0 auto; }
+
+    /* ── HERO ── */
+    .hero { padding: 60px 6% 86px; position: relative; }
+    .hero-grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; }
+    @media (max-width: 880px) { .hero-grid { grid-template-columns: 1fr; gap: 44px; } }
+    .hero-tag { display: inline-block; font-family: var(--disp); font-style: italic; font-size: 1.25rem; color: var(--yellow); margin-bottom: 18px; }
+    :root[data-theme="light"] .hero-tag { color: var(--blue); }
+    .hero h1 { font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 600; line-height: 1.2; letter-spacing: -1px; color: var(--text); margin-bottom: 22px; }
+    .hero h1 .line { display: block; }
+    .hero-sub { font-size: clamp(1.05rem, 2.2vw, 1.22rem); color: var(--text-soft); max-width: 500px; line-height: 1.65; margin-bottom: 30px; }
+    .hero-cta-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+    .hero-meta { font-size: 1rem; color: var(--text-soft); font-weight: 500; }
+    .hero-meta b { color: var(--text); font-weight: 700; }
+
+    /* lístek s fakty (papírová karta nad riso texturou) */
+    .ticket { background: var(--paper); color: var(--ink); padding: 38px 36px 30px; position: relative; z-index: 10000; border: 2px solid var(--ink); box-shadow: 11px 11px 0 var(--shadow); }
+    /* desktop: lístek zarovnaný nahoru k nadpisu, ne na střed sloupce */
+    @media (min-width: 881px) { .ticket { align-self: start; margin-top: 56px; } }
+    /* mobil: lístek hned pod podtitul, nad tlačítka (textový sloupec se rozpustí do gridu, pořadí řídí order) */
+    @media (max-width: 880px) {
+      .hero-grid { gap: 0; }
+      .hero-grid > div { display: contents; }
+      .hero-tag { order: 1; justify-self: start; }
+      .hero h1 { order: 2; }
+      .hero-sub { order: 3; }
+      .ticket { order: 4; margin: 14px 0 44px; }
+      .hero-cta-row { order: 5; }
+      .hero-meta { order: 6; }
+    }
+    .ticket::after { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: var(--grain); mix-blend-mode: multiply; opacity: .6; }
+    .ticket > * { position: relative; z-index: 1; }
+    .ticket-stamp { position: absolute; top: -16px; right: 26px; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); font-size: .68rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 6px 16px; }
+    .fact { display: grid; grid-template-columns: 112px 1fr; gap: 14px; align-items: baseline; padding: 13px 0; border-bottom: 2px dashed rgba(22,33,58,.22); }
+    .fact:last-child { border-bottom: 0; padding-bottom: 0; }
+    .fact:first-child { padding-top: 0; }
+    .fact dt { font-size: .72rem; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--paper-mut); }
+    .fact dd { font-size: 1.32rem; font-weight: 600; line-height: 1.25; color: var(--ink); }
+    .fact dd small { display: block; font-family: var(--body); font-size: .86rem; font-weight: 500; color: var(--paper-mut); margin-top: 2px; }
+
+    /* ── CO UVIDÍTE (rejstřík) ── */
+    .index { display: grid; grid-template-columns: 1fr 1fr; gap: 0 56px; margin-top: 40px; }
+    @media (max-width: 720px) { .index { grid-template-columns: 1fr; } }
+    .irow { display: grid; grid-template-columns: 42px 1fr; gap: 18px; align-items: start; padding: 24px 0; border-top: 1px solid var(--line-soft); }
+    .irow .ic { width: 34px; height: 34px; color: var(--icon); margin-top: 2px; }
+    .irow h3 { font-size: 1.45rem; font-weight: 600; color: var(--text); margin-bottom: 6px; letter-spacing: -.2px; }
+    .irow p { font-size: 1.04rem; color: var(--text-soft); line-height: 1.6; }
+    .more-line { margin-top: 34px; padding-top: 22px; border-top: 2px solid var(--line-soft); font-family: var(--disp); font-style: italic; font-size: 1.25rem; line-height: 1.5; color: var(--text-soft); max-width: 860px; }
+    .more-line b { font-style: normal; font-weight: 600; color: var(--text); }
+
+    /* ── PRO KOHO ── */
+    .who { font-size: 1.18rem; color: var(--text-soft); line-height: 1.7; max-width: 720px; }
+    .who strong { color: var(--text); font-weight: 600; }
+
+    /* ── TERMÍNY ── */
+    #terminy { z-index: auto; }
+    #terminy .mark { z-index: 0; }
+    .terms { margin-top: 36px; border-top: 2px solid var(--line); max-width: 900px; }
+    .term { display: grid; grid-template-columns: 1fr auto; gap: 10px 28px; align-items: center; padding: 26px 0; border-bottom: 1px solid var(--line-soft); }
+    .term:last-child { border-bottom: 2px solid var(--line); }
+    @media (max-width: 640px) { .term { grid-template-columns: 1fr; } }
+    .term-when { font-size: 1.6rem; font-weight: 600; line-height: 1.25; color: var(--text); letter-spacing: -.3px; }
+    .term-note { font-size: 1.04rem; color: var(--text-soft); line-height: 1.6; margin-top: 4px; max-width: 520px; }
+    .term-badge { display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 5px 13px; border: 2px solid var(--line); color: var(--text-mut); margin-bottom: 10px; }
+    .term-badge.soon { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+    .term.past .term-when { color: var(--text-mut); }
+    .order { margin-top: 56px; max-width: 620px; scroll-margin-top: 84px; }
+    .order h3 { font-size: 1.6rem; font-weight: 600; letter-spacing: -.3px; color: var(--text); margin-bottom: 18px; }
+    .embed-card { background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 11px 11px 0 var(--shadow); padding: 14px; position: relative; z-index: 10000; }
+    .embed-card #benosaurus-form { display: block; min-height: 520px; background: transparent; }
+
+    /* ── FAQ ── */
+    .faq { max-width: 780px; margin-top: 24px; }
+    .faq-item { border-top: 1px solid var(--line-soft); padding: 24px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--line-soft); }
+    .faq-q { display: flex; gap: 14px; align-items: baseline; font-size: 1.4rem; font-weight: 600; color: var(--text); margin-bottom: 8px; letter-spacing: -.2px; }
+    .faq-q .q { flex-shrink: 0; width: 16px; height: 16px; background: var(--yellow); display: inline-block; transform: translateY(2px); }
+    .faq-a { font-size: 1.08rem; color: var(--text-soft); line-height: 1.7; padding-left: 30px; }
+    .faq-a a { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--yellow); }
+    .faq-a a:hover { color: var(--yellow); }
+    .faq-a strong { color: var(--text); }
+
+    /* ── AUTOŘI (zkrácená verze z index.html) ── */
+    .bios { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 40px; }
+    @media (max-width: 720px) { .bios { grid-template-columns: 1fr; gap: 36px; } }
+    .bio { border-top: 2px solid var(--line); padding-top: 30px; }
+    .bio-head { display: flex; gap: 26px; align-items: center; }
+    .bio-photo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 4px solid var(--yellow); box-shadow: 8px 8px 0 var(--s2); }
+    @media (max-width: 460px) { .bio-photo { width: 96px; height: 96px; } .bio-head { gap: 20px; } }
+    .bio-name { font-size: 1.8rem; font-weight: 600; color: var(--text); line-height: 1.05; margin-bottom: 8px; }
+    .bio-kicker { font-family: var(--disp); font-style: italic; font-size: 1.14rem; color: var(--text-soft); line-height: 1.38; }
+    .bios-more { margin-top: 34px; font-size: 1.04rem; color: var(--text-soft); }
+    .bios-more a { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--yellow); }
+    .bios-more a:hover { color: var(--yellow); }
+
+    /* ── CTA ── */
+    .cta-section { padding: 86px 6%; }
+    .cta-box { max-width: 1120px; margin: 0 auto; background: var(--yellow); color: var(--ink); padding: 60px 52px; position: relative; overflow: hidden; border: 2px solid var(--ink); }
+    .cta-box::before { content: ''; position: absolute; inset: 0; opacity: .1; pointer-events: none; background-image: radial-gradient(var(--ink) 1.3px, transparent 1.6px); background-size: 16px 16px; }
+    .cta-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
+    @media (max-width: 720px) { .cta-grid { grid-template-columns: 1fr; gap: 24px; } }
+    .cta-box h2 { color: var(--ink); margin-bottom: 8px; max-width: 720px; font-size: clamp(2.4rem, 5.4vw, 3.8rem); }
+    .cta-box p { font-size: 1.08rem; color: rgba(22,33,58,.82); max-width: 480px; line-height: 1.55; }
+    .btn-cta-dark { background: var(--ink); color: var(--paper); padding: 17px 38px; font-weight: 800; font-size: 1.05rem; text-decoration: none; display: inline-block; border: 2px solid var(--ink); box-shadow: 6px 6px 0 rgba(255,255,255,.5); white-space: nowrap; transition: transform .12s, box-shadow .12s; }
+    .btn-cta-dark:hover { transform: translate(2px,2px); box-shadow: 4px 4px 0 rgba(255,255,255,.5); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--bg-soft); padding: 36px 6%; font-size: .82rem; color: var(--text-mut); line-height: 1.75; border-top: 2px solid var(--text); text-align: center; }
+    footer a { color: var(--text-soft); text-decoration: none; border-bottom: 1px solid var(--line-soft); }
+    footer a:hover { color: var(--yellow); border-color: var(--yellow); }
+
+    @media (max-width: 600px) {
+      .hero { padding: 40px 5% 56px; }
+      .section { padding: 60px 5%; }
+      .cta-section { padding: 56px 5%; }
+      .ticket { padding: 32px 22px 24px; }
+      .fact { grid-template-columns: 92px 1fr; }
+      .fact dd { font-size: 1.18rem; }
+      .cta-box { padding: 40px 26px; }
+      .nav-cta { display: none; }
+      .nav-logo { font-size: 1.12rem; white-space: nowrap; }
+      .btn-cta-dark { white-space: normal; text-align: center; }
+    }
+  </style>
+
+<!-- Umami – anonymní měření návštěvnosti (bez cookies, bez lišty); stejné ID jako index.html -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="1560934e-9623-4c4c-80e0-37dd07e3a4c1"></script>
+<!-- Microsoft Clarity – stejné nastavení jako index.html (cookies vypnuté, maskování Strict) -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "y7yu0k93ej");
+</script>
+</head>
+<body>
+
+<!-- doodle ikony (výběr z index.html) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="d-web"><rect x="7" y="9" width="34" height="30" rx="0" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M7 17h34" stroke="currentColor" stroke-width="2.6"/><circle cx="12" cy="13" r="1.4" fill="currentColor"/><circle cx="17" cy="13" r="1.4" fill="currentColor"/><path d="M13 26c5-3 9 3 14 0s8-2 10 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></g>
+    <g id="d-text"><path d="M10 14h28M10 22h28M10 30h18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></g>
+    <g id="d-brain"><path d="M24 11c-5-3-12 0-12 6 0 2 1 3 1 4-2 2-2 6 1 7 0 4 4 6 8 5M24 11c5-3 12 0 12 6 0 2-1 3-1 4 2 2 2 6-1 7 0 4-4 6-8 5M24 11v27" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="d-spark"><path d="M24 8l4 12 12 4-12 4-4 12-4-12-12-4 12-4z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/></g>
+  </defs>
+</svg>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="/">AI pro sólotvůrce</a>
+  <div class="nav-right">
+    <button id="themeToggle" class="theme-toggle" type="button" aria-label="Přepnout světlý a tmavý režim" title="Přepnout režim">
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+    </button>
+    <a href="#terminy" class="nav-cta" data-umami-event="uh-klik" data-umami-event-misto="nav">Termíny →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-tag">Ukázková hodina vajbování</div>
+      <h1>
+        <span class="line">Vajbování</span>
+        <span class="line">je potřeba</span>
+        <span class="line"><span class="mark">vidět.</span></span>
+      </h1>
+      <p class="hero-sub">Tvoříte weby, prezentace, vizuály a&nbsp;vlastní pomocníky tím, že si povídáte s&nbsp;počítačem. Jednou větou to ale nikomu moc neřekne. Proto vám to za&nbsp;hodinu ukážeme naživo.</p>
+      <div class="hero-cta-row">
+        <a href="#terminy" class="btn-primary" data-umami-event="uh-klik" data-umami-event-misto="hero">Chci vědět o&nbsp;dalším termínu →</a>
+        <a href="#co-uvidite" class="btn-ghost">Co uvidíte ↓</a>
+      </div>
+      <p class="hero-meta"><b>První hodina proběhla 29.&nbsp;9.&nbsp;2026.</b> Další chystáme.</p>
+    </div>
+
+    <!-- Lístek s fakty. Až bude termín, přepsat řádek „Kdy". -->
+    <dl class="ticket">
+      <div class="ticket-stamp">Jen naživo</div>
+      <div class="fact"><dt>Kdy</dt><dd>Další termín chystáme</dd></div>
+      <div class="fact"><dt>Kde</dt><dd>Online<small>přes Google Meet</small></dd></div>
+      <div class="fact"><dt>Jak dlouho</dt><dd>60&nbsp;minut</dd></div>
+      <div class="fact"><dt>Za kolik</dt><dd>290&nbsp;Kč</dd></div>
+      <div class="fact"><dt>Záznam</dt><dd>Nebude</dd></div>
+    </dl>
+  </div>
+</header>
+
+<!-- 01 CO UVIDÍTE -->
+<section class="section" id="co-uvidite" style="background:var(--bg-soft)">
+  <div class="section-inner">
+    <h2>Za hodinu vzniknou <span class="mark">dvě hotové věci.</span></h2>
+    <p class="lead">Jsme na&nbsp;to dva, Martin Kavka a&nbsp;Roman Věžník. Nic vytaženého ze&nbsp;šuplíku. Obojí vzniká před vámi, jen povídáním s&nbsp;počítačem.</p>
+    <div class="index">
+      <div class="irow"><svg class="ic" viewBox="0 0 48 48"><use href="#d-web"/></svg><div><h3>Jedna věc ven</h3><p>Web, nabídka nebo prezentace. Něco, co ukážete světu. Na&nbsp;první hodině to byl web v&nbsp;našem vlastním vzhledu.</p></div></div>
+      <div class="irow"><svg class="ic" viewBox="0 0 48 48"><use href="#d-spark"/></svg><div><h3>Jedna věc dovnitř</h3><p>Malá aplikace, která běží jen ve&nbsp;vašem počítači a&nbsp;je ohnutá přesně pro vaše potřeby. S&nbsp;funkcemi, za&nbsp;které se jinde platí.</p></div></div>
+      <div class="irow"><svg class="ic" viewBox="0 0 48 48"><use href="#d-text"/></svg><div><h3>Co AI říkáme a&nbsp;co ne</h3><p>Uvidíte celé zadání tak, jak ho píšeme. Žádná zaklínadla, běžná čeština.</p></div></div>
+      <div class="irow"><svg class="ic" viewBox="0 0 48 48"><use href="#d-brain"/></svg><div><h3>Co děláme, když se něco podělá</h3><p>Naživo se vždycky něco pokazí. Ukážeme, jak z&nbsp;toho ven.</p></div></div>
+    </div>
+    <p class="more-line">A&nbsp;nakonec vás vezmeme do&nbsp;kurzu <b>AI pro sólotvůrce</b>. Zevnitř, očima účastníka.</p>
+  </div>
+</section>
+
+<!-- 02 PRO KOHO -->
+<section class="section">
+  <div class="section-inner">
+    <h2>Hodina <span class="mark">pro netechniky.</span></h2>
+    <p class="who">Pro neajťáky. Pro lidi vajbováním ještě nepolíbené. <strong>Nemusíte nic umět, nic instalovat ani nic chystat.</strong> Stačí se připojit a&nbsp;dívat se.</p>
+  </div>
+</section>
+
+<!-- 03 TERMÍNY -->
+<section class="section" id="terminy" style="background:var(--bg-soft)">
+  <div class="section-inner">
+    <h2>Kdy to <span class="mark">bude příště.</span></h2>
+    <p class="lead">Hodinu chceme opakovat. Datum té další ještě nemáme.</p>
+    <div class="terms">
+      <!--
+        VZOR NOVÉHO TERMÍNU (vložit nad řádek „Další termín", ten pak smazat nebo nechat pro přespříští):
+        <div class="term">
+          <div><span class="term-badge soon">Přihlašujeme</span><div class="term-when">úterý 27.&nbsp;10.&nbsp;2026, 17:00–18:00</div><p class="term-note">Online přes Google Meet. 290&nbsp;Kč.</p></div>
+          <a href="#objednavka" class="btn-primary" data-umami-event="uh-klik" data-umami-event-misto="termin">Chci přijít →</a>
+        </div>
+      -->
+      <div class="term">
+        <div>
+          <span class="term-badge soon">Chystáme</span>
+          <div class="term-when">Další termín</div>
+          <p class="term-note">Napište nám a&nbsp;ozveme se, jakmile ho vypíšeme.</p>
+        </div>
+        <a href="mailto:info@hados.cz?subject=Uk%C3%A1zkov%C3%A1%20hodina%20vajbov%C3%A1n%C3%AD%20%E2%80%93%20dal%C5%A1%C3%AD%20term%C3%ADn&body=Dobr%C3%BD%20den%2C%0A%0Adejte%20mi%20pros%C3%ADm%20v%C4%9Bd%C4%9Bt%2C%20a%C5%BE%20vyp%C3%AD%C5%A1ete%20dal%C5%A1%C3%AD%20Uk%C3%A1zkovou%20hodinu%20vajbov%C3%A1n%C3%AD.%0A" class="btn-primary" data-umami-event="uh-klik" data-umami-event-misto="termin-mail">Dejte mi vědět →</a>
+      </div>
+      <div class="term past">
+        <div>
+          <span class="term-badge">Proběhlo</span>
+          <div class="term-when">úterý 29.&nbsp;9.&nbsp;2026, <span style="white-space:nowrap">17:00–18:00</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Objednávka hodiny (Naveromag). Papírová karta nad riso texturou, stejně jako objednávka kurzu v index.html. -->
+    <div class="order" id="objednavka">
+      <h3>Objednávka</h3>
+      <div class="embed-card">
+        <iframe id="benosaurus-form" src="https://naveromag.cz/objednavka/ukazkova-hodina-vajbovani?embed=1&compact=1" style="width:100%;border:none;overflow:hidden;" loading="lazy" title="Objednávka Ukázkové hodiny vajbování"></iframe>
+        <script>window.addEventListener('message',e=>{if(e.data?.type==='benosaurus-resize')document.getElementById('benosaurus-form').style.height=e.data.height+'px'});</script>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 OTÁZKY -->
+<section class="section">
+  <div class="section-inner">
+    <h2>Než se přihlásíte.</h2>
+    <div class="faq">
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Kde to probíhá?</div><p class="faq-a">Online přes Google Meet. Odkaz dostanete e-mailem po&nbsp;objednání. Trvá to 60&nbsp;minut.</p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Kolik to stojí?</div><p class="faq-a"><strong>290&nbsp;Kč.</strong></p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Bude záznam?</div><p class="faq-a">Nebude. Hodina je jenom naživo. Je to naše vědomé rozhodnutí.</p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Musím mít něco nainstalované?</div><p class="faq-a">Ne. Stačí prohlížeč a&nbsp;hodina času.</p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Odečte se mi cena hodiny z&nbsp;kurzu?</div><p class="faq-a">Ano. Když se po&nbsp;hodině přidáte do&nbsp;kurzu <a href="/">AI pro sólotvůrce</a>, máte ho o&nbsp;290&nbsp;Kč levnější. Nabídka platí jen pár dní po&nbsp;hodině.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 AUTOŘI -->
+<section class="section" style="background:var(--bg-soft)">
+  <div class="section-inner">
+    <h2>Kdo vás <span class="mark">provede.</span></h2>
+    <div class="bios">
+      <div class="bio">
+        <div class="bio-head">
+          <img class="bio-photo" src="martin-kavka.jpg" alt="Martin Kavka"
+               onerror="this.outerHTML='<div class=\'bio-photo\' style=\'background:linear-gradient(135deg,#6d28d9,#9333ea);display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:800;color:white;\'>MK</div>'">
+          <div>
+            <div class="bio-name">Martin Kavka</div>
+            <div class="bio-kicker">„Nikdy jsem nekódoval. A&nbsp;teď jsem za&nbsp;pár týdnů postavil 7&nbsp;webů a&nbsp;4&nbsp;vlastní aplikace.&#8220;</div>
+          </div>
+        </div>
+      </div>
+      <div class="bio">
+        <div class="bio-head">
+          <img class="bio-photo" src="roman-veznik.jpg" alt="Roman Věžník"
+               onerror="this.outerHTML='<div class=\'bio-photo\' style=\'background:linear-gradient(135deg,#223276,#3a52a0);display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:800;color:white;\'>RV</div>'">
+          <div>
+            <div class="bio-name">Roman Věžník</div>
+            <div class="bio-kicker">„Limity jsou většinou jen v&nbsp;naší hlavě.&#8220;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="bios-more">Ani jeden z&nbsp;nás není programátor. Víc o&nbsp;nás najdete <a href="/">na&nbsp;stránce kurzu</a>.</p>
+  </div>
+</section>
+
+<!-- 06 CTA -->
+<section class="cta-section">
+  <div class="cta-box">
+    <div class="cta-grid">
+      <div>
+        <h2>Nechce se vám čekat?</h2>
+        <p>Kurz AI pro sólotvůrce běží pořád. Prohlédnout si ho můžete zdarma a&nbsp;bez registrace.</p>
+      </div>
+      <a href="/" class="btn-cta-dark" data-umami-event="uh-klik" data-umami-event-misto="zaver">Mrknout do&nbsp;kurzu →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Hadoš s.r.o. · Sólotvůrci sobě · <a href="/">AI pro sólotvůrce</a> · <a href="vop.html">Obchodní podmínky</a> · <a href="zasady-osobnich-udaju.html">Ochrana osobních údajů</a> · <a href="mailto:info@hados.cz">info@hados.cz</a>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved === 'light' || saved === 'dark') { root.setAttribute('data-theme', saved); }
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('#themeToggle')) return;
+      var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
