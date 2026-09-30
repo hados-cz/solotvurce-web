@@ -6,3 +6,7 @@
 # Krátká adresa Ukázkové hodiny vajbování (do postů a mailů). Hlavní adresa je /ukazkova-hodina.
 /ukazka /ukazkova-hodina 302
 /ukazka/ /ukazkova-hodina 302
+
+# Krátká adresa stránky Školení AI pro učitele a lektory. Hlavní adresa je /ucitele-lektori.
+/ucitele /ucitele-lektori 302
+/ucitele/ /ucitele-lektori 302
