@@ -243,6 +243,11 @@
     .pick-copy:hover { color: var(--yellow); }
     .pick-copy:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
 
+    /* přilepený proužek s počtem vybraných témat: vidět jen když je něco vybráno a blok #vyber je ještě pod obrazovkou; nad riso texturou, pod nav */
+    .pick-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10000; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: var(--yellow); color: var(--ink); border-top: 2px solid var(--ink); padding: 12px 6% calc(12px + env(safe-area-inset-bottom)); font-size: 1rem; font-weight: 600; text-decoration: none; }
+    .pick-bar[hidden] { display: none; }
+    .pick-bar b { font-weight: 800; white-space: nowrap; }
+
     /* ── FORMÁTY + POSTUP (číslované řádky) ── */
     .steps { margin-top: 36px; max-width: 900px; border-top: 2px solid var(--line); }
     .step { display: grid; grid-template-columns: 64px 1fr; gap: 20px; align-items: start; padding: 26px 0; border-bottom: 1px solid var(--line-soft); }
@@ -430,6 +435,9 @@
   </div>
 </section>
 
+<!-- Proužek u spodního okraje: po kliknutí na dlaždici ukáže počet vybraných témat a vede k bloku #vyber (ten je až pod 43 dlaždicemi) -->
+<a id="pickBar" class="pick-bar" href="#vyber" hidden data-umami-event="skoleni-klik" data-umami-event-misto="prouzek"><span id="pickBarCount"></span><b>Poslat výběr ↓</b></a>
+
 <!-- 02 FORMÁTY -->
 <section class="section">
   <div class="section-inner">
@@ -551,6 +559,15 @@
     var mail = document.getElementById('pickMail');
     var copy = document.getElementById('pickCopy');
     var emptyHtml = list.innerHTML;
+    var bar = document.getElementById('pickBar');
+    var barCount = document.getElementById('pickBarCount');
+    var pickBelow = true; // blok #vyber je pod viditelnou částí stránky
+
+    function plural(n) { return n === 1 ? 'téma' : (n >= 2 && n <= 4 ? 'témata' : 'témat'); }
+    function showBar(n) {
+      barCount.textContent = 'Vybráno: ' + n + ' ' + plural(n);
+      bar.hidden = !(n > 0 && pickBelow);
+    }
 
     function picked() {
       return bricks.filter(function (b) { return b.getAttribute('aria-pressed') === 'true'; })
@@ -572,6 +589,7 @@
         list.innerHTML = '';
         names.forEach(function (n) { var li = document.createElement('li'); li.textContent = n; list.appendChild(li); });
       }
+      showBar(names.length);
       mail.href = 'mailto:info@hados.cz?subject=' + encodeURIComponent(SUBJECT) + '&body=' + encodeURIComponent(message(names));
     }
     bricks.forEach(function (b) {
@@ -600,6 +618,15 @@
         navigator.clipboard.writeText(text).then(function () { done(true); }, legacy);
       } else { legacy(); }
     });
+    // poloha bloku #vyber se měří při scrollu (ne IntersectionObserver: ten by skok přes blok, třeba kotvou, nezaznamenal)
+    var pickBox = document.getElementById('vyber');
+    function measure() {
+      pickBelow = pickBox.getBoundingClientRect().top > window.innerHeight;
+      showBar(picked().length);
+    }
+    window.addEventListener('scroll', measure, { passive: true });
+    window.addEventListener('resize', measure);
+    measure();
     render();
   })();
 </script>
