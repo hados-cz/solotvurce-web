@@ -164,7 +164,7 @@
     .theme-toggle .ic-moon { display: none; }
     :root[data-theme="light"] .theme-toggle .ic-sun  { display: none; }
     :root[data-theme="light"] .theme-toggle .ic-moon { display: block; }
-    .nav-logo { font-weight: 600; font-size: 1.32rem; color: var(--text); display: flex; align-items: baseline; gap: 7px; text-decoration: none; letter-spacing: -.2px; }
+    .nav-logo { font-weight: 600; font-size: 1.32rem; color: var(--text); white-space: nowrap; display: flex; align-items: baseline; gap: 7px; text-decoration: none; letter-spacing: -.2px; }
     .nav-logo .logo-mark { color: var(--yellow); font-size: 1.5rem; }
     .nav-logo small { font-family: var(--disp); font-style: italic; font-weight: 400; font-size: .92rem; color: var(--text-mut); }
     .nav-cta { background: var(--yellow); color: var(--ink); padding: 9px 20px; font-size: .85rem; font-weight: 800; text-decoration: none; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--shadow); transition: transform .12s, box-shadow .12s; }
@@ -292,6 +292,10 @@
     .price-circle { position: absolute; left: -16px; top: -12px; width: 220px; height: 96px; pointer-events: none; }
     .price-circle path { stroke: var(--yellow-dark); }
     .price-note { font-size: .85rem; color: #5b6a86; margin: 8px 0 26px; padding-bottom: 26px; border-bottom: 2px dashed rgba(22,33,58,.35); }
+    /* ticket je vždy papír (světlý v obou tématech), proto stejné pevné barvy jako .price-note */
+    .price-try { font-size: .9rem; color: #5b6a86; margin-top: 0; padding-top: 18px; border-top: 2px dashed rgba(22,33,58,.35); line-height: 1.55; }
+    .price-try a { color: var(--ink); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--yellow); }
+    .price-try a:hover { color: var(--blue); }
     .price-list { list-style: none; padding: 0; margin: 0 0 28px; }
     .price-list li { position: relative; padding-left: 26px; margin-bottom: 12px; font-size: 1.04rem; color: var(--ink); line-height: 1.5; }
     .price-list li::before { content: '▸'; position: absolute; left: 4px; top: 0; color: var(--yellow-dark); font-weight: 800; }
@@ -372,17 +376,19 @@
     .grow-item h3 { font-size: 1.3rem; font-weight: 600; color: var(--text); margin-bottom: 5px; letter-spacing: -.2px; }
     .grow-item p { font-size: 1.04rem; color: var(--text-soft); line-height: 1.6; }
 
+    /* nav do 760 px: bez žlutého CTA (je hned v heru), ať se logo s dvěma odkazy a přepínačem nezalamuje */
+    @media (max-width: 760px) { .nav-cta { display: none; } }
     @media (max-width: 600px) {
       .hero { padding: 40px 5% 56px; }
       .section { padding: 60px 5%; }
       .cta-section { padding: 56px 5%; }
       .ticket { padding: 30px 24px; }
       .cta-box { padding: 40px 26px; }
-      /* nav na mobilu: jen logo + přepínač (CTA je hned v heru) */
-      .nav-cta { display: none; }
-      .nav-logo { font-size: 1.12rem; white-space: nowrap; }
-      .nav-link { font-size: .78rem; }
-      .nav-right { gap: 10px; }
+      /* nav na mobilu: logo + dva odkazy na podstránky (přepínač tématu se na úzkém displeji nevejde, téma drží localStorage) */
+      .theme-toggle { display: none; }
+      .nav-logo { font-size: 1.06rem; }
+      .nav-link { font-size: .76rem; }
+      .nav-right { gap: 9px; }
       /* cena na mobilu: menší, ať nepřetéká kartu */
       .price-big { font-size: 2.9rem; }
       .price-row { flex-wrap: wrap; row-gap: 2px; }
@@ -583,6 +589,9 @@
 
     .hero-persona { font-size: 1.04rem; color: var(--text-soft); max-width: 480px; line-height: 1.6; margin: -8px 0 28px; }
     .hero-persona u { text-decoration: none; border-bottom: 3px solid var(--yellow); padding-bottom: 1px; }
+    .hero-persona a { color: var(--text); font-weight: 700; text-decoration: none; }
+    .hero-persona a:hover { color: var(--yellow); }
+    :root[data-theme="light"] .hero-persona a:hover { color: var(--blue); }
   </style>
 
 <!-- Umami – anonymní měření návštěvnosti (bez cookies, bez lišty); web ID patří k účtu info@hados.cz -->
@@ -619,6 +628,7 @@
   <a class="nav-logo" href="/">AI pro sólotvůrce</a>
   <div class="nav-right">
     <a href="/ukazkova-hodina" class="nav-link" data-umami-event="cta-klik" data-umami-event-misto="nav-ukazkova-hodina">Ukázková hodina</a>
+    <a href="/ucitele-lektori" class="nav-link" data-umami-event="cta-klik" data-umami-event-misto="nav-ucitele">Pro učitele</a>
     <button id="themeToggle" class="theme-toggle" type="button" aria-label="Přepnout světlý a tmavý režim" title="Přepnout režim">
       <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
       <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
@@ -639,7 +649,7 @@
       </h1>
       <!-- TIP: sem se hodí váš vlastní rukopis (sken) -->
       <p class="hero-sub">Online kurz pro sólotvůrce, kteří nikdy neprogramovali. Prošlapali jsme tu cestu před vámi&nbsp;– a&nbsp;teď vám k&nbsp;ní dáme mapu.</p>
-      <p class="hero-persona">Kurz je pro&nbsp;každého, kdo má&nbsp;nápady a&nbsp;chce je konečně realizovat&nbsp;– a&nbsp;<u>je jedno, jestli jste na&nbsp;volné noze, ve&nbsp;firmě, na&nbsp;úřadě, nebo učíte</u>.</p>
+      <p class="hero-persona">Kurz je pro&nbsp;každého, kdo má&nbsp;nápady a&nbsp;chce je konečně realizovat&nbsp;– a&nbsp;<u>je jedno, jestli jste na&nbsp;volné noze, ve&nbsp;firmě, na&nbsp;úřadě, nebo <a href="/ucitele-lektori" data-umami-event="cta-klik" data-umami-event-misto="hero-ucitele">učíte</a></u>.</p>
       <div class="hero-cta-row">
         <a href="#predprodej" class="btn-primary" data-umami-event="cta-klik" data-umami-event-misto="hero">Chci se přidat →</a>
         <a href="#vystupy" class="btn-ghost">Co si postavíte ↓</a>
@@ -838,6 +848,7 @@
           <li>14denní garance vrácení peněz&nbsp;– bez udání důvodu</li>
         </ul>
         <p class="price-rising"><span class="price-rising-badge">↑ Cena kurzu postupně poroste</span></p>
+        <p class="price-try">Nejste si jistí? Přijďte nejdřív na&nbsp;<a href="/ukazkova-hodina" data-umami-event="cta-klik" data-umami-event-misto="ticket-ukazkova-hodina">ukázkovou hodinu vajbování</a> za&nbsp;290&nbsp;Kč.</p>
       </div>
       <div class="embed-card">
         <iframe id="benosaurus-form" src="https://benosaurus.cz/objednavka/ai-pro-solotvurce?embed=1&compact=1&bare=1&font=Plus+Jakarta+Sans&accent=2a3a7e&btn_bg=FFCC33&btn_fg=16213a" style="width:100%;border:none;overflow:hidden;" loading="lazy" title="Objednávka kurzu AI pro sólotvůrce"></iframe>
@@ -856,6 +867,7 @@
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Musím umět anglicky?</div><p class="faq-a">Ne. Při vajbení si v&nbsp;pohodě vystačíte s&nbsp;češtinou. A&nbsp;těch pár anglických slov, která čas od&nbsp;času potřebujete, vám detailně vysvětlíme. Navíc přihodíme i&nbsp;taháky, abyste se nikde nezasekli.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Potřebuju drahý počítač nebo Mac?</div><p class="faq-a">Stačí běžný notebook. Instalaci ukazujeme zvlášť pro <strong>macOS</strong> i&nbsp;<strong>Windows</strong>, takže nezáleží, co máte.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Můžu si kurz prohlédnout, než se rozhodnu?</div><p class="faq-a">Ano, dveře jsou otevřené. <a href="https://naveromag.cz/kurzy/ai-pro-solotvurce?preview=1" target="_blank" rel="noopener"><strong>Projděte si kurz zevnitř</strong></a>&nbsp;– uvidíte prostředí, celou osnovu a&nbsp;pustíte si tři úvodní videa: naše společné, Martinovo i&nbsp;Romanovo. Zdarma a&nbsp;bez registrace.</p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Můžu si vajbení nejdřív vyzkoušet naživo?</div><p class="faq-a">Ano. Pořádáme <a href="/ukazkova-hodina" data-umami-event="cta-klik" data-umami-event-misto="faq-ukazkova-hodina"><strong>Ukázkovou hodinu vajbování</strong></a>&nbsp;– 60&nbsp;minut online přes Google Meet za&nbsp;290&nbsp;Kč. Uvidíte, jak vajbení vypadá v&nbsp;praxi, a&nbsp;zeptáte se na&nbsp;cokoli. Termíny a&nbsp;přihlášení najdete na&nbsp;stránce hodiny.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Platí se jednou, nebo každý rok?</div><p class="faq-a">Je to <strong>roční předplatné</strong> za&nbsp;1&nbsp;490&nbsp;Kč. Hlavní výhoda: cenu, za&nbsp;kterou se přidáte, máte <strong>zamčenou napořád</strong>. Kdo vezme 1&nbsp;490&nbsp;Kč/rok teď, platí 1&nbsp;490&nbsp;Kč/rok i&nbsp;za&nbsp;pět let&nbsp;– i&nbsp;když pro nově příchozí mezitím zdražíme.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Musím kvůli kurzu platit ještě něco navíc?</div><p class="faq-a">Ano, počítejte s&nbsp;tím dopředu. Kurz vás naučí používat nástroj <strong>Claude Code</strong>&nbsp;– ten ale není v&nbsp;ceně kurzu a&nbsp;platí se zvlášť přímo jeho tvůrcům (firma Anthropic). Dobrá zpráva: je to jednoduché a&nbsp;levné. Funguje to jako předplatné Netflixu nebo Spotify&nbsp;– nejlevnější verze vyjde zhruba na&nbsp;<strong>500&nbsp;Kč měsíčně</strong> (20&nbsp;dolarů), platíte po&nbsp;měsících a&nbsp;kdykoli můžete zrušit. Žádné licence na&nbsp;rok, žádné instalační poplatky. Na&nbsp;rozjezd vám ta nejlevnější verze bohatě stačí.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Ani jeden z&nbsp;vás není programátor. Jak můžete učit stavět něco, čemu z&nbsp;pohledu bezpečnosti sami nerozumíte?</div><p class="faq-a">Nejsme programátoři, ale to neznamená, že na&nbsp;bezpečnost kašleme. Řešíme to třemi věcmi.</p><p class="faq-a"><strong>Výběrem toho, co učíme:</strong> jako začátečníci si v&nbsp;kurzu stavíte hlavně věci pro sebe&nbsp;– systém na&nbsp;psaní vlastních textů, jednostránkový web, prezentaci, infografiku, obrázky. Věci, které běží u&nbsp;vás v&nbsp;počítači, nebo jsou to statické stránky bez přihlašování a&nbsp;bez databáze. Velké SaaS projekty stavět neučíme a&nbsp;ani to není naše ambice.</p><p class="faq-a"><strong>Pravidly, která nevyžadují rozumět kódu:</strong> nedávat do&nbsp;chatu přístupové klíče ani cizí data, nechat si vysvětlit, co chce nástroj udělat, a&nbsp;odmítat, čemu nerozumíte. Není to bezpečnostní politika, spíš zdravý rozum.</p><p class="faq-a"><strong>Přiznáním hranic toho, co umíme.</strong> Kdo chce jít dál než k&nbsp;věcem z&nbsp;prvního bodu, tomu doporučujeme přizvat zkušeného programátora a&nbsp;nechat si udělat bezpečnostní audit. Na&nbsp;téma bezpečnosti chceme do&nbsp;kurzu časem přizvat i&nbsp;hosty. Zároveň se sami posouváme a&nbsp;vzděláváme v&nbsp;tom, jak vajbovat bezpečně.</p></div>
