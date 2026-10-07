@@ -125,7 +125,7 @@
     <svg class="status-ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="19"/><path d="M24 13v11l7 5"/></svg>
     <p class="status-kicker">Platba se zpracovává</p>
     <h1 class="status-h1">Ještě chviličku strpení.</h1>
-    <p class="status-msg" id="statusMsg">U&nbsp;některých způsobů platby (třeba bankovního převodu) může potvrzení chvíli trvat. <strong>Nemusíte nic dělat.</strong> Jakmile platbu dostaneme, pošleme vám e-mailem fakturu a&nbsp;přihlašovací údaje do&nbsp;kurzu.<br/><br/>Kdyby vám do&nbsp;pár dní nic nepřišlo, ozvěte se na&nbsp;<a href="mailto:info@hados.cz">info@hados.cz</a>.</p>
+    <p class="status-msg">U&nbsp;některých způsobů platby (třeba bankovního převodu) může potvrzení chvíli trvat. <strong>Nemusíte nic dělat.</strong> Jakmile platbu dostaneme, pošleme vám e-mailem fakturu a&nbsp;přihlašovací údaje do&nbsp;kurzu.<br/><br/>Kdyby vám do&nbsp;pár dní nic nepřišlo, ozvěte se na&nbsp;<a href="mailto:info@hados.cz">info@hados.cz</a>.</p>
     <div class="status-cta">
       <a href="/" class="btn-primary">Zpět na&nbsp;hlavní stránku</a>
     </div>
@@ -151,17 +151,5 @@
   })();
 </script>
 
-
-<!-- Text podle produktu z návratové URL Benosaura (?p=hodina → ukázková hodina místo kurzu) -->
-<script>
-  (function () {
-    var p = '';
-    try { p = new URLSearchParams(location.search).get('p') || ''; } catch (e) {}
-    if (p !== 'hodina') return;
-    document.title = 'Platba se zpracovává – Ukázková hodina vajbování';
-    var m = document.getElementById('statusMsg');
-    if (m) m.innerHTML = 'U\u00a0některých způsobů platby (třeba bankovního převodu) může potvrzení chvíli trvat. <strong>Nemusíte nic dělat.</strong> Jakmile platbu dostaneme, pošleme vám e-mailem fakturu a\u00a0odkaz na\u00a0Google Meet, kde hodina proběhne.<br/><br/>Kdyby vám do\u00a0pár dní nic nepřišlo, ozvěte se na\u00a0<a href="mailto:info@hados.cz">info@hados.cz</a>.';
-  })();
-</script>
 </body>
 </html>
