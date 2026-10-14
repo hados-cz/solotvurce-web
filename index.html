@@ -379,6 +379,45 @@
 
     /* nav do 760 px: bez žlutého CTA (je hned v heru), ať se logo s dvěma odkazy a přepínačem nezalamuje */
     @media (max-width: 760px) { .nav-cta { display: none; } }
+    /* PODCAST – Fosilní palivo (obálka + odkazy na aplikace vlevo, poslední díly s přehrávačem vpravo) */
+    .podcast-grid { display: grid; grid-template-columns: 300px 1fr; gap: 44px; align-items: start; }
+    @media (max-width: 820px) { .podcast-grid { grid-template-columns: 1fr; gap: 36px; } .podcast-cover, .podcast-apps { max-width: none; } }
+    .podcast-cover { display: block; width: 100%; max-width: 300px; height: auto; border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--shadow); }
+    .podcast-apps { display: flex; flex-direction: column; gap: 10px; margin-top: 32px; max-width: 300px; }
+    .podcast-apps a { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; border: 2px solid var(--text); color: var(--text); font-weight: 700; font-size: .92rem; text-decoration: none; transition: background .15s, color .15s; }
+    .podcast-apps a::after { content: '→'; }
+    .podcast-apps a:hover { background: var(--text); color: var(--bg); }
+    .podcast-card { background: var(--paper); border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--shadow); color: var(--ink); padding: 30px 32px 30px; }
+    .podcast-card h3 { font-size: 1.6rem; font-weight: 600; margin-bottom: 6px; letter-spacing: -.3px; }
+    .fp-list { list-style: none; margin-bottom: 26px; }
+    .fp-ep { display: grid; grid-template-columns: 52px 1fr; gap: 18px; padding: 22px 0; border-bottom: 2px solid rgba(22,33,58,.15); }
+    .fp-play { width: 52px; height: 52px; background: var(--yellow); border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); cursor: pointer; display: grid; place-items: center; color: var(--ink); padding: 0; transition: transform .12s, box-shadow .12s; }
+    .fp-play:hover { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
+    .fp-play:disabled { opacity: .4; cursor: default; }
+    .fp-play svg { width: 20px; height: 20px; fill: currentColor; }
+    .fp-play .ic-pause, .fp-ep.is-playing .fp-play .ic-play { display: none; }
+    .fp-ep.is-playing .fp-play .ic-pause { display: block; }
+    .fp-meta { min-width: 0; }
+    .fp-kicker { font-size: .76rem; font-weight: 800; letter-spacing: 1.3px; text-transform: uppercase; color: var(--blue); margin-bottom: 6px; }
+    .fp-title { font-family: var(--disp); font-size: 1.35rem; font-weight: 600; line-height: 1.25; color: var(--ink); text-decoration: none; letter-spacing: -.2px; }
+    .fp-title:hover { color: var(--blue); }
+    .fp-excerpt { font-size: .92rem; color: var(--ink); opacity: .78; line-height: 1.6; margin: 8px 0 0; }
+    .fp-progress { display: none; align-items: center; gap: 12px; margin-top: 14px; }
+    .fp-ep.is-active .fp-progress { display: flex; }
+    .fp-bar { flex: 1; height: 12px; border: 2px solid var(--ink); background: var(--paper); cursor: pointer; position: relative; }
+    .fp-bar-fill { position: absolute; inset: 0; width: 0; background: var(--yellow); }
+    .fp-time { font-size: .76rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink); opacity: .78; white-space: nowrap; }
+    .fp-status { font-size: .92rem; color: var(--ink); opacity: .78; padding: 14px 0 6px; }
+    .fp-status a { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--yellow); text-decoration: none; }
+    @media (max-width: 600px) {
+      .podcast-card { padding: 24px 20px; }
+      .fp-ep { grid-template-columns: 44px 1fr; gap: 14px; padding: 18px 0; }
+      .fp-play { width: 44px; height: 44px; }
+      .fp-title { font-size: 1.2rem; }
+    }
+    .fp-all { display: inline-block; background: transparent; color: var(--ink); border: 2px solid var(--ink); padding: 11px 20px; font-weight: 800; font-size: .92rem; text-decoration: none; transition: background .15s, color .15s; }
+    .fp-all:hover { background: var(--ink); color: var(--paper); }
+
     @media (max-width: 600px) {
       .hero { padding: 40px 5% 56px; }
       .section { padding: 60px 5%; }
@@ -822,6 +861,33 @@
   </div>
 </section>
 
+<!-- 04b PODCAST – Fosilní palivo (díly plní skript na konci stránky z hados.cz/api/podcast) -->
+<section class="section" id="podcast">
+  <div class="section-inner">
+    <h2>Co s&nbsp;námi dělá AI, <span class="mark">probíráme i&nbsp;nahlas.</span></h2>
+    <p class="lead" style="margin-bottom:46px;">Fosilní palivo je náš podcast. Dva fosilové u&nbsp;mikrofonu o&nbsp;tom, co dělá AI s&nbsp;prací, psaním i&nbsp;kariérou. Žádná teorie, jen to, co jsme si sami odzkoušeli.</p>
+
+    <div class="podcast-grid">
+      <div>
+        <img class="podcast-cover" src="fosilni-palivo.jpg" width="600" height="600" alt="Obálka podcastu Fosilní palivo s kreslenými portréty Romana Věžníka a Martina Kavky" loading="lazy" />
+        <div class="podcast-apps">
+          <a href="https://fosilnipalivo.substack.com/podcast" target="_blank" rel="noopener" data-umami-event="podcast-klik" data-umami-event-kam="substack">Substack</a>
+          <a href="https://podcasts.apple.com/cz/podcast/fosiln%C3%AD-palivo/id1770735186" target="_blank" rel="noopener" data-umami-event="podcast-klik" data-umami-event-kam="apple">Apple Podcasts</a>
+          <a href="https://open.spotify.com/show/3B25mwCPboBuDZR23FCgqK" target="_blank" rel="noopener" data-umami-event="podcast-klik" data-umami-event-kam="spotify">Spotify</a>
+          <a href="https://pocketcasts.com/podcast/fosiln%C3%AD-palivo/ac54bbb0-5e1f-013d-1b69-0eeab2591ccf" target="_blank" rel="noopener" data-umami-event="podcast-klik" data-umami-event-kam="pocketcasts">Pocket Casts</a>
+          <a href="https://api.substack.com/feed/podcast/3077724.rss" target="_blank" rel="noopener" data-umami-event="podcast-klik" data-umami-event-kam="rss">RSS</a>
+        </div>
+      </div>
+
+      <div class="podcast-card" id="fp" data-src="https://hados.cz/api/podcast">
+        <h3>Poslední díly</h3>
+        <ol class="fp-list" id="fp-list"><li class="fp-status">Načítám díly…</li></ol>
+        <a href="https://fosilnipalivo.substack.com/podcast" target="_blank" rel="noopener" class="fp-all" data-umami-event="podcast-klik" data-umami-event-kam="vsechny-dily">Všechny díly →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- 05 PŘEDPRODEJ -->
 <section class="section" id="predprodej">
   <div class="section-inner">
@@ -908,7 +974,7 @@
       <p class="pay-foot">Online platby zajišťuje zabezpečená platební brána&nbsp;Comgate.</p>
     </div>
   </div>
-  <div class="footer-meta">© 2026 Hadoš s.r.o. · Sólotvůrci sobě · <a href="/ucitele-lektori">Školení pro učitele a&nbsp;lektory</a> · <a href="platba.html">Platba a&nbsp;doručení</a> · <a href="vop.html">Obchodní podmínky</a> · <a href="zasady-osobnich-udaju.html">Ochrana osobních údajů</a></div>
+  <div class="footer-meta">© 2026 Hadoš s.r.o. · Sólotvůrci sobě · <a href="/ucitele-lektori">Školení pro učitele a&nbsp;lektory</a> · <a href="https://fosilnipalivo.substack.com" target="_blank" rel="noopener">Podcast Fosilní palivo</a> · <a href="platba.html">Platba a&nbsp;doručení</a> · <a href="vop.html">Obchodní podmínky</a> · <a href="zasady-osobnich-udaju.html">Ochrana osobních údajů</a></div>
 </footer>
 
 <!-- MOCKUPY pro showreel a seznam s náhledem (ilustrační – nahradí reálné screenshoty) -->
@@ -1214,6 +1280,68 @@
     once(document.getElementById('predprodej'), 'predprodej-doscroll', 0.2);
     once(document.getElementById('benosaurus-form'), 'objednavka-zobrazena', 0.4);
   })();
+</script>
+
+<!-- Přehrávač podcastu: načte poslední díly z JSON (data-src na #fp) a hraje je jedním <audio> bez cizích iframů. -->
+<script>
+(function () {
+  var box = document.getElementById('fp'); if (!box || !window.fetch) return;
+  var list = document.getElementById('fp-list');
+  var src = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? '/api/podcast' : box.getAttribute('data-src'); // lokální náhled přes wrangler z rootu repa hados
+  var audio = new Audio(); audio.preload = 'none';
+  var active = null;
+  function fmt(s) { s = Math.max(0, Math.round(s || 0)); var h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return (h ? h + ':' + String(m).padStart(2, '0') : m) + ':' + String(x).padStart(2, '0'); }
+  function czDate(iso) { if (!iso) return ''; var p = iso.split('-'); return +p[2] + '. ' + +p[1] + '. ' + p[0]; }
+  function fail() { list.innerHTML = '<li class="fp-status">Díly se teď nepodařilo načíst. Poslechněte si je <a href="https://fosilnipalivo.substack.com/podcast" target="_blank" rel="noopener">na Substacku</a>.</li>'; }
+  fetch(src).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(render).catch(fail);
+
+  function render(data) {
+    if (!data.episodes || !data.episodes.length) return fail();
+    list.innerHTML = '';
+    data.episodes.forEach(function (ep) {
+      var li = document.createElement('li'); li.className = 'fp-ep';
+      var mins = ep.duration ? Math.round(ep.duration / 60) + ' min' : '';
+      li.innerHTML =
+        '<button class="fp-play" type="button" aria-label="Přehrát díl"' + (ep.audio ? '' : ' disabled') + ' data-umami-event="podcast-play">' +
+          '<svg class="ic-play" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3l12 7-12 7z"/></svg>' +
+          '<svg class="ic-pause" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3h4v14H4zM12 3h4v14h-4z"/></svg></button>' +
+        '<div class="fp-meta">' +
+          '<div class="fp-kicker">' + czDate(ep.date) + (mins ? ' · ' + mins : '') + '</div>' +
+          '<a class="fp-title" target="_blank" rel="noopener"></a>' +
+          '<p class="fp-excerpt"></p>' +
+          '<div class="fp-progress"><div class="fp-bar" role="slider" aria-label="Pozice v dílu"><div class="fp-bar-fill"></div></div><span class="fp-time">0:00 / ' + fmt(ep.duration) + '</span></div>' +
+        '</div>';
+      var a = li.querySelector('.fp-title'); a.textContent = ep.title; a.href = ep.link;
+      li.querySelector('.fp-excerpt').textContent = ep.excerpt || '';
+      li.querySelector('.fp-play').addEventListener('click', function () { toggle(li, ep); });
+      li.querySelector('.fp-bar').addEventListener('click', function (e) {
+        if (active !== li || !audio.duration) return;
+        var r = this.getBoundingClientRect(); audio.currentTime = audio.duration * (e.clientX - r.left) / r.width;
+      });
+      list.appendChild(li);
+    });
+  }
+  function toggle(li, ep) {
+    if (active === li) { if (audio.paused) audio.play(); else audio.pause(); return; }
+    if (active) active.classList.remove('is-playing', 'is-active');
+    active = li; li.classList.add('is-active');
+    audio.src = ep.audio; audio.play();
+  }
+  audio.addEventListener('play', function () { if (active) active.classList.add('is-playing'); });
+  audio.addEventListener('pause', function () { if (active) active.classList.remove('is-playing'); });
+  audio.addEventListener('ended', function () { if (active) active.classList.remove('is-playing'); });
+  audio.addEventListener('timeupdate', function () {
+    if (!active) return;
+    var d = audio.duration || 0, t = audio.currentTime || 0;
+    active.querySelector('.fp-bar-fill').style.width = d ? (t / d * 100) + '%' : '0';
+    active.querySelector('.fp-time').textContent = fmt(t) + ' / ' + fmt(d);
+  });
+  audio.addEventListener('error', function () {
+    if (!active) return;
+    active.classList.remove('is-playing');
+    active.querySelector('.fp-time').textContent = 'Přehrávání selhalo, otevřete díl přes název.';
+  });
+})();
 </script>
 
 </body>
