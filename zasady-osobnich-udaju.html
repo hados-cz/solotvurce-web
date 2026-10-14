@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zásady zpracování osobních údajů – AI pro sólotvůrce</title>
+  <meta name="description" content="Zásady zpracování osobních údajů ke kurzu AI pro sólotvůrce." />
+  <meta name="author" content="Hadoš s.r.o." />
+  <meta name="theme-color" content="#121b30" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #16213a; --blue: #2a3a7e; --yellow: #FFCC33; --yellow-dark: #e6b800;
+      --disp: 'Newsreader', Georgia, serif;
+      --body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    :root, :root[data-theme="dark"] {
+      --bg: #121b30; --bg-soft: #16203a; --nav-bg: rgba(18,27,48,0.84);
+      --text: #ece3d1; --text-soft: rgba(236,227,209,.82); --text-mut: rgba(236,227,209,.55);
+      --line: rgba(244,236,221,.22); --line-soft: rgba(244,236,221,.12); --shadow: rgba(0,0,0,.42);
+    }
+    :root[data-theme="light"] {
+      --bg: #fbf4e6; --bg-soft: #f2e9d8; --nav-bg: rgba(251,244,230,0.85);
+      --text: #16213a; --text-soft: #2c3a58; --text-mut: #5b6a86;
+      --line: rgba(34,50,118,.30); --line-soft: rgba(34,50,118,.15); --shadow: rgba(22,33,58,.30);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--body); line-height: 1.7; -webkit-font-smoothing: antialiased; background: var(--bg); color: var(--text); }
+
+    nav { position: sticky; top: 0; z-index: 10; background: var(--nav-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line-soft); }
+    .nav-inner { max-width: 820px; margin: 0 auto; padding: 16px 6%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-back { font-weight: 700; color: var(--text); text-decoration: none; font-size: .98rem; }
+    .nav-back:hover { color: var(--yellow); }
+    .theme-toggle {
+      width: 38px; height: 38px; flex-shrink: 0;
+      background: transparent; color: var(--text);
+      border: 2px solid var(--text); cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: background .15s, color .15s;
+    }
+    .theme-toggle:hover { background: var(--text); color: var(--bg); }
+    .theme-toggle svg { width: 18px; height: 18px; }
+    .theme-toggle .ic-moon { display: none; }
+    :root[data-theme="light"] .theme-toggle .ic-sun  { display: none; }
+    :root[data-theme="light"] .theme-toggle .ic-moon { display: block; }
+
+    main { max-width: 760px; margin: 0 auto; padding: 56px 6% 96px; }
+    h1 { font-family: var(--disp); font-weight: 600; font-size: clamp(2.1rem, 5vw, 3rem); letter-spacing: -.5px; line-height: 1.15; margin-bottom: 12px; }
+    .eff { color: var(--text-mut); font-size: .95rem; margin-bottom: 8px; }
+    h2 { font-family: var(--disp); font-weight: 600; font-size: clamp(1.5rem, 3.2vw, 1.95rem); letter-spacing: -.3px; margin: 44px 0 14px; padding-top: 28px; border-top: 1px solid var(--line-soft); }
+    h3 { font-family: var(--disp); font-weight: 600; font-size: 1.25rem; margin: 24px 0 8px; color: var(--text); }
+    p, li { color: var(--text-soft); font-size: 1.04rem; margin-bottom: 14px; }
+    strong { color: var(--text); font-weight: 700; }
+    ul, ol { padding-left: 1.4em; margin-bottom: 14px; }
+    li { margin-bottom: 8px; }
+    a { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--yellow); }
+    a:hover { color: var(--yellow); }
+    .addr { color: var(--text-soft); line-height: 1.8; margin-bottom: 14px; }
+    footer { border-top: 1px solid var(--line-soft); margin-top: 40px; }
+    .foot-inner { max-width: 760px; margin: 0 auto; padding: 28px 6%; color: var(--text-mut); font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-back" href="index.html">← Zpět na kurz</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Přepnout světlý a tmavý režim" title="Přepnout režim">
+        <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+        <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <h1>Zásady zpracování osobních údajů</h1>
+    <p class="eff">Účinné od 14. května 2026</p>
+
+    <h2>Kdo s&nbsp;vašimi údaji pracuje</h2>
+    <p>Vaše osobní údaje zpracovává společnost <strong>Hadoš s.r.o.</strong>, IČO 23822694, se sídlem Nad Přívozem 1681/3, Braník, 147 00 Praha 4. Napište nám na <a href="mailto:info@hados.cz">info@hados.cz</a>; odpovídáme zpravidla do 3 pracovních dnů.</p>
+
+    <h2>Co o&nbsp;vás držíme a&nbsp;proč</h2>
+
+    <h3>Při registraci a&nbsp;přihlášení</h3>
+    <ul>
+      <li><strong>Jméno a&nbsp;příjmení</strong> – abychom vás mohli oslovit v&nbsp;aplikaci a&nbsp;v&nbsp;e-mailech.</li>
+      <li><strong>E-mail</strong> – pro přihlášení, zaslání hesla, obnovu hesla, upozornění před koncem přístupu.</li>
+      <li><strong>Heslo</strong> ukládáme jen jako jednosměrný kryptografický otisk (hash, PBKDF2-SHA256, 100 000 iterací), ze kterého nejde získat původní heslo zpět. Samotné heslo nikde nemáme a&nbsp;nikdy ho nevidíme.</li>
+      <li><strong>IP adresu při registraci a&nbsp;čas vašeho souhlasu</strong> – abychom uměli doložit, kdy jste souhlasili. Vyžaduje to GDPR.</li>
+    </ul>
+
+    <h3>Když používáte kurz</h3>
+    <ul>
+      <li><strong>Záznamy o&nbsp;vašem postupu</strong> (která lekce, kdy dokončená, výsledky cvičení) – abyste mohli pokračovat tam, kde jste skončili, a&nbsp;my viděli, jak kurz funguje.</li>
+      <li><strong>Datum vypršení vašeho přístupu</strong> – abychom vás stihli včas upozornit.</li>
+    </ul>
+
+    <h3>Co o&nbsp;vás NEUKLÁDÁME</h3>
+    <ul>
+      <li>Žádné marketingové cookies, Google Analytics ani Meta Pixel. (Jak měříme návštěvnost bez cookies, popisuje sekce Měření návštěvnosti níže.)</li>
+      <li>Web Naveromag používá výhradně technické cookies (přihlášení, dvoufaktorové ověření).</li>
+      <li>Vaše údaje nikomu neprodáváme.</li>
+    </ul>
+
+    <h2>Jak dlouho údaje uchováváme</h2>
+    <ul>
+      <li><strong>Aktivní účet:</strong> dokud používáte kurz nebo dokud o&nbsp;smazání nepožádáte.</li>
+      <li><strong>Neaktivní účet 24+ měsíců:</strong> anonymizujeme nebo smažeme.</li>
+      <li><strong>Fakturační údaje</strong> (pokud jste si u&nbsp;nás koupili kurz): 10 let dle zákona o&nbsp;účetnictví (č. 563/1991 Sb.).</li>
+      <li><strong>Záznamy o&nbsp;administrátorských zásazích:</strong> 12 měsíců.</li>
+    </ul>
+
+    <h2>Kdo se k&nbsp;vašim údajům dostane</h2>
+    <p>Pro provoz služby využíváme několik poskytovatelů (tzv. zpracovatelů). Zpracovávají osobní údaje jen pro nás a&nbsp;podle našich pokynů:</p>
+    <ul>
+      <li><strong>Cloudflare, Inc.</strong> – hosting webu, databáze (D1), úložiště souborů (R2), streamování videa. Vaše data jsou uložená v&nbsp;EU.</li>
+      <li><strong>Resend (Resend.com Inc.)</strong> – transakční e-maily (přihlašovací údaje, upozornění). Sídlí v&nbsp;USA, data ale zpracovává přes dodavatele v&nbsp;EU.</li>
+      <li><strong>Google Ireland Ltd.</strong> – volitelné přihlášení přes Google účet (jen pokud ho zvolíte). Data zpracovávaná v&nbsp;EU.</li>
+      <li><strong>Anthropic, PBC</strong> – vylepšení titulků k&nbsp;videolekcím (AI Claude). Předávaný obsah neobsahuje vaše osobní údaje, jen text videolekce. Sídlí v&nbsp;USA.</li>
+    </ul>
+    <p>Jiný poskytovatel k&nbsp;vašim údajům přístup nemá.</p>
+
+    <h2>Vaše práva</h2>
+    <p>Podle GDPR máte právo:</p>
+    <ul>
+      <li>vědět, co o&nbsp;vás držíme (na požádání pošleme kopii),</li>
+      <li>opravit nesprávné údaje (buď v&nbsp;sekci Profil, nebo e-mailem),</li>
+      <li>smazat svůj účet a&nbsp;údaje („být zapomenut&#8220;) – uděláme to do 30 dnů. Výjimka: fakturační údaje, které musíme držet 10 let zákonně,</li>
+      <li>omezit zpracování, pokud zpochybňujete jejich správnost,</li>
+      <li>přenést údaje (dostanete export ve strojově čitelném formátu),</li>
+      <li>vznést námitku proti zpracování na základě oprávněného zájmu,</li>
+      <li>odvolat souhlas – kdykoli, bez sankcí,</li>
+      <li>podat stížnost u&nbsp;Úřadu pro ochranu osobních údajů nebo se obrátit na soud.</li>
+    </ul>
+
+    <h2>Cookies</h2>
+    <p>Web používá pouze technicky nutné cookies:</p>
+    <ul>
+      <li><strong>naveromag_session</strong> – přihlášení do kurzu (30 dní)</li>
+      <li><strong>naveromag_admin_session</strong> – administrativní rozhraní jen pro adminy (30 dní)</li>
+      <li><strong>naveromag_2fa_pending</strong> – dvoufaktorové ověření (15 minut)</li>
+    </ul>
+    <p>Tyto cookies jsou nezbytné pro fungování webu, a&nbsp;proto podle zákona nepotřebují souhlas. Žádné marketingové ani analytické cookies neukládáme.</p>
+
+    <h2>Měření návštěvnosti</h2>
+    <p>Na webu solotvurci.cz měříme návštěvnost nástrojem <strong>Umami</strong> (služba Umami Cloud, Umami Software, Inc.). Funguje <strong>bez cookies</strong> a&nbsp;bez ukládání čehokoli do vašeho zařízení. Sbírá jen souhrnné, anonymní údaje: kolik lidí si stránku zobrazilo, na&nbsp;co se klikalo, typ prohlížeče a&nbsp;zemi. Vaše IP adresa se neukládá&nbsp;– použije se jen jednorázově k&nbsp;vytvoření anonymního otisku, který se každý den mění. Z&nbsp;těchto dat nejde poznat konkrétního člověka, proto k&nbsp;měření nepotřebujeme váš souhlas ani cookie lištu.</p>
+    <p>Vedle toho používáme nástroj <strong>Microsoft Clarity</strong> (Microsoft Corporation), který nám ukazuje, jak se stránka používá: mapy klikání a&nbsp;anonymizované přehrání návštěvy (pohyb myši, posouvání stránky). Máme ho nastavený <strong>bez cookies</strong> a&nbsp;se&nbsp;striktním maskováním obsahu&nbsp;– všechno, co byste na stránce vyplnili, se v&nbsp;záznamu nahrazuje zástupnými znaky, takže záznam neobsahuje údaje, podle kterých bychom vás poznali. Slouží nám to jedině k&nbsp;vylepšování webu.</p>
+
+    <h2>Zabezpečení</h2>
+    <ul>
+      <li>Hesla výhradně jako PBKDF2 hash (100 000 iterací, SHA-256, unikátní salt).</li>
+      <li>Provoz šifrovaný HTTPS (TLS 1.3).</li>
+      <li>Data jsou uložená na serverech v&nbsp;EU – vaše údaje nikdy neopustí Evropskou unii.</li>
+      <li>Přihlašování je chráněné proti zkoušení hesel (max. 5 pokusů za 15 minut).</li>
+      <li>Volitelně si můžete zapnout dvoufaktorové ověření (2FA) přes ověřovací aplikaci, např. Google Authenticator.</li>
+    </ul>
+
+    <h2>Změny dokumentu</h2>
+    <p>Při významné změně tady zveřejníme novou verzi a&nbsp;pokud máte aktivní účet, dáme vám vědět e-mailem.</p>
+  </main>
+
+  <footer>
+    <div class="foot-inner">© 2026 Hadoš s.r.o. · Sólotvůrci sobě · <a href="platba.html">Platba a&nbsp;doručení</a> · <a href="vop.html">Obchodní podmínky</a></div>
+  </footer>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var saved = null;
+      try { saved = localStorage.getItem('theme'); } catch (e) {}
+      if (saved === 'light' || saved === 'dark') { root.setAttribute('data-theme', saved); }
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('#themeToggle')) return;
+        var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+      });
+    })();
+  </script>
+</body>
+</html>
