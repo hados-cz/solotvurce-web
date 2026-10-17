@@ -1,4 +1,13 @@
+# robots.txt – solotvurci.cz
+# Vyhledávače, AI vyhledávače i trénovací crawlery smí prodejní stránky (Roman + Martin,
+# 14. 10. 2026) – chceme, aby modely značku znaly. Platební stránky ne: nemají co říct.
+# Bytespider robots.txt nerespektuje, blokuje ho WAF v Cloudflare.
+
 User-agent: *
+Disallow: /platba
 Allow: /
+
+User-agent: Bytespider
+Disallow: /
 
 Sitemap: https://solotvurci.cz/sitemap.xml
