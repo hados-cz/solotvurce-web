@@ -127,7 +127,7 @@
     <h1 class="status-h1">Nevadí, stane se.</h1>
     <p class="status-msg">Nic se nestrhlo a&nbsp;žádné peníze vám neodešly. Jestli to byl omyl nebo něco po&nbsp;cestě nefungovalo, klidně to <strong>zkuste znovu</strong>.<br/><br/>Kdyby platba nešla opakovaně, napište nám na&nbsp;<a href="mailto:info@hados.cz">info@hados.cz</a> a&nbsp;vyřešíme to spolu.</p>
     <div class="status-cta">
-      <a href="/#predprodej" class="btn-primary">Zkusit to&nbsp;znovu</a>
+      <a href="/#predprodej" class="btn-primary" id="retryLink">Zkusit to&nbsp;znovu</a>
       <a href="mailto:info@hados.cz" class="btn-ghost">Napsat nám</a>
     </div>
   </div>
@@ -149,6 +149,18 @@
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('theme', next); } catch (e) {}
     });
+  })();
+</script>
+
+<!-- Tlačítko „Zkusit to znovu“ podle produktu z návratové URL Benosaura (?p=hodina → objednávka ukázkové hodiny místo kurzu) -->
+<script>
+  (function () {
+    var p = '';
+    try { p = new URLSearchParams(location.search).get('p') || ''; } catch (e) {}
+    if (p !== 'hodina') return;
+    document.title = 'Platba zrušena – Ukázková hodina vajbování';
+    var a = document.getElementById('retryLink');
+    if (a) a.setAttribute('href', '/ukazkova-hodina#objednavka');
   })();
 </script>
 
