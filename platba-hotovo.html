@@ -134,8 +134,8 @@
   <div class="status">
     <svg class="status-ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="19"/><path d="M15 25l6 6 12-15"/></svg>
     <p class="status-kicker">Platba proběhla</p>
-    <h1 class="status-h1">Vítejte mezi&nbsp;sólotvůrci!</h1>
-    <p class="status-msg">Děkujeme za&nbsp;nákup. Na&nbsp;e-mail jsme vám poslali <strong>fakturu</strong> a&nbsp;<strong>přihlašovací údaje</strong> do&nbsp;kurzu. Mrkněte do&nbsp;schránky (a&nbsp;pro jistotu i&nbsp;do&nbsp;spamu) – a&nbsp;můžete se rovnou pustit do&nbsp;vajbení.<br/><br/>Kdyby cokoli nedorazilo, napište nám na&nbsp;<a href="mailto:info@hados.cz">info@hados.cz</a>.</p>
+    <h1 class="status-h1" id="statusH1">Vítejte mezi&nbsp;sólotvůrci!</h1>
+    <p class="status-msg" id="statusMsg">Děkujeme za&nbsp;nákup. Na&nbsp;e-mail jsme vám poslali <strong>fakturu</strong> a&nbsp;<strong>přihlašovací údaje</strong> do&nbsp;kurzu. Mrkněte do&nbsp;schránky (a&nbsp;pro jistotu i&nbsp;do&nbsp;spamu) – a&nbsp;můžete se rovnou pustit do&nbsp;vajbení.<br/><br/>Kdyby cokoli nedorazilo, napište nám na&nbsp;<a href="mailto:info@hados.cz">info@hados.cz</a>.</p>
     <div class="status-cta">
       <a href="/" class="btn-primary">Zpět na&nbsp;hlavní stránku</a>
     </div>
@@ -161,12 +161,31 @@
   })();
 </script>
 
-<!-- Umami event: dokončená platba (počká, až se skript načte) -->
+<!-- Produkt podle návratové URL z Benosaura: ?p=kurz | ?p=hodina (bez parametru = neuvedeno).
+     Text stránky se přepne pro ukázkovou hodinu; Umami event nese property „produkt" a střílí jen jednou za relaci (reload se nepočítá). -->
 <script>
   (function () {
+    var p = '';
+    try { p = new URLSearchParams(location.search).get('p') || ''; } catch (e) {}
+    var produkt = (p === 'kurz' || p === 'hodina') ? p : 'neuvedeno';
+
+    if (produkt === 'hodina') {
+      document.title = 'Platba proběhla – Ukázková hodina vajbování';
+      var h = document.getElementById('statusH1'), m = document.getElementById('statusMsg');
+      if (h) h.innerHTML = 'Místo máte, těšíme se na\u00a0vás!';
+      if (m) m.innerHTML = 'Děkujeme za\u00a0nákup. Na\u00a0e-mail jsme vám poslali <strong>fakturu</strong> a\u00a0<strong>odkaz na\u00a0Google Meet</strong>, kde hodina proběhne. Mrkněte do\u00a0schránky (a\u00a0pro jistotu i\u00a0do\u00a0spamu) a\u00a0uložte si termín do\u00a0kalendáře.<br/><br/>Kdyby cokoli nedorazilo, napište nám na\u00a0<a href="mailto:info@hados.cz">info@hados.cz</a>.';
+    }
+
+    var klic = 'platba-dokoncena:' + produkt, uz = false;
+    try { uz = sessionStorage.getItem(klic) === '1'; } catch (e) {}
+    if (uz) return;
     var pokusy = 0;
     var t = setInterval(function () {
-      if (window.umami) { window.umami.track('platba-dokoncena'); clearInterval(t); }
+      if (window.umami) {
+        window.umami.track('platba-dokoncena', { produkt: produkt });
+        try { sessionStorage.setItem(klic, '1'); } catch (e) {}
+        clearInterval(t);
+      }
       if (++pokusy > 20) clearInterval(t);
     }, 300);
   })();
