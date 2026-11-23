@@ -519,14 +519,26 @@
     .mk-page .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
     .mk-page .pgn { text-align: right; font-family: var(--mono); font-size: .5rem; color: #aab; margin-top: 8px; }
 
-    .mk-term { background: #0e1526; padding: 0; }
-    .mk-term .mk-bar { background: #1a2338; border-bottom: 1px solid #2a3752; }
-    .mk-term .mk-url { background: #0e1526; border-color: #2a3752; color: #8aa0c8; }
-    .mk-body { padding: 14px 16px 18px; font-family: var(--mono); font-size: .72rem; line-height: 1.65; color: #c7d3e8; min-height: 120px; }
-    .mk-body .u { color: #ffcc33; } .mk-body .u::before{ content: '> '; color: #5b7bf5; }
-    .mk-body .ok { color: #5eead4; } .mk-body .ok::before{ content: '✓ '; }
-    .mk-body .mut { color: #6b7a99; }
-    .mk-body .cur { display: inline-block; width: 7px; height: 13px; background: #ffcc33; vertical-align: -2px; animation: mkbl 1s steps(1) infinite; }
+    /* okno aplikace v showreelu: obecný chat, záměrně bez loga a bez vzhledu konkrétního nástroje
+       (kurz točíme v Claude Code, vyzkoušený je i v Codexu). Do 11/2026 tu byl mockup terminálu.
+       Pevné výšky vlákna i pole = okno při psaní a odeslání nemění výšku (žádné poskakování). */
+    .mk-app { background: #fbf8f1; }
+    .mk-chat { font-family: var(--body); font-size: .8rem; line-height: 1.5; color: #1c2333; }
+    .mk-thread { height: 172px; padding: 16px 16px 0; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+    .mk-thread .u { align-self: flex-end; max-width: 88%; background: #16213a; color: #f6efdf; padding: 8px 13px; border-radius: 14px 14px 3px 14px; font-weight: 600; }
+    .mk-thread .u[hidden] { display: none; }
+    .mk-steps { display: flex; flex-direction: column; gap: 5px; }
+    .mk-steps .ok { position: relative; padding-left: 23px; color: #5b6478; }
+    .mk-steps .ok::before { content: '✓'; position: absolute; left: 0; top: 2px; width: 15px; height: 15px; border-radius: 50%; background: #d9f5e5; color: #0f8a4e; font-size: .6rem; font-weight: 800; display: grid; place-items: center; }
+    .mk-steps .mut { align-self: flex-start; margin-top: 4px; background: #fff; border: 1px solid #d8d0bd; padding: 8px 13px; border-radius: 14px 14px 14px 3px; font-weight: 600; }
+    .mk-input { display: flex; align-items: center; gap: 8px; margin: 10px 12px 12px; padding: 6px 6px 6px 14px; min-height: 42px; background: #fff; border: 2px solid #16213a; border-radius: 22px; }
+    .mk-field { flex: 1; min-width: 0; }
+    .mk-field .ph { display: none; color: #9a927f; }
+    #typed:empty ~ .ph { display: inline; }
+    .mk-field .cur { display: inline-block; width: 2px; height: 1.05em; background: #16213a; vertical-align: -2px; margin: 0 1px; animation: mkbl 1s steps(1) infinite; }
+    .mk-send { flex: none; width: 26px; height: 26px; border-radius: 50%; background: #ffcc33; border: 2px solid #16213a; color: #16213a; display: grid; place-items: center; font-size: .8rem; font-weight: 800; line-height: 1; }
+    /* úzké okno (mobil; dva sloupce těsně nad 860 px): zadání se láme na 2 řádky → rezerva předem */
+    @media (max-width: 480px), (min-width: 861px) and (max-width: 1040px) { .mk-input { min-height: 62px; } .mk-thread { height: 182px; } }
     @keyframes mkbl { 50%{ opacity: 0; } }
 
     .mk-edit { background: #fff; }
@@ -751,11 +763,14 @@
     <p class="lead" style="margin-bottom:8px;">Žádné programování. Napíšete nebo řeknete, co chcete&nbsp;– a&nbsp;ono to vznikne. Takhle to vypadá:</p>
     <div class="reel-wrap">
       <div class="reel" id="reel">
-        <div class="mk mk-term">
-          <div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">~/muj-napad — claude</span></div>
-          <div class="mk-body">
-            <div class="u"><span id="typed"></span><span class="cur"></span></div>
-            <div id="steps"></div>
+        <div class="mk mk-app">
+          <div class="mk-bar"><i></i><i></i><i></i><span class="mk-url">Můj nápad</span></div>
+          <div class="mk-chat">
+            <div class="mk-thread">
+              <div class="u" id="sent" hidden></div>
+              <div class="mk-steps" id="steps"></div>
+            </div>
+            <div class="mk-input"><span class="mk-field"><span id="typed"></span><span class="cur"></span><span class="ph">Napište, co potřebujete…</span></span><span class="mk-send" aria-hidden="true">↑</span></div>
           </div>
         </div>
         <div class="reel-arr">→</div>
@@ -819,8 +834,8 @@
     <p class="lead" style="margin-bottom:44px;">Postupujeme od&nbsp;jednoduchého ke&nbsp;složitějšímu. Nejdřív vás bezpečně provedeme rozjezdem, pak teprve přijdou výstupy. Nikdo se neztratí.</p>
     <div class="steps">
       <div class="step"><div class="step-num">0</div><div><h3>Úvodní inspirace</h3><p>Prohlídka toho, co všechno s&nbsp;AI zvládnete – abyste hned věděli, kam to vede.</p></div></div>
-      <div class="step"><div class="step-num">1</div><div><h3>Zprovoznění</h3><p>Instalace a&nbsp;první spuštění, krok za&nbsp;krokem. Mac i&nbsp;Windows. Rozptýlíme strach z&nbsp;příkazové řádky: píšete jako v&nbsp;chatu a&nbsp;mačkáte Enter. Nic složitého, ukážeme.</p></div></div>
-      <div class="step"><div class="step-num">2</div><div><h3>Základní postup</h3><p>Projektová složka, CLAUDE.md jako mozek projektu, jak s&nbsp;AI mluvit, ať vás poslechne – a&nbsp;co dělat, když nedělá, co chcete.</p></div></div>
+      <div class="step"><div class="step-num">1</div><div><h3>Zprovoznění</h3><p>Stáhnete si aplikaci, přihlásíte se a&nbsp;vyberete složku, ve&nbsp;které chcete tvořit. Žádné příkazy: píšete česky jako v&nbsp;chatu. Točíme v&nbsp;Claude Code, postupy máme vyzkoušené i&nbsp;v&nbsp;Codexu od&nbsp;tvůrců ChatGPT.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div><h3>Základní postup</h3><p>Projektová složka, soubor s&nbsp;pokyny jako mozek projektu, jak s&nbsp;AI mluvit, ať vás poslechne – a&nbsp;co dělat, když nedělá, co chcete.</p></div></div>
       <div class="step"><div class="step-num">3</div><div><h3>Různé výstupy v&nbsp;praxi</h3><p>Projdeme spolu hlavní věci, co s&nbsp;AI vytvoříte – texty, weby, obrázky, prezentace, dokumenty a&nbsp;další. U&nbsp;každé z&nbsp;nich si ukážeme konkrétní příklad krok za&nbsp;krokem – a&nbsp;uvidíte, že to zvládnete i&nbsp;sami.</p></div></div>
       <div class="step"><div class="step-num">4</div><div><h3>Pořád se rozrůstá</h3><p>Kurz se nezastaví – přibývají nové lekce, nápady i&nbsp;hromada inspirace, abyste mohli posunout vlastní projekty zas o&nbsp;kus dál.</p></div></div>
     </div>
@@ -902,8 +917,8 @@
         </div>
         <p class="price-note">Cenu, za&nbsp;kterou se přidáte, máte zamčenou napořád.</p>
         <ul class="price-list">
-          <li>Celý kurz&nbsp;– od&nbsp;instalace po&nbsp;hotové weby, prezentace, texty i&nbsp;vizuály</li>
-          <li>Instalace krok za&nbsp;krokem pro&nbsp;Mac i&nbsp;Windows</li>
+          <li>Celý kurz&nbsp;– od&nbsp;prvního spuštění po&nbsp;hotové weby, prezentace, texty i&nbsp;vizuály</li>
+          <li>Rozjezd v&nbsp;aplikaci, bez psaní příkazů&nbsp;– na&nbsp;Macu i&nbsp;na&nbsp;Windows</li>
           <li>Nový obsah průběžně přibývá&nbsp;– máte ho v&nbsp;ceně</li>
           <li>Komunita sólotvůrců a&nbsp;živé setkávačky&nbsp;– pomáháme si a&nbsp;inspirujeme se</li>
           <li>Taháky k&nbsp;vytištění téměř ke&nbsp;každé lekci&nbsp;– nikdy vás nenecháme na&nbsp;holičkách</li>
@@ -927,12 +942,14 @@
     <h2>Než se rozhodnete.</h2>
     <div class="faq" style="margin-top:24px;">
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Musím umět programovat?</div><p class="faq-a">Ne. O&nbsp;to přesně jde. Kurz je pro lidi, kteří nikdy nenapsali řádku kódu. Neučíme programování – učíme, jak s&nbsp;AI dostat hotový výsledek.</p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Jak se to celé ovládá?</div><p class="faq-a">V&nbsp;aplikaci, kterou si nainstalujete jako kterýkoli jiný program. Píšete do&nbsp;ní česky, co potřebujete, a&nbsp;změny schvalujete kliknutím. Část starších lekcí jsme natočili v&nbsp;příkazové řádce. Píše se do&nbsp;ní totéž co do&nbsp;aplikace, takže vás to nezaskočí, a&nbsp;přecházet do&nbsp;ní nemusíte.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Musím umět anglicky?</div><p class="faq-a">Ne. Při vajbení si v&nbsp;pohodě vystačíte s&nbsp;češtinou. A&nbsp;těch pár anglických slov, která čas od&nbsp;času potřebujete, vám detailně vysvětlíme. Navíc přihodíme i&nbsp;taháky, abyste se nikde nezasekli.</p></div>
-      <div class="faq-item"><div class="faq-q"><span class="q"></span> Potřebuju drahý počítač nebo Mac?</div><p class="faq-a">Stačí běžný notebook. Instalaci ukazujeme zvlášť pro <strong>macOS</strong> i&nbsp;<strong>Windows</strong>, takže nezáleží, co máte.</p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Potřebuju drahý počítač nebo Mac?</div><p class="faq-a">Stačí běžný notebook. Aplikace funguje na&nbsp;<strong>macOS</strong> i&nbsp;na&nbsp;<strong>Windows</strong>, takže nezáleží, co máte.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Můžu si kurz prohlédnout, než se rozhodnu?</div><p class="faq-a">Ano, dveře jsou otevřené. <a href="https://naveromag.cz/kurzy/ai-pro-solotvurce?preview=1" target="_blank" rel="noopener"><strong>Projděte si kurz zevnitř</strong></a>&nbsp;– uvidíte prostředí, celou osnovu a&nbsp;pustíte si tři úvodní videa: naše společné, Martinovo i&nbsp;Romanovo. Zdarma a&nbsp;bez registrace.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Můžu si vajbování nejdřív vyzkoušet naživo?</div><p class="faq-a">Ano. Pořádáme <a href="/ukazkova-hodina" data-umami-event="cta-klik" data-umami-event-misto="faq-ukazkova-hodina"><strong>Ukázkovou hodinu vajbování</strong></a>&nbsp;– 60&nbsp;minut online přes Google Meet za&nbsp;290&nbsp;Kč. Uvidíte, jak vajbování vypadá v&nbsp;praxi, a&nbsp;zeptáte se na&nbsp;cokoli. Termíny a&nbsp;přihlášení najdete na&nbsp;stránce hodiny.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Platí se jednou, nebo každý rok?</div><p class="faq-a">Je to <strong>roční předplatné</strong> za&nbsp;1&nbsp;490&nbsp;Kč. Hlavní výhoda: cenu, za&nbsp;kterou se přidáte, máte <strong>zamčenou napořád</strong>. Kdo vezme 1&nbsp;490&nbsp;Kč/rok teď, platí 1&nbsp;490&nbsp;Kč/rok i&nbsp;za&nbsp;pět let&nbsp;– i&nbsp;když pro nově příchozí mezitím zdražíme.</p></div>
-      <div class="faq-item"><div class="faq-q"><span class="q"></span> Musím kvůli kurzu platit ještě něco navíc?</div><p class="faq-a">Ano, počítejte s&nbsp;tím dopředu. Kurz vás naučí používat nástroj <strong>Claude Code</strong>&nbsp;– ten ale není v&nbsp;ceně kurzu a&nbsp;platí se zvlášť přímo jeho tvůrcům (firma Anthropic). Dobrá zpráva: je to jednoduché a&nbsp;levné. Funguje to jako předplatné Netflixu nebo Spotify&nbsp;– nejlevnější verze vyjde zhruba na&nbsp;<strong>500&nbsp;Kč měsíčně</strong> (20&nbsp;dolarů), platíte po&nbsp;měsících a&nbsp;kdykoli můžete zrušit. Žádné licence na&nbsp;rok, žádné instalační poplatky. Na&nbsp;rozjezd vám ta nejlevnější verze bohatě stačí.</p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Musím kvůli kurzu platit ještě něco navíc?</div><p class="faq-a">Ano, počítejte s&nbsp;tím dopředu. K&nbsp;vajbování potřebujete předplatné AI nástroje. V&nbsp;ceně kurzu není a&nbsp;platí se zvlášť přímo jeho tvůrcům. Kurz točíme v&nbsp;nástroji <strong>Claude Code</strong>, který je součástí aplikace Claude od&nbsp;firmy Anthropic. Funguje to jako předplatné Netflixu nebo Spotify&nbsp;– nejlevnější verze vyjde zhruba na&nbsp;<strong>500&nbsp;Kč měsíčně</strong> (20&nbsp;dolarů), platíte po&nbsp;měsících a&nbsp;kdykoli můžete zrušit. Žádné licence na&nbsp;rok, žádné instalační poplatky. Na&nbsp;rozjezd vám ta nejlevnější verze bohatě stačí. A&nbsp;pokud už platíte ChatGPT, můžete začít s&nbsp;ním.</p></div>
+      <div class="faq-item"><div class="faq-q"><span class="q"></span> Mám předplacený ChatGPT. Musím přecházet jinam?</div><p class="faq-a">Nemusíte. Součástí předplatného ChatGPT je nástroj <strong>Codex</strong>, který pracuje podobně: napíšete mu, co potřebujete, a&nbsp;on to ve&nbsp;vaší složce v&nbsp;počítači postaví. Kurz točíme v&nbsp;Claude Code, ale postupy máme vyzkoušené i&nbsp;v&nbsp;Codexu. Učíme totiž hlavně to, jak si práci uspořádat a&nbsp;jak AI zadávat, a&nbsp;to platí v&nbsp;obou. Jen počítejte s&nbsp;tím, že na&nbsp;videích uvidíte Claude Code a&nbsp;v&nbsp;Codexu se některá tlačítka jmenují jinak.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Ani jeden z&nbsp;vás není programátor. Jak můžete učit stavět něco, čemu z&nbsp;pohledu bezpečnosti sami nerozumíte?</div><p class="faq-a">Nejsme programátoři, ale to neznamená, že na&nbsp;bezpečnost kašleme. Řešíme to třemi věcmi.</p><p class="faq-a"><strong>Výběrem toho, co učíme:</strong> jako začátečníci si v&nbsp;kurzu stavíte hlavně věci pro sebe&nbsp;– systém na&nbsp;psaní vlastních textů, jednostránkový web, prezentaci, infografiku, obrázky. Věci, které běží u&nbsp;vás v&nbsp;počítači, nebo jsou to statické stránky bez přihlašování a&nbsp;bez databáze. Velké SaaS projekty stavět neučíme a&nbsp;ani to není naše ambice.</p><p class="faq-a"><strong>Pravidly, která nevyžadují rozumět kódu:</strong> nedávat do&nbsp;chatu přístupové klíče ani cizí data, nechat si vysvětlit, co chce nástroj udělat, a&nbsp;odmítat, čemu nerozumíte. Není to bezpečnostní politika, spíš zdravý rozum.</p><p class="faq-a"><strong>Přiznáním hranic toho, co umíme.</strong> Kdo chce jít dál než k&nbsp;věcem z&nbsp;prvního bodu, tomu doporučujeme přizvat zkušeného programátora a&nbsp;nechat si udělat bezpečnostní audit. Na&nbsp;téma bezpečnosti chceme do&nbsp;kurzu časem přizvat i&nbsp;hosty. Zároveň se sami posouváme a&nbsp;vzděláváme v&nbsp;tom, jak vajbovat bezpečně.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Co když zjistím, že to není pro mě?</div><p class="faq-a">Nic neriskujete. Máte <strong>14denní garanci vrácení peněz</strong>&nbsp;– když do&nbsp;14 dnů od&nbsp;nákupu zjistíte, že to pro vás není, napište nám na&nbsp;<a href="mailto:info@hados.cz">info@hados.cz</a> a&nbsp;peníze vám vrátíme. Nemusíte nic zdůvodňovat. Podrobnosti najdete v&nbsp;<a href="vop.html">obchodních podmínkách</a>.</p></div>
       <div class="faq-item"><div class="faq-q"><span class="q"></span> Jak dlouho mi to zabere?</div><p class="faq-a">Videa jsou krátká a&nbsp;jdete vlastním tempem. Nejde o&nbsp;to něco prosvištět&nbsp;– jsme tu s&nbsp;vámi dlouhodobě a&nbsp;vědomě nikam neženeme.</p></div>
@@ -1095,7 +1112,10 @@
   ];
   var typed=document.getElementById('typed');
   var steps=document.getElementById('steps');
+  var sent=document.getElementById('sent');
   var out=document.getElementById('reel-out');
+  /* zadání se píše do pole dole; „odesláním" se přesune jako zpráva do vlákna */
+  function send(r){ sent.textContent=r.wish; sent.hidden=false; typed.textContent=''; }
   var dotsWrap=document.getElementById('reel-dots');
   var paused=false, runId=0;
 
@@ -1131,22 +1151,24 @@
   function play(i){
     var id=++runId, r=REEL[i];
     Array.prototype.forEach.call(dotsWrap.children,function(d,di){ d.classList.toggle('on',di===i); });
-    typed.textContent=''; steps.innerHTML='';
+    typed.textContent=''; steps.innerHTML=''; sent.hidden=true; sent.textContent='';
     out.innerHTML='<div class="reel-ph">… vzniká</div>';
 
     if(reduce){
-      typed.textContent=r.wish;
+      send(r);
       r.steps.forEach(function(s){ var l=document.createElement('div'); l.className='ok'; l.textContent=s; steps.appendChild(l); });
       var m=document.createElement('div'); m.className='mut'; m.textContent=r.done; steps.appendChild(m);
       show(i); var mk=out.querySelector('.mk'); if(mk) mk.classList.add('on');
       delay(5000,function(){ play((i+1)%REEL.length); },id);
       return;
     }
-    var ci=0;
+    var ci=0, hold=0;
     (function type(){
       if(id!==runId) return;
       if(paused){ setTimeout(type,150); return; }
       if(ci<r.wish.length){ typed.textContent+=r.wish.charAt(ci++); setTimeout(type,22); return; }
+      if(hold++<12){ setTimeout(type,22); return; } /* krátká pauza před odesláním */
+      send(r);
       var si=0;
       (function step(){
         if(id!==runId) return;
@@ -1168,7 +1190,7 @@
   function showInstant(i){
     var id=++runId, r=REEL[i];
     Array.prototype.forEach.call(dotsWrap.children,function(d,di){ d.classList.toggle('on',di===i); });
-    typed.textContent=r.wish; steps.innerHTML='';
+    send(r); steps.innerHTML='';
     r.steps.forEach(function(s){ var l=document.createElement('div'); l.className='ok'; l.textContent=s; steps.appendChild(l); });
     var m=document.createElement('div'); m.className='mut'; m.textContent=r.done; steps.appendChild(m);
     show(i); var mk=out.querySelector('.mk'); if(mk) mk.classList.add('on');
